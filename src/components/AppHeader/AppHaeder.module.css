@@ -1,0 +1,35 @@
+.header {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+.headerSection {
+    display: flex;
+}
+
+.btn {
+    border: 1px dashed #4C4CFF;
+    border-radius: 40px;
+    background-color: transparent;
+    color: #8585AD;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    align-items: center;
+    gap: 8px;
+    display: flex;
+    flex-direction: row-reverse;
+}
+.btnConstructor {
+    width: 178px;
+    height: 56px;
+}
+.btnOrder {
+    width: 197px;
+    height: 56px;
+}
+.btnAccount {
+    width: 207px;
+    height: 56px;
+    margin-left: 200px;
+}

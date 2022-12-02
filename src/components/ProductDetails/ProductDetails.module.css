@@ -1,0 +1,9 @@
+.description{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+.energyValue {
+    border-spacing: 20px;
+}

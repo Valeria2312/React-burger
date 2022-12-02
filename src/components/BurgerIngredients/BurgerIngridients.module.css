@@ -1,6 +1,7 @@
-.headerConstructor {
-    color: #F2F2F3;
-    text-align: left;
+.ingredients {
+    max-height: 600px;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 .categoriesName {
     text-align: left;
@@ -10,23 +11,6 @@
     flex-wrap: wrap;
     width: 600px;
     gap: 40px;
-}
-.product {
-    position: relative;
-}
-.productName {
-    word-break: break-all;
-    max-width: 272px;
-}
-.productPrice {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.ingredients {
-    max-height: 600px;
-    overflow-y: scroll;
-    overflow-x: hidden;
 }
 .ingredients::-webkit-scrollbar {
     background: #8585AD;

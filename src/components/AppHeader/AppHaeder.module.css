@@ -19,6 +19,8 @@
     gap: 8px;
     display: flex;
     flex-direction: row-reverse;
+    justify-content: center;
+    text-decoration: none;
 }
 .btnConstructor {
     width: 178px;

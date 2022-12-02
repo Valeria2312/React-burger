@@ -1,0 +1,11 @@
+.App {
+  text-align: center;
+  max-width: 1920px;
+  background: #131316;
+
+}
+.mainConstructor {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+}

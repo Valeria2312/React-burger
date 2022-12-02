@@ -1,0 +1,12 @@
+.product {
+    position: relative;
+}
+.productName {
+    word-break: break-all;
+    max-width: 272px;
+}
+.productPrice {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

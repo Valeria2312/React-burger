@@ -1,0 +1,25 @@
+.container{
+    position: fixed;
+    max-width: 720px;
+    min-height: 539px;
+    width: 100%;
+    background-color: #1C1C21;
+    border: 1px solid rgba(76, 76, 255, 0.2);
+    border-radius: 40px;
+    top: 15%;
+    left: 30%;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 1;
+}
+.btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    padding: 0;
+    top: 40px;
+    right: 40px
+}

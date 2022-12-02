@@ -1,0 +1,21 @@
+.ingredients {
+    max-height: 600px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.categoriesName {
+    text-align: left;
+}
+.categories {
+    display: flex;
+    flex-wrap: wrap;
+    width: 600px;
+    gap: 40px;
+}
+.ingredients::-webkit-scrollbar {
+    background: #8585AD;
+    width: 8px;
+}
+.ingredients::-webkit-scrollbar-thumb {
+    background: #2F2F37;
+}

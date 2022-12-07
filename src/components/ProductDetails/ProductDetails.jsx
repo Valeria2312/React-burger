@@ -11,6 +11,7 @@ export const ProductDetails = ({product}) => {
             <h3 className={`text text_type_main-medium`}>{product.name}</h3>
 
             <table className={`${StyleProductDetails.energyValue} mt-8 mb-15`}>
+                <tbody>
                 <tr>
                     <th className="text text_type_main-default text_color_inactive">Калории,ккал</th>
                     <th className="text text_type_main-default text_color_inactive">Белки, г</th>
@@ -23,6 +24,7 @@ export const ProductDetails = ({product}) => {
                     <th className="text text_type_main-default text_color_inactive">{product.fat}</th>
                     <th className="text text_type_main-default text_color_inactive">{product.carbohydrates}</th>
                 </tr>
+                </tbody>
             </table>
         </div>
         </>
@@ -30,11 +32,5 @@ export const ProductDetails = ({product}) => {
 }
 
    ProductDetails.propTypes = {
-        name: PropTypes.string.isRequired,
-        thumbnail: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-        type: PropTypes.oneOf(["top" | "bottom" | undefined]),
-        isLocked: PropTypes.oneOf([PropTypes.bool | undefined]),
-        extraClass: PropTypes.oneOf([PropTypes.string | undefined]),
-        handleClose: PropTypes.func,
+       product: PropTypes.object.isRequired,
     }

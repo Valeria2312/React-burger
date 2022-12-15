@@ -1,3 +1,7 @@
+.headerConstructor {
+    color: #F2F2F3;
+    text-align: left;
+}
 .ingredients {
     max-height: 600px;
     overflow-y: scroll;

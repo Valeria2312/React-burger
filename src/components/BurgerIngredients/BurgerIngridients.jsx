@@ -1,52 +1,47 @@
-import React, {useContext} from "react";
+import React, {useEffect, useMemo} from "react";
 import StyleIngredients from "./BurgerIngridients.module.css"
-import PropTypes from "prop-types";
 import {ProductElem} from "../ProductElem/ProductElem";
-import {BurgerIngredientsHeader} from "../BurgerIngredientsHeader/BurgerIngredientsHeader";
-import {DataContext} from "../services/DataContext";
-import {typesDataProduct} from "../../types/typesDataProduct";
+import {useDispatch, useSelector} from "react-redux";
+import {Tabs} from "../BurgerIngredientsHeader/BurgerIngredientsTabs";
+import {getIngredients} from "../../services/actions/BurgerIngridients";
 
 export const BurgerIngredients = () => {
-    const { data } = useContext(DataContext);
+    const {ingredients} = useSelector(store => store.BurgerIngredients);
 
-    const arrBun = [];
-    const arrSauce = [];
-    const arrMain = []
+    const dispatch = useDispatch();
 
-    data.map((product) => {
-        if (product.type === "bun") {
-            arrBun.push(product);
-        }
-        if (product.type === "sauce") {
-            arrSauce.push(product);
-        }
-        if (product.type === "main") {
-            arrMain.push(product);
-        }
-        return product;
-    })
+    useEffect(() => {
+        dispatch(getIngredients())
+    }, [dispatch])
+
+
+    const arrBun = useMemo(() => ingredients.filter(item => item.type === "bun"), [ingredients]);
+    const arrSauce = useMemo(() => ingredients.filter(item => item.type === "sauce"), [ingredients]);
+    const arrMain = useMemo(() => ingredients.filter(item => item.type === "main"), [ingredients]);
 
     return (
         <section className="BurgerIngredients">
-            <BurgerIngredientsHeader/>
+            <p className={`${StyleIngredients.headerConstructor} mt-10 mb-5 text text_type_main-large`}>Соберите
+                бургер</p>
+            <Tabs/>
             <div className={`${StyleIngredients.ingredients}`}>
                 <div className={`${StyleIngredients.categoriesName} text text_type_main-medium mt-10`}>Булки</div>
                 <div className={`${StyleIngredients.categories} mt-6`}>
-                    {arrBun.map((product)=>(
+                    {arrBun.map((product) => (
                         <ProductElem key={product.id} product={product}/>
                     ))}
                 </div>
 
                 <div className={`${StyleIngredients.categoriesName} text text_type_main-medium mt-10`}>Соусы</div>
                 <div className={`${StyleIngredients.categories} mt-6`}>
-                    {arrSauce.map((product)=>(
+                    {arrSauce.map((product) => (
                         <ProductElem key={product.id} product={product}/>
                     ))}
                 </div>
 
                 <div className={`${StyleIngredients.categoriesName} text text_type_main-medium mt-10`}>Начинки</div>
                 <div className={`${StyleIngredients.categories} mt-6`}>
-                    {arrMain.map((product)=>(
+                    {arrMain.map((product) => (
                         <ProductElem key={product.id} product={product}/>
                     ))}
                 </div>
@@ -54,6 +49,7 @@ export const BurgerIngredients = () => {
         </section>
     );
 }
+
 BurgerIngredients.propTypes = {
-    ingredients: PropTypes.arrayOf(PropTypes.shape(typesDataProduct)).isRequired,
+    // ingredients: PropTypes.arrayOf(PropTypes.shape(typesDataProduct)).isRequired,
 };

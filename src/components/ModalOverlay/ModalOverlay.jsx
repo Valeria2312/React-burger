@@ -9,7 +9,7 @@ export const ModalOverlay = (props) => {
         }
     };
 
-    return(
+    return (
         <div className={`${StyleModalOverlay.overlay}`} onClickCapture={closeModal} id="overlay"></div>
     )
 }

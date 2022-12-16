@@ -1,11 +1,12 @@
 import {
     CLOSE_CURRENT_PRODUCT,
     GET_INGREDIENTS_FAILED, GET_INGREDIENTS_REQUEST,
-    GET_INGREDIENTS_SUCCESS, SHOW_CURRENT_PRODUCT
+    GET_INGREDIENTS_SUCCESS, SHOW_CURRENT_PRODUCT,
 } from "../actions/BurgerIngridients";
 
 const initialState = {
     ingredients: [],
+    counter: 0,
     loading: false,
     isError: false,
     currentProduct: false,

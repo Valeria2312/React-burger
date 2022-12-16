@@ -8,6 +8,7 @@ export const SHOW_CURRENT_PRODUCT = 'SHOW_CURRENT_PRODUCT';
 export const CLOSE_CURRENT_PRODUCT = 'CLOSE_CURRENT_PRODUCT';
 
 
+
 // Получение ингридиентов
 export function getIngredients() {
     return function (dispatch) {

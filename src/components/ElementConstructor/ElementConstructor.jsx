@@ -1,19 +1,12 @@
-import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {ConstructorElement} from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import React from "react";
 import StyleElement from "./ElementConstructor.module.css"
 
 
-export const ElementConstructor = ({isLocked, type, price, name, thumbnail}) => {
-
-
+export const ElementConstructor = ({ isLocked, type, price, name, thumbnail}) => {
     return (
-        <div className={`${StyleElement.element} + ${(isLocked === true ? 'ml-8' : '')}`}>
-            {isLocked === false &&
-                <DragIcon
-                    type="primary"
-                />
-            }
+        <div className={`${StyleElement.element}}`}>
             <ConstructorElement
                 type={type}
                 isLocked={isLocked}

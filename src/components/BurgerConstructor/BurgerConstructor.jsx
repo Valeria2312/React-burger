@@ -1,31 +1,58 @@
-import React, {useState} from "react";
+import React, {useCallback, useMemo} from "react";
 import StylesConstructor from "./BurgerConstructor.module.css";
-import {Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {ElementConstructor} from "../ElementConstructor/ElementConstructor";
+import {Button, ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Modal} from "../Modal/Modal";
 import {OrderDetails} from "../orderDetails/orderDetails";
-import {typesDataProduct} from "../../types/typesDataProduct";
 import {useDispatch, useSelector} from "react-redux";
-import {useEffect} from "react";
 import {
-    GET_ORDER_REQUEST,
-    GET_OPEN_MODAL,
-    getOrderNumber,
+    ADD_BUN,
+    ADD_INGREDIENT,
+    DEL_INGREDIENTS,
     GET_CLOSE_MODAL,
+    GET_OPEN_MODAL,
+    getOrderNumber, MOVE_INGREDIENT,
 } from "../../services/actions/BurgerConstructor";
-
+import {useDrop} from "react-dnd";
+import {v4 as uuid4} from 'uuid';
+import BurgerItem from "../BurgerItem/BurgerItem";
 
 export const BurgerConstructor = () => {
-    const data = useSelector((store) => store.BurgerIngredients.ingredients);
     const {showModal} = useSelector(store => store.OrderDetails);
+    const {ingredients} = useSelector(store => store.BurgerConstructor);
+    const {bun} = useSelector(store => store.BurgerConstructor);
 
     const dispatch = useDispatch();
+
+    const [{isOver}, dropRef] = useDrop({
+        accept: 'ingredient',
+        drop(item) {
+            if (item.type === 'bun') {
+                console.log(item);
+                dispatch({
+                    type: ADD_BUN,
+                    data: item,
+                })
+            } else {
+                dispatch({
+                    type: ADD_INGREDIENT,
+                    data: item,
+                    key: uuid4(),
+                })
+            }
+        },
+        collect: monitor => ({
+            isOver: monitor.isOver()
+        })
+    });
 
     const openModal = () => {
         dispatch(getOrderNumber(orderArr));
         dispatch({
             type: GET_OPEN_MODAL,
         });
+        dispatch({
+            type: DEL_INGREDIENTS,
+        })
     };
 
     const closeModal = () => {
@@ -34,63 +61,81 @@ export const BurgerConstructor = () => {
         });
     };
 
-    const arrBun = [];
-    const arrMain = [];
 
-    data.map((ingredient) => {
-        if (ingredient.name === "Краторная булка N-200i") {
-            arrBun.push(ingredient);
+    const orderArr = useMemo(() => {
+        if (ingredients && bun) {
+            return [...ingredients, bun].map(elem => elem._id)
         }
-        if (ingredient.type === "sauce" || ingredient.type === "main") {
-            arrMain.push(ingredient);
-            arrMain.splice(3, 2);
-        }
-        return ingredient;
-    })
+    }, [ingredients, bun])
+
+    const price = useMemo(() => {
+        return ingredients.length > 0 && bun.price * 2 + ingredients.reduce((acc, item) => acc + item.price, 0)
+    }, [ingredients, bun]);
 
 
-    console.log("проверка массивов")
-    console.log(data);
-    console.log(arrBun);
-    console.log(arrMain);
+    const moveIngredient = useCallback(
+        (dragIndex, hoverIndex) => {
+          const dragItem = ingredients[dragIndex];
+          const hoverItem = ingredients[hoverIndex];
+          const newIngredients = [...ingredients];
+          newIngredients[dragIndex] = hoverItem;
+          newIngredients[hoverIndex] = dragItem;
 
+          dispatch({ type: MOVE_INGREDIENT, sorted: newIngredients });
+        },
+        [dispatch, ingredients]
+      );
 
-    const fullBurgerIngredients = arrBun.concat(arrMain);
-    const orderArr = fullBurgerIngredients.map(elem => elem._id);
-    console.log(orderArr);
-
-    // useEffect(() => {
-    //     dispatch(getOrderNumber(orderArr));
-    //     console.log(orderArr);
-    // }, []);
-
-    const totalAmount = arrMain.reduce((sum, el) => sum + el.price, 0) + (arrBun.reduce((sum, el) => sum + el.price, 0) * 2);
+    const renderIngredients = (ing, index) => {
+        return (
+            <BurgerItem ing={ing} index={index} key={ing.keyId} moveIng={moveIngredient}/>
+        )
+    }
 
     return (
         <section className={`StylesConstructor mt-25`}>
-            <div className={StylesConstructor.basket}>
-                {
-                    arrBun.map((ingredient) => (
-                        <ElementConstructor key={ingredient.id} isLocked={true} type={"top"} price={ingredient.price}
-                                            name={ingredient.name + '(верх)'} thumbnail={ingredient.image}/>
-                    ))
+            <div ref={dropRef} className={StylesConstructor.basket}>
+                {bun ?
+                    <div>
+                        <ConstructorElement
+                            type="top"
+                            isLocked={true}
+                            text={bun.name + '(верх)'}
+                            price={bun.price}
+                            thumbnail={bun.image}
+                        />
+                    </div>
+                    :
+                    <div>
+                        <h2>Добавьте булку</h2>
+                    </div>
                 }
-                {
-                    arrMain.map((ingredient) => (
-                        <ElementConstructor key={ingredient.id} isLocked={false} type={ingredient.type}
-                                            price={ingredient.price} name={ingredient.name}
-                                            thumbnail={ingredient.image}/>
-                    ))
+                {ingredients.length >= 1 ?
+                    ingredients.map((ingredient, index) => (renderIngredients(ingredient, index)))
+                    :
+                    <div>
+                        <h2>Добавьте начинку</h2>
+                    </div>
                 }
-                {
-                    arrBun.map((ingredient) => (
-                        <ElementConstructor key={ingredient.id} isLocked={true} type={"bottom"} price={ingredient.price}
-                                            name={ingredient.name + '(низ)'} thumbnail={ingredient.image}/>
-                    ))}
+                {bun ?
+                    <div>
+                        <ConstructorElement
+                            type="bottom"
+                            isLocked={true}
+                            text={bun.name + '(низ)'}
+                            price={bun.price}
+                            thumbnail={bun.image}
+                        />
+                    </div>
+                    :
+                    <div>
+                        <h2>Добавьте булку</h2>
+                    </div>
+                }
             </div>
             <div className={`${StylesConstructor.result} mt-10`}>
                 <div className={`${StylesConstructor.totalAmount} mr-10`}>
-                    <p className="text text_type_digits-medium">{totalAmount}</p>
+                    <p className="text text_type_digits-medium">{price}</p>
                     <CurrencyIcon type="primary"/>
                 </div>
                 <Button htmlType="button" type="primary" size="medium" onClick={openModal}>
@@ -105,8 +150,4 @@ export const BurgerConstructor = () => {
             }
         </section>
     )
-};
-
-BurgerConstructor.propTypes = {
-    ingredients: typesDataProduct.isRequired,
 };

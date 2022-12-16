@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import StyleOrderDetails from "./orderDetails.module.css"
 import done from '../../images/done.png'
 import {useSelector} from "react-redux";

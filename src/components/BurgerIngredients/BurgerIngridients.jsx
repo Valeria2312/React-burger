@@ -72,7 +72,7 @@ export const BurgerIngredients = () => {
                 </div>
                 <div className={`${StyleIngredients.categories} mt-6`}>
                     {arrBun.map((product) => (
-                        <ProductElem key={product.id} product={product}/>
+                        <ProductElem key={product._id} product={product}/>
                     ))}
                 </div>
 
@@ -81,7 +81,7 @@ export const BurgerIngredients = () => {
                 </div>
                 <div className={`${StyleIngredients.categories} mt-6`}>
                     {arrSauce.map((product) => (
-                        <ProductElem key={product.id} product={product}/>
+                        <ProductElem key={product._id} product={product}/>
                     ))}
                 </div>
 
@@ -90,7 +90,7 @@ export const BurgerIngredients = () => {
                 </div>
                 <div className={`${StyleIngredients.categories} mt-6`}>
                     {arrMain.map((product) => (
-                        <ProductElem key={product.id} product={product}/>
+                        <ProductElem key={product._id} product={product}/>
                     ))}
                 </div>
             </div>

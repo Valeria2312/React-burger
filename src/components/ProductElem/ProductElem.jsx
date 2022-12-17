@@ -42,20 +42,22 @@ export const ProductElem = ({product}) => {
     };
 
     return (
-        <div ref={dragRef} className={`${StyleIBurgerProducts.product}`} onClick={openModal}>
-            <img className={`mr-4 ml-4`} src={product.image} alt={product.name}/>
-            <Counter count={count} size="default" extraClass="m-1"/>
-            <h3 className={`${StyleIBurgerProducts.productName} text text_type_main-default`}>{product.name}</h3>
-            <div className={`${StyleIBurgerProducts.productPrice} mt-1 mb-1`}>
-                <p className={`mr-1 text text_type_digits-default`}>{product.price}</p>
-                <CurrencyIcon type="primary"/>
+        <>
+            <div ref={dragRef} className={`${StyleIBurgerProducts.product}`} onClick={openModal}>
+                <img className={`mr-4 ml-4`} src={product.image} alt={product.name}/>
+                <Counter count={count} size="default" extraClass="m-1"/>
+                <h3 className={`${StyleIBurgerProducts.productName} text text_type_main-default`}>{product.name}</h3>
+                <div className={`${StyleIBurgerProducts.productPrice} mt-1 mb-1`}>
+                    <p className={`mr-1 text text_type_digits-default`}>{product.price}</p>
+                    <CurrencyIcon type="primary"/>
+                </div>
             </div>
             {currentProduct && (
                 <Modal close={closeModal}>
                     <IngredientDetails/>
                 </Modal>)
             }
-        </div>
+        </>
     );
 };
 

@@ -8,21 +8,21 @@ import {useInView} from "react-intersection-observer";
 
 export const BurgerIngredients = () => {
     const {ingredients} = useSelector(store => store.BurgerIngredients);
-    // const [chapter, setChapter] = React.useState('bun')
+    const [chapter, setChapter] = React.useState('bun')
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getIngredients())
     }, [dispatch])
 
-    const arrBun = useMemo(() => ingredients.filter(item => item.type === "bun"), [ingredients]);
-    const arrSauce = useMemo(() => ingredients.filter(item => item.type === "sauce"), [ingredients]);
-    const arrMain = useMemo(() => ingredients.filter(item => item.type === "main"), [ingredients]);
-
     const firstTab = "Булки";
     const secondTab = "Соусы";
     const thirdTab = "Начинки";
     const rootScroll = useRef();
+
+    const arrBun = useMemo(() => ingredients.filter(item => item.type === "bun"), [ingredients]);
+    const arrSauce = useMemo(() => ingredients.filter(item => item.type === "sauce"), [ingredients]);
+    const arrMain = useMemo(() => ingredients.filter(item => item.type === "main"), [ingredients]);
 
     const [ref, inView] = useInView({
         root: rootScroll.current,
@@ -37,15 +37,31 @@ export const BurgerIngredients = () => {
         root: rootScroll.current,
         threshold: 0.9,
     })
+    useEffect(() => {
+    if (inView) {
+        setChapter("bun");
+        return;
+    }
+
+    if (inView2) {
+        setChapter("sauce");
+        return;
+    }
+
+    if (inView3) {
+        setChapter("main");
+        return;
+    }
+}, [inView, inView2, inView3]);
 
     return (
         <section className="BurgerIngredients">
             <p className={`${StyleIngredients.headerConstructor} mt-10 mb-5 text text_type_main-large`}>Соберите
                 бургер</p>
             <div className={`${StyleIngredients.tabs}`}>
-                <Tab value={firstTab} active={inView}>Булки</Tab>
-                <Tab value={secondTab} active={inView2}>Соусы</Tab>
-                <Tab value={thirdTab} active={inView3}>Начинки</Tab>
+                <Tab value={firstTab} active={chapter === "bun"} onClick={setChapter}>Булки</Tab>
+                <Tab value={secondTab} active={chapter === "sauce"} onClick={setChapter} >Соусы</Tab>
+                <Tab value={thirdTab} active={chapter === "main"} onClick={setChapter}>Начинки</Tab>
             </div>
             <div ref={rootScroll} className={`${StyleIngredients.ingredients}`}>
 

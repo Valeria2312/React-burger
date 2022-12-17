@@ -1,4 +1,4 @@
-import {CheckResponse, requestAddress} from "../../Сonstants/ForQueries";
+import {checkResponse, requestAddress} from "../../Сonstants/ForQueries";
 
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
@@ -16,7 +16,7 @@ export function getIngredients() {
             type: GET_INGREDIENTS_REQUEST,
         });
         fetch(requestAddress + "/ingredients")
-            .then(CheckResponse)
+            .then(checkResponse)
             .then(res => {
                 if (res.success) {
                     dispatch({

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import StyleIBurgerProducts from "./ProductElem.module.css"
 import {Modal} from "../Modal/Modal";
-import {ProductDetails} from "../ProductDetails/ProductDetails";
+import {IngredientDetails} from "../IngredientDetails/IngredientDetails";
 import {useDrag} from "react-dnd";
 import {CLOSE_CURRENT_PRODUCT, SHOW_CURRENT_PRODUCT} from "../../services/actions/BurgerIngridients";
 import {useDispatch, useSelector} from "react-redux";
@@ -16,7 +16,6 @@ export const ProductElem = ({product}) => {
         if (prod && prod._id) {
             return product._id === prod._id;
         }
-
         return false;
     });
     const count = foundInBasket.length;
@@ -28,6 +27,7 @@ export const ProductElem = ({product}) => {
         item: product,
     });
     const openModal = () => {
+        console.log(product);
         dispatch({
             type: SHOW_CURRENT_PRODUCT,
             currentProduct: product,
@@ -41,10 +41,9 @@ export const ProductElem = ({product}) => {
         })
     };
 
-
     return (
         <div ref={dragRef} className={`${StyleIBurgerProducts.product}`} onClick={openModal}>
-            <img className={`mr-4 ml-4`} src={product.image} alt="product"/>
+            <img className={`mr-4 ml-4`} src={product.image} alt={product.name}/>
             <Counter count={count} size="default" extraClass="m-1"/>
             <h3 className={`${StyleIBurgerProducts.productName} text text_type_main-default`}>{product.name}</h3>
             <div className={`${StyleIBurgerProducts.productPrice} mt-1 mb-1`}>
@@ -53,10 +52,9 @@ export const ProductElem = ({product}) => {
             </div>
             {currentProduct && (
                 <Modal close={closeModal}>
-                    <ProductDetails product={product}/>
+                    <IngredientDetails/>
                 </Modal>)
             }
-
         </div>
     );
 };

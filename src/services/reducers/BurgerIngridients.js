@@ -6,10 +6,9 @@ import {
 
 const initialState = {
     ingredients: [],
-    counter: 0,
     loading: false,
     isError: false,
-    currentProduct: false,
+    currentProduct: null,
 }
 
 //Редьюсер для ингридиентов
@@ -37,6 +36,7 @@ export const ingredientsReducer = (state = initialState, action) => {
             };
         }
         case SHOW_CURRENT_PRODUCT: {
+            console.log(state.currentProduct);
             return {
                 ...state,
                 currentProduct: action.currentProduct,
@@ -45,7 +45,7 @@ export const ingredientsReducer = (state = initialState, action) => {
         case CLOSE_CURRENT_PRODUCT: {
             return {
                 ...state,
-                currentProduct: false,
+                currentProduct: null,
             }
         }
         default: {

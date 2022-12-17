@@ -4,10 +4,13 @@ import {useDispatch} from 'react-redux';
 import {useRef} from 'react';
 import BurgerElem from "./BurgerItem.module.css";
 import {DEL_INGREDIENT} from "../../services/actions/BurgerConstructor";
+import PropTypes from "prop-types";
 
 function BurgerItem({ing, index, moveIng}) {
     const dispatch = useDispatch();
     const ref = useRef(null);
+
+    console.log(index);
 
     const [{isDragging}, dragRef] = useDrag({
         type: 'item',
@@ -51,7 +54,7 @@ function BurgerItem({ing, index, moveIng}) {
 
     return (
         <div className={`${BurgerElem.elem}`} ref={ref}>
-                <DragIcon type="primary" />
+            <DragIcon type="primary" />
             <ConstructorElement
                 text={ing.name}
                 price={ing.price}
@@ -63,3 +66,9 @@ function BurgerItem({ing, index, moveIng}) {
 }
 
 export default BurgerItem
+
+BurgerItem.propTypes = {
+    ing: PropTypes.object.isRequired,
+    index: PropTypes.number.isRequired,
+    moveIng: PropTypes.func.isRequired,
+}

@@ -26,6 +26,7 @@ export const BurgerConstructor = () => {
     const [{isOver}, dropRef] = useDrop({
         accept: 'ingredient',
         drop(item) {
+            item.uuid = uuid4();
             if (item.type === 'bun') {
                 console.log(item);
                 dispatch({
@@ -36,7 +37,7 @@ export const BurgerConstructor = () => {
                 dispatch({
                     type: ADD_INGREDIENT,
                     data: item,
-                    key: uuid4(),
+                    key: item.uuid,
                 })
             }
         },
@@ -69,7 +70,9 @@ export const BurgerConstructor = () => {
     }, [ingredients, bun])
 
     const price = useMemo(() => {
-        return ingredients.length > 0 && bun.price * 2 + ingredients.reduce((acc, item) => acc + item.price, 0)
+        if (ingredients && bun) {
+            return ingredients.length > 0 && bun.price * 2 + ingredients.reduce((acc, item) => acc + item.price, 0)
+        }
     }, [ingredients, bun]);
 
 
@@ -88,7 +91,7 @@ export const BurgerConstructor = () => {
 
     const renderIngredients = (ing, index) => {
         return (
-            <BurgerItem ing={ing} index={index} key={ing.keyId} moveIng={moveIngredient}/>
+            <BurgerItem ing={ing} index={index} key={ing.uuid} moveIng={moveIngredient}/>
         )
     }
 

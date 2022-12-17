@@ -1,4 +1,4 @@
-import {CheckResponse, requestAddress} from "../../Сonstants/ForQueries";
+import {checkResponse, requestAddress} from "../../Сonstants/ForQueries";
 
 export const ADD_INGREDIENT = 'ADD_INGREDIENT';
 export const MOVE_INGREDIENT = 'MOVE_INGREDIENT';
@@ -26,7 +26,7 @@ export function getOrderNumber(orderArr) {
                 'Content-Type': 'application/json'
             }
         })
-            .then(CheckResponse)
+            .then(checkResponse)
             .then((res) => {
                 console.log(res);
                 return res

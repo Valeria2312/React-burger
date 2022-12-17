@@ -4,90 +4,75 @@ import {ProductElem} from "../ProductElem/ProductElem";
 import {useDispatch, useSelector} from "react-redux";
 import {getIngredients} from "../../services/actions/BurgerIngridients";
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
+import {useInView} from "react-intersection-observer";
 
 export const BurgerIngredients = () => {
     const {ingredients} = useSelector(store => store.BurgerIngredients);
-    const [chapter, setChapter] = React.useState('bun')
+    // const [chapter, setChapter] = React.useState('bun')
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getIngredients())
     }, [dispatch])
 
-    // Якори
-    const chapters = {
-        menu: useRef(null),
-        bun: useRef(null),
-        sauce: useRef(null),
-        main: useRef(null),
-    }
-
     const arrBun = useMemo(() => ingredients.filter(item => item.type === "bun"), [ingredients]);
     const arrSauce = useMemo(() => ingredients.filter(item => item.type === "sauce"), [ingredients]);
     const arrMain = useMemo(() => ingredients.filter(item => item.type === "main"), [ingredients]);
 
-    //обработка поведения скролла по табам
-    const handleScroll = () => {
-        const menuTop = chapters.menu.current.getBoundingClientRect().top;
-        //подсчет верхних границ разделов
-        const bunTop = Math.abs(chapters.bun.current.getBoundingClientRect().top - menuTop);
-        const sauceTop = Math.abs(chapters.sauce.current.getBoundingClientRect().top - menuTop);
-        const mainTop = Math.abs(chapters.main.current.getBoundingClientRect().top - menuTop);
-        // логика изменения chapter
-        if (bunTop < sauceTop) {
-            setChapter('Булки');
-        }
-        if (sauceTop < mainTop) {
-            setChapter('Соусы');
-        } else {
-            setChapter('Начинки');
-        }
-    }
-    //scroll
-    const onChapterClick = (type) => {
-        console.log(type);
-        console.log(chapters[type].current);
-        setChapter(type);
-        chapters[type].current.scrollIntoView({behavior: 'smooth'});
-    }
+    const firstTab = "Булки";
+    const secondTab = "Соусы";
+    const thirdTab = "Начинки";
+    const rootScroll = useRef();
+
+    const [ref, inView] = useInView({
+        root: rootScroll.current,
+        threshold: 0,
+    })
+    const [ref2, inView2] = useInView({
+        root: rootScroll.current,
+        rootMargin: "-100px",
+        threshold: 0,
+    })
+    const [ref3, inView3] = useInView({
+        root: rootScroll.current,
+        threshold: 0.9,
+    })
 
     return (
         <section className="BurgerIngredients">
             <p className={`${StyleIngredients.headerConstructor} mt-10 mb-5 text text_type_main-large`}>Соберите
                 бургер</p>
-            <div ref={chapters.menu} className={`${StyleIngredients.tabs}`}>
-                <Tab value="bun" active={chapter === 'bun'} onClick={onChapterClick}>
-                    Булки
-                </Tab>
-                <Tab value="sauce" active={chapter === 'sauce'} onClick={onChapterClick}>
-                    Соусы
-                </Tab>
-                <Tab value="main" active={chapter === 'main'} onClick={onChapterClick}>
-                    Начинки
-                </Tab>
+            <div className={`${StyleIngredients.tabs}`}>
+                <Tab value={firstTab} active={inView}>Булки</Tab>
+                <Tab value={secondTab} active={inView2}>Соусы</Tab>
+                <Tab value={thirdTab} active={inView3}>Начинки</Tab>
             </div>
-            <div onScroll={handleScroll} className={`${StyleIngredients.ingredients}`}>
-                <div ref={chapters.bun}
+            <div ref={rootScroll} className={`${StyleIngredients.ingredients}`}>
+
+                <div ref={ref}
                      className={`${StyleIngredients.categoriesName} text text_type_main-medium mt-10`}>Булки
                 </div>
+
                 <div className={`${StyleIngredients.categories} mt-6`}>
                     {arrBun.map((product) => (
                         <ProductElem key={product._id} product={product}/>
                     ))}
                 </div>
 
-                <div ref={chapters.sauce}
+                <div ref={ref2}
                      className={`${StyleIngredients.categoriesName} text text_type_main-medium mt-10`}>Соусы
                 </div>
+
                 <div className={`${StyleIngredients.categories} mt-6`}>
                     {arrSauce.map((product) => (
                         <ProductElem key={product._id} product={product}/>
                     ))}
                 </div>
 
-                <div ref={chapters.main}
+                <div ref={ref3}
                      className={`${StyleIngredients.categoriesName} text text_type_main-medium mt-10`}>Начинки
                 </div>
+
                 <div className={`${StyleIngredients.categories} mt-6`}>
                     {arrMain.map((product) => (
                         <ProductElem key={product._id} product={product}/>
@@ -97,7 +82,3 @@ export const BurgerIngredients = () => {
         </section>
     );
 }
-
-BurgerIngredients.propTypes = {
-    // ingredients: PropTypes.arrayOf(PropTypes.shape(typesDataProduct)).isRequired,
-};

@@ -1,5 +1,5 @@
 // import PropTypes from "prop-types";
-// import {CheckResponse, requestAddress} from "../Сonstants/ForQueries";
+// import {CheckResponse, requestAddress} from "../сonstants/ForQueries";
 //
 // export const createRequest = (orderArr) => {
 //     console.log(orderArr);

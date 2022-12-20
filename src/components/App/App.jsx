@@ -1,42 +1,21 @@
-import React, {useEffect, useState} from 'react';
-import './App.css'
-import { AppHeader } from "../AppHeader/AppHeader";
-import { BurgerConstructor } from "../BurgerConstructor/BurgerConstructor";
+import React from 'react';
+import StyleApp from './App.module.css'
+import {AppHeader} from "../AppHeader/AppHeader";
 import {BurgerIngredients} from "../BurgerIngredients/BurgerIngridients";
+import {BurgerConstructor} from "../BurgerConstructor/BurgerConstructor";
+import {DndProvider} from "react-dnd";
+import {HTML5Backend} from "react-dnd-html5-backend";
 
-
- export const App = () => {
-
-     const [state, setState] = useState({
-         error: false,
-         loading: false,
-         data: []
-     });
-
-     useEffect(() => {
-         const getData = () => {
-             setState({ ...state, error: false, loading: true });
-             fetch("https://norma.nomoreparties.space/api/ingredients")
-                 .then((res) => {return res.json();})
-                 .then((res) => {
-                     setState({ ...state, data: res.data, loading: false });
-                 })
-                 .catch((err) => {
-                     alert(err);
-                     setState({ ...state, error: true, loading: false });
-                 });
-         };
-
-         getData();
-     }, []);
-
-  return (
-    <div className="App">
-        <AppHeader />
-        <div className="mainConstructor">
-            <BurgerIngredients products={ state.data }/>
-            <BurgerConstructor ingredients={ state.data }/>
+export const App = () => {
+    return (
+        <div className={`${StyleApp.app}`}>
+            <AppHeader/>
+            <main className={`${StyleApp.mainConstructor}`}>
+                <DndProvider backend={HTML5Backend}>
+                    <BurgerIngredients/>
+                    <BurgerConstructor/>
+                </DndProvider>
+            </main>
         </div>
-    </div>
-  );
+    );
 }

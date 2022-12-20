@@ -7,37 +7,37 @@ import PropTypes from "prop-types";
 
 const modalRoot = document.getElementById("react-modals");
 
-export const Modal = ({ close, children }) => {
+export const Modal = ({close, children}) => {
 
     const closeModal = () => {
         close();
-        };
+    };
 
-        function closeByEsc(evt) {
-            if (evt.key === "Escape") {
-                closeModal();
-            }
+    function closeByEsc(evt) {
+        if (evt.key === "Escape") {
+            closeModal();
         }
+    }
 
-        useEffect(() => {
-            document.addEventListener("keydown", closeByEsc);
-            return () => {
-                document.removeEventListener("keydown", closeByEsc);
-            };
-        }, []);
+    useEffect(() => {
+        document.addEventListener("keydown", closeByEsc);
+        return () => {
+            document.removeEventListener("keydown", closeByEsc);
+        };
+    }, []);
 
-        return ReactDOM.createPortal(
-            <>
-                <div className={`${StyleModal.container}`}>
-                    <button className={`${StyleModal.btn}`} onClickCapture={closeModal}>
-                        <CloseIcon type="primary" />
-                    </button>
-                    {children}
-                </div>
-                <ModalOverlay close={closeModal} />
-            </>,
-            modalRoot
-        );
+    return ReactDOM.createPortal(
+        <>
+            <div className={`${StyleModal.container}`}>
+                <button className={`${StyleModal.btn}`} onClickCapture={closeModal}>
+                    <CloseIcon type="primary"/>
+                </button>
+                {children}
+            </div>
+            <ModalOverlay close={closeModal}/>
+        </>,
+        modalRoot
+    );
 }
 
 Modal.propTypes = {

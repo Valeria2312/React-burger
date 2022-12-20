@@ -1,4 +1,4 @@
-import {CheckResponse, requestAddress} from "../Сonstants/ForQueries";
+import {CheckResponse, requestAddress} from "../сonstants/ForQueries";
 import PropTypes from "prop-types";
 
 export const GetIngredients = (setIngredients, ingredients) => {

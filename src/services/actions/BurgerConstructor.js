@@ -1,4 +1,4 @@
-import {checkResponse, requestAddress} from "../../Сonstants/ForQueries";
+import {checkResponse, requestAddress} from "../../сonstants/ForQueries";
 
 export const ADD_INGREDIENT = 'ADD_INGREDIENT';
 export const MOVE_INGREDIENT = 'MOVE_INGREDIENT';

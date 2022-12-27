@@ -1,10 +1,12 @@
 import React from "react";
 import StyleProductDetails from "./IngredientDetails.module.css";
 import {useSelector} from "react-redux";
+import {useParams} from "react-router-dom";
 
 export const IngredientDetails = () => {
     const currentProduct = useSelector((store) => store.BurgerIngredients.currentProduct);
 
+    const { id } = useParams()
     return (
         <>
             <p className={`text text_type_main-large ml-10 mt-10`}>Детали ингридиента</p>

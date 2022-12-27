@@ -12,6 +12,7 @@ export const ProductElem = ({product}) => {
     const {currentProduct} = useSelector((store) => store.BurgerIngredients);
     const {bun, ingredients} = useSelector((store) => store.BurgerConstructor);
 
+
     const foundInBasket = [...ingredients, bun].filter((prod) => {
         if (prod && prod._id) {
             return product._id === prod._id;

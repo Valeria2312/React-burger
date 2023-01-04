@@ -41,14 +41,14 @@ export function forgotPasswordRequest(userEmail) {
     };
 }
 
-export function resetPasswordRequest(userEmail) {
+export function resetPasswordRequest(newPassword) {
     return function(dispatch) {
         dispatch({
             type: RESET_PASS_REQUEST
         });
         fetch(requestAddress + `/password-reset/reset`, {
             method: 'POST',
-            body: JSON.stringify(userEmail),
+            body: JSON.stringify(newPassword),
             headers: {
                 'Content-Type': 'application/json'
             }

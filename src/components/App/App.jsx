@@ -11,18 +11,18 @@ import {Main} from "../../pages/main/main";
 import {OrdersUser} from "../../pages/profile/orders/orders";
 import {getUser} from "../../services/actions/Registration";
 import {useDispatch, useSelector} from "react-redux";
-import {getCookie} from "../../utils/cookie";
 import {IngredientDetails} from "../IngredientDetails/IngredientDetails";
 import {Modal} from "../Modal/Modal";
 import {ProtectedRoute} from "../../pages/protected-route/protected-route";
+import {CLOSE_CURRENT_PRODUCT} from "../../services/actions/BurgerIngridients";
 
 export const App = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const location = useLocation();
-    const cookie = getCookie('token');
     const {user} = useSelector(store => store.RegisterUser);
     const background = location.state && location.state.background;
+    const {currentProduct} = useSelector((store) => store.BurgerIngredients);
 
     useEffect(() => {
         if (!user) {
@@ -31,43 +31,56 @@ export const App = () => {
     }, [dispatch, user])
 
     const handleOnClose = () => {
-        history.goBack()
+        dispatch({
+            type: CLOSE_CURRENT_PRODUCT,
+            currentProduct: false,
+        })
+        history.goBack();
     }
+
     return (
         <div className={`${StyleApp.app}`}>
-            <Router>
+            <Router location={background || location}>
                 <AppHeader/>
                 <main className={`${StyleApp.mainConstructor}`}>
                     <Route path="/" exact={true}>
                         <Main/>
                     </Route>
-                    <ProtectedRoute onlyAuth={false} path="/login" exact={true}>
+                    <ProtectedRoute path="/login" exact={true}>
                         <Login/>
                     </ProtectedRoute>
-                    <ProtectedRoute onlyAuth={false} path="/register" exact={true}>
+                    <ProtectedRoute path="/register" exact={true}>
                         <Registration/>
                     </ProtectedRoute>
-                    <ProtectedRoute onlyAuth={false} path="/forgot-password" exact={true}>
+                    <ProtectedRoute path="/forgot-password" exact={true}>
                         <ForgotPassword/>
                     </ProtectedRoute>
-                    <ProtectedRoute onlyAuth={false} path="/reset-password" exact={true}>
+                    <ProtectedRoute path="/reset-password" exact={true}>
                         <ResetPassword/>
                     </ProtectedRoute>
-                    <ProtectedRoute onlyAuth={false} path="/profile" exact={true}>
+                    <ProtectedRoute path="/profile" exact={true}>
                         <Profile/>
                     </ProtectedRoute>
-                    <ProtectedRoute onlyAuth={false} path={`/profile/orders`} exact={true}>
+                    <ProtectedRoute onlyAuth path={`/profile/orders`} exact={true}>
                         <OrdersUser/>
                     </ProtectedRoute>
+                    <Route path='/ingredients/:id' exact={true}>
+                            <IngredientDetails/>
+                    </Route>
                 </main>
             </Router>
             {background && (
-                <Route path='/ingredients/:id'>
-                    <Modal onClose={handleOnClose}>
-                        <IngredientDetails/>
-                    </Modal>
+                <Route path='/ingredients/:id' exact={ true }>
+                    { currentProduct && (
+                        <Modal close={handleOnClose}>
+                            <IngredientDetails />
+                        </Modal>
+                    )}
                 </Route>
             )}
         </div>
+
     );
 }
+
+//60d3b41abdacab0026a733c7

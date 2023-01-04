@@ -2,16 +2,15 @@ import React from "react";
 import PropTypes from "prop-types";
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import StyleIBurgerProducts from "./ProductElem.module.css"
-import {Modal} from "../Modal/Modal";
-import {IngredientDetails} from "../IngredientDetails/IngredientDetails";
 import {useDrag} from "react-dnd";
-import {CLOSE_CURRENT_PRODUCT, SHOW_CURRENT_PRODUCT} from "../../services/actions/BurgerIngridients";
+import {SHOW_CURRENT_PRODUCT} from "../../services/actions/BurgerIngridients";
 import {useDispatch, useSelector} from "react-redux";
+import {useHistory, useLocation} from "react-router-dom";
 
 export const ProductElem = ({product}) => {
-    const {currentProduct} = useSelector((store) => store.BurgerIngredients);
     const {bun, ingredients} = useSelector((store) => store.BurgerConstructor);
-
+    const history = useHistory();
+    const location = useLocation();
 
     const foundInBasket = [...ingredients, bun].filter((prod) => {
         if (prod && prod._id) {
@@ -27,19 +26,18 @@ export const ProductElem = ({product}) => {
         type: 'ingredient',
         item: product,
     });
+
     const openModal = () => {
         console.log(product);
         dispatch({
             type: SHOW_CURRENT_PRODUCT,
             currentProduct: product,
         })
-    };
-
-    const closeModal = () => {
-        dispatch({
-            type: CLOSE_CURRENT_PRODUCT,
-            currentProduct: false,
-        })
+        const _location = {
+            pathname: `/ingredients/${ product._id }`,
+            state: { background: location }
+        }
+        history.push(_location)
     };
 
     return (
@@ -53,11 +51,6 @@ export const ProductElem = ({product}) => {
                     <CurrencyIcon type="primary"/>
                 </div>
             </div>
-            {currentProduct && (
-                <Modal close={closeModal}>
-                    <IngredientDetails/>
-                </Modal>)
-            }
         </>
     );
 };

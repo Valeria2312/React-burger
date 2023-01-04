@@ -85,10 +85,13 @@ export function loginUser(login) {
         }).then(checkResponse)
             .then((res) => {
                 console.log(res)
+
                 const authToken = res.accessToken.split('Bearer ')[1]
                 const refreshToken = res.refreshToken
                 setCookie('token', authToken)
                 localStorage.setItem('refreshToken', refreshToken)
+                console.log(authToken)
+                console.log(refreshToken)
                 dispatch({
                     type: LOGIN_USER_SUCCESS,
                     user: res.user,
@@ -136,12 +139,12 @@ export function logoutUser() {
     }
 }
 //обновление токена
-export function updateToken() {
-    return function (dispatch) {
+export  function updateToken () {
+    return  async function (dispatch) {
         dispatch({
             type: TOKEN_USER_REQUEST
         });
-        fetch(requestAddress + `/auth/token`, {
+        await fetch(requestAddress + `/auth/token`, {
             method: 'POST',
             body: JSON.stringify({
                 token: localStorage.getItem('refreshToken')
@@ -161,6 +164,11 @@ export function updateToken() {
                 dispatch(getUser());
             })
             .catch(err => {
+                if (err.message === "jwt expired") {
+                    updateToken();
+                } else {
+                    return Promise.reject(err);
+                }
                 dispatch({
                     type: TOKEN_USER_FAILED,
                     err
@@ -178,10 +186,15 @@ export function getUser() {
         });
         fetch(requestAddress + `/auth/user`, {
             method: "GET",
+            mode: 'cors',
+            cache: 'no-cache',
+            credentials: 'same-origin',
             headers: {
                 "Content-Type": "application/json",
                 Authorization: 'Bearer ' + getCookie('token')
-            }
+            },
+            redirect: 'follow',
+            referrerPolicy: 'no-referrer'
         }).then(checkResponse)
             .then(res => {
                 if(res && res.success) {
@@ -232,3 +245,4 @@ export function updateUser(updateForm) {
             })
     };
 }
+

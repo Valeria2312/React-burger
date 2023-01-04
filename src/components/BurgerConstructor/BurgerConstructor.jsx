@@ -15,13 +15,15 @@ import {
 import {useDrop} from "react-dnd";
 import {v4 as uuid4} from 'uuid';
 import BurgerItem from "../BurgerItem/BurgerItem";
+import {useHistory} from "react-router-dom";
 
 export const BurgerConstructor = () => {
     const {showModal} = useSelector(store => store.OrderDetails);
     const {ingredients} = useSelector(store => store.BurgerConstructor);
     const {bun} = useSelector(store => store.BurgerConstructor);
-
+    const {user} = useSelector(store => store.RegisterUser);
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const [{isOver}, dropRef] = useDrop({
         accept: 'ingredient',
@@ -47,13 +49,18 @@ export const BurgerConstructor = () => {
     });
 
     const openModal = () => {
-        dispatch(getOrderNumber(orderArr));
-        dispatch({
-            type: GET_OPEN_MODAL,
-        });
-        dispatch({
-            type: DEL_INGREDIENTS,
-        })
+        if(!user) {
+            return (history.push({ pathname: "/login"}))
+        } else {
+            dispatch(getOrderNumber(orderArr));
+            dispatch({
+                type: GET_OPEN_MODAL,
+            });
+            dispatch({
+                type: DEL_INGREDIENTS,
+            })
+        }
+
     };
 
     const closeModal = () => {

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import StyleProfile from "./profile.module.css"
-import {NavLink} from "react-router-dom";
+import {NavLink, Redirect} from "react-router-dom";
 import {logoutUser, updateUser} from "../../services/actions/Registration";
 import {useDispatch, useSelector} from "react-redux";
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
@@ -13,6 +13,11 @@ export const Profile = () => {
         email: '',
         password: '',
     })
+    if (!user) {
+        return (
+            <Redirect to='/login' />
+        );
+    }
 
     const onLogOut = () => {
         dispatch(logoutUser())
@@ -33,6 +38,13 @@ export const Profile = () => {
             password: form.password,
         }
         dispatch(updateUser(updateForm))
+    }
+    const handleSubmitCancel = () => {
+        setForm ({
+            name: form.name,
+            email: form.email,
+            password: form.password,
+        })
     }
 
     return (
@@ -83,6 +95,7 @@ export const Profile = () => {
 
                 />
                 <Button htmlType="button" size="medium" onClick={() => handleSubmit()}>Сохранить</Button>
+                <Button htmlType="button" size="medium" onClick={() => handleSubmitCancel()}>Отменить</Button>
             </form>
         </div>
 

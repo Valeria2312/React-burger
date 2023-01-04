@@ -3,13 +3,13 @@ import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components"
 import StyleQueryPassword from './reset-password.module.css'
 import {useDispatch, useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
-// import {resetPasswordRequest} from "../../services/actions/ForgotPassword";
+import {resetPasswordRequest} from "../../services/actions/ForgotPassword";
 
 
 export const ResetPassword = () => {
     const [passwordValue, setPasswordValue] = React.useState('');
     const [codeValue, setCodeValue] = React.useState('');
-    const {forgotPasswordSuccess, resetPasswordRequest} = useSelector(store => store.ForgotPassword);
+    const {forgotPasswordSuccess} = useSelector(store => store.ForgotPassword);
     const dispatch = useDispatch();
     const history = useHistory();
 

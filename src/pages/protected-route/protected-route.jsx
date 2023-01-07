@@ -4,16 +4,16 @@ import { useLocation, Redirect, Route } from 'react-router-dom'
 import {getUser} from "../../services/actions/Registration";
 import PropTypes from "prop-types";
 
-export  const ProtectedRoute = (...props) => {
-    const user = useSelector((store) => store.RegisterUser)
-    const location = useLocation()
-    const dispatch = useDispatch()
+export  const ProtectedRoute = ({ onlyAuth = false, children, ...rest }) => {
+    const user = useSelector((store) => store.RegisterUser);
+    const location = useLocation();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getUser())
     }, [])
 
-    if (!user && props.onlyAuth) {
+    if (!user && !onlyAuth) {
         return (
             <Redirect
                 to={{
@@ -24,7 +24,7 @@ export  const ProtectedRoute = (...props) => {
         )
     }
 
-    return <Route exact={true}>{props.children}</Route>
+    return <Route {...rest}>{children}</Route>
 }
 
 ProtectedRoute.propTypes = {

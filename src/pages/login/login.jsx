@@ -35,7 +35,7 @@ export const Login = () => {
 
     if (user) {
         return (
-            <Redirect to='/'/>
+            <Redirect to='/profile'/>
         );
     }
 
@@ -79,7 +79,7 @@ export const Login = () => {
                 </div>
                 <div className={`${StyleLogin.recovery}`}>
                     <p>Забыли пароль?</p>
-                    <NavLink to={{ pathname: '/forgot-forgot-password' }}>Восстановить пароль</NavLink>
+                    <NavLink to={{ pathname: '/forgot-password' }}>Восстановить пароль</NavLink>
                 </div>
             </div>
         </div>

@@ -1,7 +1,7 @@
 import StyleForgotPassword from "./forgot-password.module.css"
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import React, {useEffect, useState} from "react";
-import {useHistory} from "react-router-dom";
+import {NavLink, useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {forgotPasswordRequest} from "../../services/actions/ForgotPassword";
 
@@ -49,7 +49,7 @@ export const ForgotPassword = () => {
             </form>
             <div className={`${StyleForgotPassword.entrance} mt-20`}>
                 <p>Вспимнили пароль?</p>
-                <a href="#">Войти</a>
+                <NavLink to={{ pathname: '/login' }}>Войти</NavLink>
             </div>
         </div>
     )

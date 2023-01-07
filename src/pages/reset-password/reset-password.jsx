@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import StyleQueryPassword from './reset-password.module.css'
 import {useDispatch, useSelector} from "react-redux";
-import {useHistory} from "react-router-dom";
+import {NavLink, useHistory} from "react-router-dom";
 import {resetPasswordRequest} from "../../services/actions/ForgotPassword";
 
 
@@ -68,7 +68,7 @@ export const ResetPassword = () => {
             </form>
             <div className={`${StyleQueryPassword.entrance} mt-20`}>
                 <p>Вспимнили пароль?</p>
-                <a href="#">Войти</a>
+                <NavLink to={{ pathname: '/login' }}>Войти</NavLink>
             </div>
         </div>
     )

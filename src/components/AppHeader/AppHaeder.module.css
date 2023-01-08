@@ -7,7 +7,7 @@
     display: flex;
 }
 
-.btn {
+.link {
     border: 1px dashed #4C4CFF;
     border-radius: 40px;
     background-color: transparent;
@@ -22,16 +22,25 @@
     justify-content: center;
     text-decoration: none;
 }
-.btnConstructor {
+.linkConstructor {
     width: 178px;
     height: 56px;
+    margin-right: 8px;
 }
-.btnOrder {
+.linkOrder {
     width: 197px;
     height: 56px;
+    margin-right: 120px;
 }
-.btnAccount {
+.linkAccount {
     width: 207px;
     height: 56px;
     margin-left: 200px;
+}
+.link:hover {
+    color: #F2F2F3;
+}
+
+.activeLink {
+    color: #F2F2F3;
 }

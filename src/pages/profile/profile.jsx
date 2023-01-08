@@ -1,28 +1,37 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import StyleProfile from "./profile.module.css"
-import {NavLink, Redirect} from "react-router-dom";
+import {NavLink, useHistory} from "react-router-dom";
 import {logoutUser, updateUser} from "../../services/actions/Registration";
 import {useDispatch, useSelector} from "react-redux";
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 
 export const Profile = () => {
     const dispatch = useDispatch();
+    const history = useHistory();
     const { user } = useSelector(store => store.RegisterUser);
+    console.log(user)
+    if (!user) {
+        history.replace({ pathname: '/login' });
+    }
     const [form, setForm] = useState({
         name: '',
         email: '',
         password: '',
     })
-    if (!user) {
-        return (
-            <Redirect to='/login' />
-        );
-    }
+
+    useEffect(() => {
+        if(user && user.name && user.email) {
+            setForm({
+                name: user.name,
+                email: user.email,
+                password: user.password ? user.password : '',
+            })
+        }
+    }, [user])
 
     const onLogOut = () => {
         dispatch(logoutUser())
     }
-
     const onChange = e => {
         setForm({
             ...form,
@@ -37,13 +46,16 @@ export const Profile = () => {
             email: form.email,
             password: form.password,
         }
+        console.log(updateForm);
         dispatch(updateUser(updateForm))
     }
+
+
     const handleSubmitCancel = () => {
         setForm ({
-            name: form.name,
-            email: form.email,
-            password: form.password,
+            name: user.name,
+            email: user.email,
+            password: user.password,
         })
     }
 
@@ -92,7 +104,6 @@ export const Profile = () => {
                     errorText={'Ошибка'}
                     size={'default'}
                     extraClass="mb-6"
-
                 />
                 <Button htmlType="button" size="medium" onClick={() => handleSubmit()}>Сохранить</Button>
                 <Button htmlType="button" size="medium" onClick={() => handleSubmitCancel()}>Отменить</Button>

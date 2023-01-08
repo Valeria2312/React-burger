@@ -1,23 +1,24 @@
 import React from "react";
 import {Logo, BurgerIcon, ListIcon, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import headerStyles from './AppHaeder.module.css';
-import {Link} from "react-router-dom";
+import {NavLink, useLocation} from "react-router-dom";
 
 export const AppHeader = () => {
+    const location = useLocation();
     return (
         <header className={`${headerStyles.header} mt-10 pt-4`}>
-            <div className={`${headerStyles.headerSection}`}>
-                <Link  to='/' className={`${headerStyles.btn} ${headerStyles.btnConstructor} mr-2`}>Конструктор
-                    <BurgerIcon type="secondary"/>
-                </Link>
-                <Link to='/profile/orders' className={`${headerStyles.btn} ${headerStyles.btnOrder} mr-30`}>Лента заказов
-                    <ListIcon type="secondary"/>
-                </Link>
-            </div>
-            <Logo/>
-            <Link to='/profile' className={`${headerStyles.btn} ${headerStyles.btnAccount} `}>Личный кабинет
-                <ProfileIcon type="secondary"/>
-            </Link>
+            <nav className={`${headerStyles.headerSection}`}>
+                <NavLink  to='/' exact={true} className={`${headerStyles.link} ${headerStyles.linkConstructor}`} activeClassName={headerStyles.activeLink}>Конструктор
+                    <BurgerIcon type={location.pathname === '/' ? 'primary' : 'secondary'}/>
+                </NavLink>
+                <NavLink to='/feed' className={`${headerStyles.link} ${headerStyles.linkOrder}`} activeClassName={headerStyles.activeLink}>Лента заказов
+                    <ListIcon type={location.pathname === '/feed' ? 'primary' : 'secondary'}/>
+                </NavLink>
+                <div><Logo/></div>
+                <NavLink to='/profile' className={`${headerStyles.link} ${headerStyles.linkAccount}`} activeClassName={headerStyles.activeLink}>Личный кабинет
+                    <ProfileIcon type={location.pathname === '/profile' ? 'primary' : 'secondary'}/>
+                </NavLink>
+            </nav>
         </header>
     )
 }

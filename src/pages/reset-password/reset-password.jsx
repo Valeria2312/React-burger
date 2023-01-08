@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import StyleQueryPassword from './reset-password.module.css'
 import {useDispatch, useSelector} from "react-redux";
@@ -9,30 +9,21 @@ import {resetPasswordRequest} from "../../services/actions/ForgotPassword";
 export const ResetPassword = () => {
     const [passwordValue, setPasswordValue] = React.useState('');
     const [codeValue, setCodeValue] = React.useState('');
-    const {forgotPasswordSuccess} = useSelector(store => store.ForgotPassword);
+    // const {forgotPasswordSuccess} = useSelector(store => store.ForgotPassword);
     const dispatch = useDispatch();
     const history = useHistory();
 
        const reset = e => {
             e.preventDefault();
-            console.log("Теперь придумай новый пароль")
             const newPassword = {
                 password: passwordValue,
                 token: codeValue
             }
             dispatch(resetPasswordRequest(newPassword));
+           history.replace({ pathname: '/login' });
            setPasswordValue('');
            setCodeValue('');
         };
-
-        useEffect (() => {
-            if (!forgotPasswordSuccess) {
-                history.replace({ pathname: '/' });
-            }
-            if (resetPasswordRequest) {
-                history.replace({ pathname: '/login' });
-            }
-        }, [forgotPasswordSuccess, history]);
 
     return (
         <div className={`${StyleQueryPassword.form}`}>
@@ -63,7 +54,7 @@ export const ResetPassword = () => {
                     size={'default'}
                     extraClass="mb-6"
                 />
-                <Button htmlType="button" type="primary" size="medium">Восстановить
+                <Button htmlType="submit" type="primary" size="medium">Восстановить
                 </Button>
             </form>
             <div className={`${StyleQueryPassword.entrance} mt-20`}>

@@ -1,4 +1,4 @@
-import {checkResponse, requestAddress} from "../../сonstants/ForQueries";
+import fetchWithRefresh, {checkResponse, requestAddress} from "../../сonstants/ForQueries";
 import {deleteCookie, getCookie, setCookie} from "../../utils/cookie";
 
 
@@ -164,11 +164,6 @@ export  function updateToken () {
                 dispatch(getUser());
             })
             .catch(err => {
-                if (err.message === "jwt expired") {
-                    updateToken();
-                } else {
-                    return Promise.reject(err);
-                }
                 dispatch({
                     type: TOKEN_USER_FAILED,
                     err
@@ -184,7 +179,7 @@ export function getUser() {
             type: AUTH_USER_REQUEST,
             authChecked: false,
         });
-        fetch(requestAddress + `/auth/user`, {
+        fetchWithRefresh(requestAddress + `/auth/user`, {
             method: "GET",
             mode: 'cors',
             cache: 'no-cache',
@@ -195,8 +190,7 @@ export function getUser() {
             },
             redirect: 'follow',
             referrerPolicy: 'no-referrer'
-        }).then(checkResponse)
-            .then(res => {
+        }).then(res => {
                 if(res && res.success) {
                     dispatch({
                         type: AUTH_USER_SUCCESS,
@@ -222,7 +216,7 @@ export function updateUser(updateForm) {
         dispatch({
             type: UPDATE_USER_REQUEST
         });
-        fetch(requestAddress + `/auth/user`, {
+        fetchWithRefresh(requestAddress + `/auth/user`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -230,8 +224,7 @@ export function updateUser(updateForm) {
             },
             body: JSON.stringify(
                 updateForm)
-        }).then(checkResponse)
-            .then(res => {
+        }).then(res => {
                 dispatch({
                     type: UPDATE_USER_SUCCESS,
                     user: res.user,

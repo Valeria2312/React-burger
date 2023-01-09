@@ -85,13 +85,10 @@ export function loginUser(login) {
         }).then(checkResponse)
             .then((res) => {
                 console.log(res)
-
                 const authToken = res.accessToken.split('Bearer ')[1]
                 const refreshToken = res.refreshToken
                 setCookie('token', authToken)
                 localStorage.setItem('refreshToken', refreshToken)
-                console.log(authToken)
-                console.log(refreshToken)
                 dispatch({
                     type: LOGIN_USER_SUCCESS,
                     user: res.user,
@@ -139,38 +136,53 @@ export function logoutUser() {
     }
 }
 //обновление токена
-export  function updateToken () {
-    return  async function (dispatch) {
-        dispatch({
-            type: TOKEN_USER_REQUEST
-        });
-        await fetch(requestAddress + `/auth/token`, {
-            method: 'POST',
-            body: JSON.stringify({
-                token: localStorage.getItem('refreshToken')
-            }),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(checkResponse)
-            .then(res => {
-                const authToken = res.accessToken.split('Bearer ')[1]
-                const refreshToken = res.refreshToken
-                setCookie('token', authToken)
-                localStorage.setItem('refreshToken', refreshToken)
-                dispatch({
-                    type: TOKEN_USER_SUCCESS
-                });
-                dispatch(getUser());
-            })
-            .catch(err => {
-                dispatch({
-                    type: TOKEN_USER_FAILED,
-                    err
-                });
-            })
-    };
+
+export async function updateToken () {
+    console.log('обновление токена в экшене')
+    console.log("выполняется диспатч")
+    // dispatch({
+    //     type: TOKEN_USER_REQUEST
+    // });
+    // const authUrl = requestAddress + `/auth/token`;
+    const authUrl = "https://norma.nomoreparties.space/api/auth/token"
+    const authBody = {
+        method: 'POST',
+        body: JSON.stringify({
+            token: localStorage.getItem('refreshToken')
+        }),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    console.log( "адрес" + authUrl)
+    console.log("тело" +authBody)
+
+    fetch(authUrl, authBody)
+        .then(res => {
+            console.log(res);
+            const authToken = res.accessToken.split('Bearer ')[1]
+            const refreshToken = res.refreshToken
+            setCookie('token', authToken)
+            localStorage.setItem('refreshToken', refreshToken)
+            console.log("здесь куки аксес токен" + getCookie('token'))
+            console.log("Здесь рефреш токен" + localStorage.getItem('refreshToken'))
+            return authToken
+            //
+            // dispatch({
+            //     type: TOKEN_USER_SUCCESS
+            // });
+            // dispatch(getUser());
+            // getUser()
+        })
+        .catch(err => {
+            console.log(err);
+            // dispatch({
+            //     type: TOKEN_USER_FAILED,
+            //     err
+            // });
+        })
 }
+
 //получения данных о пользователе
 export function getUser() {
     return function (dispatch) {
@@ -199,9 +211,6 @@ export function getUser() {
                 }
             })
             .catch(err => {
-                if (err.message === 'jwt expired') {
-                    dispatch(updateToken());
-                }
                 dispatch({
                     type: AUTH_USER_FAILED,
                     err
@@ -209,9 +218,11 @@ export function getUser() {
             })
     };
 }
+
 //обновление данных о пользователе
 export function updateUser(updateForm) {
     console.log("Обновил данные о пользователе")
+    console.log("здесь куки аксес токен" + getCookie('token'))
     return function (dispatch) {
         dispatch({
             type: UPDATE_USER_REQUEST

@@ -158,6 +158,7 @@ export async function updateToken () {
     console.log("тело" +authBody)
 
     fetch(authUrl, authBody)
+        .then(checkResponse)
         .then(res => {
             console.log(res);
             const authToken = res.accessToken.split('Bearer ')[1]

@@ -82,5 +82,3 @@ export const App = () => {
 
     );
 }
-
-//60d3b41abdacab0026a733c7

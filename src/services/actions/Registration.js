@@ -79,11 +79,6 @@ export function loginUser(login) {
             }
         }).then(checkResponse)
             .then((res) => {
-                console.log(res)
-                // const authToken = res.accessToken.split('Bearer ')[1]
-                // const refreshToken = res.refreshToken
-                // setCookie('token', authToken)
-                // localStorage.setItem('refreshToken', refreshToken)
                 localStorage.setItem("refreshToken", res.refreshToken);
                 setCookie('token', res.accessToken);
                 dispatch({
@@ -145,7 +140,7 @@ export async function updateToken() {
     })
         .then(checkResponse)
         .then((res) => {
-            return res; // благодаря этому return в refreshData будет не undefined
+            return res;
         });
 }
 
@@ -163,7 +158,7 @@ export function getUser() {
             credentials: 'same-origin',
             headers: {
                 "Content-Type": "application/json",
-                Authorization: 'Bearer ' + getCookie('token')
+                Authorization: getCookie('token')
             },
             redirect: 'follow',
             referrerPolicy: 'no-referrer'

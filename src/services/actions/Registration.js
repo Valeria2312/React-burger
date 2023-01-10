@@ -29,9 +29,7 @@ export const UPDATE_USER_FAILED = 'UPDATE_USER_FAILED'
 
 //регистрация пользовалеля
 export function registerUserRequest(userData) {
-    console.log(userData)
     return function (dispatch) {
-        console.log("Я зарегистировался");
         dispatch({
             type: REGISTER_USER_REQUEST
         });
@@ -44,12 +42,9 @@ export function registerUserRequest(userData) {
         })
             .then(checkResponse)
             .then((res) => {
-                console.log(res)
                 if (res && res.success) {
-                    const authToken = res.accessToken.split('Bearer')[1];
-                    const refreshToken = res.refreshToken;
-                    setCookie('token', authToken)
-                    localStorage.setItem('refreshToken', refreshToken)
+                    localStorage.setItem("refreshToken", res.refreshToken);
+                    setCookie('token', res.accessToken);
                     dispatch({
                         type: REGISTER_USER_SUCCESS,
                         user: res.user,
@@ -69,10 +64,10 @@ export function registerUserRequest(userData) {
             })
     }
 }
+
 //авторизация
 export function loginUser(login) {
     return function (dispatch) {
-        console.log("Я вхожу")
         dispatch({
             type: LOGIN_USER_REQUEST,
         })
@@ -85,27 +80,28 @@ export function loginUser(login) {
         }).then(checkResponse)
             .then((res) => {
                 console.log(res)
-                const authToken = res.accessToken.split('Bearer ')[1]
-                const refreshToken = res.refreshToken
-                setCookie('token', authToken)
-                localStorage.setItem('refreshToken', refreshToken)
+                // const authToken = res.accessToken.split('Bearer ')[1]
+                // const refreshToken = res.refreshToken
+                // setCookie('token', authToken)
+                // localStorage.setItem('refreshToken', refreshToken)
+                localStorage.setItem("refreshToken", res.refreshToken);
+                setCookie('token', res.accessToken);
                 dispatch({
                     type: LOGIN_USER_SUCCESS,
                     user: res.user,
                 })
             })
             .catch((error) => {
-                console.log("что то пошло не так")
                 dispatch({
                     type: LOGIN_USER_FAILED,
                 })
             })
     }
 }
+
 //выход
 export function logoutUser() {
     return function (dispatch) {
-        console.log("Я выхожу")
         dispatch({
             type: LOGOUT_USER_REQUEST
         });
@@ -135,59 +131,27 @@ export function logoutUser() {
             })
     }
 }
-//обновление токена
 
-export async function updateToken () {
-    console.log('обновление токена в экшене')
-    console.log("выполняется диспатч")
-    // dispatch({
-    //     type: TOKEN_USER_REQUEST
-    // });
-    // const authUrl = requestAddress + `/auth/token`;
-    const authUrl = "https://norma.nomoreparties.space/api/auth/token"
-    const authBody = {
-        method: 'POST',
+//обновление токена
+export async function updateToken() {
+    return await fetch(requestAddress + `/auth/token`, {
+        method: "POST",
         body: JSON.stringify({
-            token: localStorage.getItem('refreshToken')
+            token: localStorage.getItem("refreshToken"),
         }),
         headers: {
-            'Content-Type': 'application/json'
-        }
-    }
-    console.log( "адрес" + authUrl)
-    console.log("тело" +authBody)
-
-    fetch(authUrl, authBody)
+            "Content-Type": "application/json",
+        },
+    })
         .then(checkResponse)
-        .then(res => {
-            console.log(res);
-            const authToken = res.accessToken.split('Bearer ')[1]
-            const refreshToken = res.refreshToken
-            setCookie('token', authToken)
-            localStorage.setItem('refreshToken', refreshToken)
-            console.log("здесь куки аксес токен" + getCookie('token'))
-            console.log("Здесь рефреш токен" + localStorage.getItem('refreshToken'))
-            return authToken
-            //
-            // dispatch({
-            //     type: TOKEN_USER_SUCCESS
-            // });
-            // dispatch(getUser());
-            // getUser()
-        })
-        .catch(err => {
-            console.log(err);
-            // dispatch({
-            //     type: TOKEN_USER_FAILED,
-            //     err
-            // });
-        })
+        .then((res) => {
+            return res; // благодаря этому return в refreshData будет не undefined
+        });
 }
 
 //получения данных о пользователе
 export function getUser() {
     return function (dispatch) {
-        console.log("получил данные о пользователе")
         dispatch({
             type: AUTH_USER_REQUEST,
             authChecked: false,
@@ -222,8 +186,6 @@ export function getUser() {
 
 //обновление данных о пользователе
 export function updateUser(updateForm) {
-    console.log("Обновил данные о пользователе")
-    console.log("здесь куки аксес токен" + getCookie('token'))
     return function (dispatch) {
         dispatch({
             type: UPDATE_USER_REQUEST
@@ -232,7 +194,7 @@ export function updateUser(updateForm) {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: 'Bearer ' + getCookie('token')
+                Authorization: getCookie('token')
             },
             body: JSON.stringify(
                 updateForm)

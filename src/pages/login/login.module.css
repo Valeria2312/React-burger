@@ -1,0 +1,9 @@
+.entrance {
+    margin-top: 180px;
+}
+.registration, .recovery {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}

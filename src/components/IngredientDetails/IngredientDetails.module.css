@@ -1,8 +1,11 @@
+.container {
+    flex-direction: column;
+}
 .description{
     display: flex;
     flex-direction: column;
     align-items: center;
-    /*pointer-events: none;*/
+    pointer-events: none;
 }
 .energyValue {
     border-spacing: 20px;

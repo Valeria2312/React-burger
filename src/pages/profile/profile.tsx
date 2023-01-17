@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {SyntheticEvent, useEffect, useState} from 'react';
 import StyleProfile from "./profile.module.css"
 import {NavLink, useHistory} from "react-router-dom";
 import {logoutUser, updateUser} from "../../services/actions/Registration";
@@ -8,6 +8,7 @@ import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components"
 export const Profile = () => {
     const dispatch = useDispatch();
     const history = useHistory();
+    // @ts-ignore
     const { user } = useSelector(store => store.RegisterUser);
     console.log(user)
     if (!user) {
@@ -30,12 +31,13 @@ export const Profile = () => {
     }, [user])
 
     const onLogOut = () => {
+        // @ts-ignore
         dispatch(logoutUser())
     }
-    const onChange = e => {
+    const onChange = (e: SyntheticEvent) => {
         setForm({
             ...form,
-            [e.target.name]: e.target.value
+            [(e.target as HTMLInputElement).name]: (e.target as HTMLInputElement).value
         });
         console.log(form);
     };
@@ -47,6 +49,7 @@ export const Profile = () => {
             password: form.password,
         }
         console.log(updateForm);
+        // @ts-ignore
         dispatch(updateUser(updateForm))
     }
 

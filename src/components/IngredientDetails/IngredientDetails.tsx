@@ -2,11 +2,14 @@ import React from "react";
 import StyleProductDetails from "./IngredientDetails.module.css";
 import {useSelector} from "react-redux";
 import {useParams} from "react-router-dom";
+import {IIngredient} from "../../types/typesDataProduct";
 
 export const IngredientDetails = () => {
-    let { id } = useParams();
+    let { id }: any = useParams();
+    // @ts-ignore
     const {ingredients} = useSelector(store => store.BurgerIngredients);
-    const data = ingredients.length && ingredients.find((item) => item._id === id);
+
+    const data = ingredients.length && ingredients.find((item: IIngredient) => item._id === id);
     return (
         <div className={`${StyleProductDetails.container}`}>
             <p className={`text text_type_main-large ml-10 mt-10`}>Детали ингридиента</p>

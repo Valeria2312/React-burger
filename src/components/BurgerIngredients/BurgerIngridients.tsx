@@ -5,24 +5,27 @@ import {useDispatch, useSelector} from "react-redux";
 import {getIngredients} from "../../services/actions/BurgerIngridients";
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useInView} from "react-intersection-observer";
+import {IIngredient} from "../../types/typesDataProduct";
 
 export const BurgerIngredients = () => {
+    // @ts-ignore
     const {ingredients} = useSelector(store => store.BurgerIngredients);
     const [chapter, setChapter] = React.useState('bun')
     const dispatch = useDispatch();
 
     useEffect(() => {
+        // @ts-ignore
         dispatch(getIngredients())
     }, [dispatch])
 
     const firstTab = "Булки";
     const secondTab = "Соусы";
     const thirdTab = "Начинки";
-    const rootScroll = useRef();
+    const rootScroll = useRef<HTMLDivElement>(null);
 
-    const arrBun = useMemo(() => ingredients.filter(item => item.type === "bun"), [ingredients]);
-    const arrSauce = useMemo(() => ingredients.filter(item => item.type === "sauce"), [ingredients]);
-    const arrMain = useMemo(() => ingredients.filter(item => item.type === "main"), [ingredients]);
+    const arrBun = useMemo(() => ingredients.filter((item: IIngredient) => item.type === "bun"), [ingredients]);
+    const arrSauce = useMemo(() => ingredients.filter((item: IIngredient) => item.type === "sauce"), [ingredients]);
+    const arrMain = useMemo(() => ingredients.filter((item: IIngredient) => item.type === "main"), [ingredients]);
 
     const [ref, inView] = useInView({
         root: rootScroll.current,
@@ -70,7 +73,7 @@ export const BurgerIngredients = () => {
                 </div>
 
                 <div className={`${StyleIngredients.categories} mt-6`}>
-                    {arrBun.map((product) => (
+                    {arrBun.map((product: IIngredient) => (
                         <ProductElem key={product._id} product={product}/>
                     ))}
                 </div>
@@ -80,7 +83,7 @@ export const BurgerIngredients = () => {
                 </div>
 
                 <div className={`${StyleIngredients.categories} mt-6`}>
-                    {arrSauce.map((product) => (
+                    {arrSauce.map((product: IIngredient) => (
                         <ProductElem key={product._id} product={product}/>
                     ))}
                 </div>
@@ -90,7 +93,7 @@ export const BurgerIngredients = () => {
                 </div>
 
                 <div className={`${StyleIngredients.categories} mt-6`}>
-                    {arrMain.map((product) => (
+                    {arrMain.map((product: IIngredient) => (
                         <ProductElem key={product._id} product={product}/>
                     ))}
                 </div>

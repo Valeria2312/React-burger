@@ -1,19 +1,24 @@
-import React, {useEffect} from "react";
+import React, {useEffect, ReactNode} from "react";
 import ReactDOM from "react-dom";
 import StyleModal from "./Modal.module.css"
 import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {ModalOverlay} from "../ModalOverlay/ModalOverlay";
 import PropTypes from "prop-types";
 
-const modalRoot = document.getElementById("react-modals");
+const modalRoot = document.getElementById("react-modals")as HTMLElement;
 
-export const Modal = ({close, children}) => {
+type TElementProps = {
+    close: () => void;
+    children: ReactNode;
+};
+
+export const Modal = ({close, children}: TElementProps) => {
 
     const closeModal = () => {
         close();
     };
 
-    function closeByEsc(evt) {
+    function closeByEsc(evt: KeyboardEvent) {
         if (evt.key === "Escape") {
             closeModal();
         }

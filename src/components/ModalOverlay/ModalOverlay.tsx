@@ -1,11 +1,15 @@
-import React from "react";
+import React, {SyntheticEvent} from "react";
 import StyleModalOverlay from "./ModalOverlay.module.css";
 import PropTypes from "prop-types";
 
-export const ModalOverlay = (props) => {
+type TElementProps = {
+    close: () => void;
+};
 
-    const closeModal = (e) => {
-        if (e.target.id === "overlay") {
+export const ModalOverlay = (props: TElementProps) => {
+
+    const closeModal = (e: SyntheticEvent) => {
+        if ((e.target as HTMLDivElement).id === "overlay") {
             props.close();
         }
     };

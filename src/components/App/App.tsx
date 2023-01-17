@@ -1,7 +1,8 @@
 import React, {useEffect} from 'react';
 import StyleApp from './App.module.css'
 import {AppHeader} from "../AppHeader/AppHeader";
-import {BrowserRouter as Router, Route, useHistory, useLocation} from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route, useHistory, useLocation} from 'react-router-dom';
+import { Location } from "history"
 import {Login} from "../../pages/login/login";
 import {Profile} from "../../pages/profile/profile";
 import {Registration} from "../../pages/registration/registration";
@@ -19,13 +20,16 @@ import {CLOSE_CURRENT_PRODUCT} from "../../services/actions/BurgerIngridients";
 export const App = () => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const location = useLocation();
+    const location = useLocation<{background: Location }>();
+    // @ts-ignore
     const {user} = useSelector(store => store.RegisterUser);
     const background = location.state && location.state.background;
+    // @ts-ignore
     const {currentProduct} = useSelector((store) => store.BurgerIngredients);
 
     useEffect(() => {
         if (!user) {
+            // @ts-ignore
             dispatch(getUser())
         }
     }, [dispatch, user])
@@ -40,8 +44,9 @@ export const App = () => {
 
     return (
         <div className={`${StyleApp.app}`}>
-            <Router location={background || location}>
-                <AppHeader/>
+            <AppHeader/>
+            <Switch location={background || location}>
+
                 <main className={`${StyleApp.mainConstructor}`}>
                     <Route path="/" exact={true}>
                         <Main/>
@@ -68,7 +73,7 @@ export const App = () => {
                             <IngredientDetails/>
                     </Route>
                 </main>
-            </Router>
+            </Switch>
             {background && (
                 <Route path='/ingredients/:id' exact={ true }>
                     { currentProduct && (

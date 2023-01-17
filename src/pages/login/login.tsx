@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {SyntheticEvent, useState} from "react";
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {NavLink, Redirect} from 'react-router-dom';
 import StyleLogin from "./login.module.css"
@@ -7,6 +7,7 @@ import {loginUser} from "../../services/actions/Registration";
 
 export const Login = () => {
 
+    // @ts-ignore
     const { user } = useSelector(store => store.RegisterUser);
     const [form, setForm] = useState({
         email: '',
@@ -14,15 +15,15 @@ export const Login = () => {
     });
     const dispatch = useDispatch();
 
-    const onChange = e => {
+    const onChange = (e: SyntheticEvent) => {
         setForm({
             ...form,
-            [e.target.name]: e.target.value
+            [(e.target as HTMLInputElement).name]: (e.target as HTMLInputElement).value
         });
         console.log(form);
     };
 
-    const onSubmit = (e) => {
+    const onSubmit = (e: SyntheticEvent) => {
         e.preventDefault();
         const login = {
             email: form.email,
@@ -30,6 +31,7 @@ export const Login = () => {
         }
         console.log(login)
         console.log("отправил запрос")
+        // @ts-ignore
         dispatch(loginUser(login));
     };
 

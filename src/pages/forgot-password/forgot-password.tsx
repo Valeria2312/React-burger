@@ -1,22 +1,24 @@
 import StyleForgotPassword from "./forgot-password.module.css"
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, SyntheticEvent} from "react";
 import {NavLink, useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {forgotPasswordRequest} from "../../services/actions/ForgotPassword";
 
 export const ForgotPassword = () => {
     const [emailValue, setEmailValue] = React.useState('');
+    // @ts-ignore
     const {forgotPasswordSuccess} = useSelector(store => store.ForgotPassword);
     const history = useHistory();
     const dispatch = useDispatch();
 
-    const forgot = e => {
+    const forgot = (e: SyntheticEvent) => {
         e.preventDefault();
         console.log("Давай напишем почту")
         const userEmail = {
             email: emailValue
         }
+        // @ts-ignore
         dispatch(forgotPasswordRequest(userEmail));
         setEmailValue('');
     };

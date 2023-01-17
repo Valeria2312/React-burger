@@ -3,8 +3,16 @@ import PropTypes from "prop-types";
 import React from "react";
 import StyleElement from "./ElementConstructor.module.css"
 
+type TElement = {
+    isLocked: boolean | undefined
+    type: "top" | "bottom" | undefined
+    price: number
+    name: string
+    thumbnail: string
+}
 
-export const ElementConstructor = ({ isLocked, type, price, name, thumbnail}) => {
+export const ElementConstructor = ({ isLocked, type, price, name, thumbnail}: TElement) => {
+    console.log("я используюсь ??")
     return (
         <div className={`${StyleElement.element}}`}>
             <ConstructorElement
@@ -16,12 +24,4 @@ export const ElementConstructor = ({ isLocked, type, price, name, thumbnail}) =>
             />
         </div>
     )
-}
-
-ElementConstructor.propTypes = {
-    name: PropTypes.string.isRequired,
-    thumbnail: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    type: PropTypes.oneOf(["top" | "bottom" | undefined]),
-    isLocked: PropTypes.oneOf([PropTypes.bool | undefined]),
 }

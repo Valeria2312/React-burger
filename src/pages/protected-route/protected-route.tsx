@@ -4,12 +4,21 @@ import { useLocation, Redirect, Route } from 'react-router-dom'
 import {getUser} from "../../services/actions/Registration";
 import PropTypes from "prop-types";
 
-export  const ProtectedRoute = ({ onlyAuth = false, children, ...rest }) => {
+type TProtectedRoute = {
+    children: React.ReactNode,
+    onlyAuth?: boolean,
+    path?: string,
+    exact?: boolean
+}
+
+export  const ProtectedRoute = ({ onlyAuth = false, children, ...rest }: TProtectedRoute) => {
+    // @ts-ignore
     const user = useSelector((store) => store.RegisterUser);
     const location = useLocation();
     const dispatch = useDispatch();
 
     useEffect(() => {
+        // @ts-ignore
         dispatch(getUser())
     }, [])
 

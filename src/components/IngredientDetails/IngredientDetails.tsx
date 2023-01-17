@@ -5,7 +5,7 @@ import {useParams} from "react-router-dom";
 import {IIngredient} from "../../types/typesDataProduct";
 
 export const IngredientDetails = () => {
-    let { id }: any = useParams();
+    const { id } = useParams<{ id?: string }>();
     // @ts-ignore
     const {ingredients} = useSelector(store => store.BurgerIngredients);
 

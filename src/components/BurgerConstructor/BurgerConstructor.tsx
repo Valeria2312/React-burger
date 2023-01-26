@@ -16,18 +16,28 @@ import {useDrop} from "react-dnd";
 import {v4 as uuid4} from 'uuid';
 import BurgerItem from "../BurgerItem/BurgerItem";
 import {useHistory} from "react-router-dom";
+import {IIngredient} from "../../types/typesDataProduct";
 
 export const BurgerConstructor = () => {
+    // @ts-ignore
     const {showModal} = useSelector(store => store.OrderDetails);
+    // @ts-ignore
     const {ingredients} = useSelector(store => store.BurgerConstructor);
+    // @ts-ignore
     const {bun} = useSelector(store => store.BurgerConstructor);
+    // @ts-ignore
     const {user} = useSelector(store => store.RegisterUser);
     const dispatch = useDispatch();
     const history = useHistory();
 
-    const [{isOver}, dropRef] = useDrop({
+    type TCallback = (
+        dragIndex: number,
+        hoverIndex: number
+    ) => any
+
+    const [, dropRef] = useDrop({
         accept: 'ingredient',
-        drop(item) {
+        drop(item: IIngredient) {
             item.uuid = uuid4();
             if (item.type === 'bun') {
                 console.log(item);
@@ -52,6 +62,7 @@ export const BurgerConstructor = () => {
         if(!user) {
             return (history.push({ pathname: "/login"}))
         } else {
+            // @ts-ignore
             dispatch(getOrderNumber(orderArr));
             dispatch({
                 type: GET_OPEN_MODAL,
@@ -76,14 +87,15 @@ export const BurgerConstructor = () => {
         }
     }, [ingredients, bun])
 
-    const price = useMemo(() => {
+    //подстчет цены
+    const price: number = useMemo(() => {
         if (ingredients && bun) {
-            return ingredients.length > 0 && bun.price * 2 + ingredients.reduce((acc, item) => acc + item.price, 0)
+            return ingredients.length > 0 && bun.price * 2 + ingredients.reduce((acc:number, item: IIngredient) => acc + item.price, 0)
         }
     }, [ingredients, bun]);
 
 
-    const moveIngredient = useCallback(
+    const moveIngredient = useCallback<TCallback>(
         (dragIndex, hoverIndex) => {
           const dragItem = ingredients[dragIndex];
           const hoverItem = ingredients[hoverIndex];
@@ -96,7 +108,7 @@ export const BurgerConstructor = () => {
         [dispatch, ingredients]
       );
 
-    const renderIngredients = (ing, index) => {
+    const renderIngredients = (ing: IIngredient, index: number) => {
         return (
             <BurgerItem ing={ing} index={index} key={ing.uuid} moveIng={moveIngredient}/>
         )
@@ -121,7 +133,7 @@ export const BurgerConstructor = () => {
                     </div>
                 }
                 {ingredients.length >= 1 ?
-                    ingredients.map((ingredient, index) => (renderIngredients(ingredient, index)))
+                    ingredients.map((ingredient: IIngredient, index: number) => (renderIngredients(ingredient, index)))
                     :
                     <div>
                         <h2>Добавьте начинку</h2>

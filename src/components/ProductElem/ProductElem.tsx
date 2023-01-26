@@ -6,8 +6,14 @@ import {useDrag} from "react-dnd";
 import {SHOW_CURRENT_PRODUCT} from "../../services/actions/BurgerIngridients";
 import {useDispatch, useSelector} from "react-redux";
 import {useHistory, useLocation} from "react-router-dom";
+import {IIngredient} from "../../types/typesDataProduct";
 
-export const ProductElem = ({product}) => {
+type TElementProps = {
+    product: IIngredient;
+};
+
+export const ProductElem = ({product}: TElementProps) => {
+    // @ts-ignore
     const {bun, ingredients} = useSelector((store) => store.BurgerConstructor);
     const history = useHistory();
     const location = useLocation();

@@ -1,7 +1,7 @@
-import React, {useCallback} from 'react';
+import React, {SyntheticEvent} from 'react';
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import StyleRegistration from './registration.module.css'
-import {Link, Redirect, useHistory} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import {registerUserRequest} from "../../services/actions/Registration";
 import {useDispatch, useSelector} from "react-redux";
 
@@ -11,15 +11,17 @@ export const Registration = () => {
     const [passValue, setPassValue] = React.useState('');
     // const history = useHistory();
     const dispatch = useDispatch();
+    // @ts-ignore
     const {user} = useSelector(store => store.RegisterUser);
 
-    const registration = e => {
+    const registration = (e: SyntheticEvent) => {
         e.preventDefault();
         const userData = {
             email: emailValue,
             password: passValue,
             name: nameValue,
         }
+        // @ts-ignore
         dispatch(registerUserRequest(userData));
         setEmailValue('');
         setPassValue('');

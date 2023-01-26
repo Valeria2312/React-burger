@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {SyntheticEvent} from 'react';
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import StyleQueryPassword from './reset-password.module.css'
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {NavLink, useHistory} from "react-router-dom";
 import {resetPasswordRequest} from "../../services/actions/ForgotPassword";
 
@@ -9,17 +9,17 @@ import {resetPasswordRequest} from "../../services/actions/ForgotPassword";
 export const ResetPassword = () => {
     const [passwordValue, setPasswordValue] = React.useState('');
     const [codeValue, setCodeValue] = React.useState('');
-    // const {forgotPasswordSuccess} = useSelector(store => store.ForgotPassword);
     const dispatch = useDispatch();
     const history = useHistory();
 
-       const reset = e => {
+       const reset = (e: SyntheticEvent) => {
             e.preventDefault();
             const newPassword = {
                 password: passwordValue,
                 token: codeValue
             }
-            dispatch(resetPasswordRequest(newPassword));
+            // @ts-ignore
+           dispatch(resetPasswordRequest(newPassword));
            history.replace({ pathname: '/login' });
            setPasswordValue('');
            setCodeValue('');

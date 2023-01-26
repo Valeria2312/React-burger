@@ -7,6 +7,7 @@ import {useHistory} from "react-router-dom";
 
 export const Main = () => {
     const history = useHistory();
+    // @ts-ignore
     const { user } = useSelector(store => store.RegisterUser);
     if (!user) {
         history.replace({ pathname: '/login' });

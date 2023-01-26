@@ -2,16 +2,23 @@
 import {updateToken} from "../services/actions/Registration";
 import {setCookie} from "../utils/cookie";
 
-export const checkResponse = (res) => (res.ok ? res.json() : res.json().then((err) => Promise.reject(err)));
+export const checkResponse = (res: Response) => (res.ok ? res.json() : res.json().then((err: any) => Promise.reject(err)));
 // базовая строка запроса
 export const requestAddress = "https://norma.nomoreparties.space/api";
 
+type TOptions = {
+    method: string
+    headers: {
+        Authorization: string
+    }
+}
+
 // проверка запроса
-const fetchWithRefresh = async (url, options) => {
+const fetchWithRefresh = async (url: string, options: TOptions) => {
     try {
         const res = await fetch(url, options); //делаем запрос
         return await checkResponse(res);
-    } catch (err) {
+    } catch (err: any) {
         if (err.message === "jwt expired") {
             const refreshData = await updateToken();
             localStorage.setItem("refreshToken", refreshData.refreshToken);

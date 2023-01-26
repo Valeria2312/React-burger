@@ -4,13 +4,19 @@ import {useDispatch} from 'react-redux';
 import {useRef} from 'react';
 import BurgerElem from "./BurgerItem.module.css";
 import {DEL_INGREDIENT} from "../../services/actions/BurgerConstructor";
-import PropTypes from "prop-types";
+import {IIngredient} from "../../types/typesDataProduct";
 
-function BurgerItem({ing, index, moveIng}) {
+type TElementProps = {
+    ing: IIngredient;
+    moveIng: (moveIndex: number, hoverIndex: number) => void;
+    index: number;
+};
+
+function BurgerItem({ing, index, moveIng}: TElementProps ) {
     const dispatch = useDispatch();
-    const ref = useRef(null);
+    const ref = useRef<HTMLDivElement>(null);
 
-    console.log(index);
+    console.log("я отвечаю за бургер айтем" + index);
 
     const [{isDragging}, dragRef] = useDrag({
         type: 'item',
@@ -30,8 +36,9 @@ function BurgerItem({ing, index, moveIng}) {
 
     const [, drop] = useDrop({
         accept: 'item',
-        hover: (item, monitor) => {
+        hover: (item: IIngredient, monitor: object) => {
             if (!ref.current) return
+
             const dragIndex = item.index;
             const hoverIndex = index;
 
@@ -39,7 +46,8 @@ function BurgerItem({ing, index, moveIng}) {
 
             const hoverBoundingRect = ref.current?.getBoundingClientRect();
             const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-            const hoverActualY = monitor.getClientOffset().y - hoverBoundingRect.top;
+            // @ts-ignore
+            const hoverActualY = monitor?.getClientOffset().y - hoverBoundingRect.top;
 
             if (dragIndex < hoverIndex && hoverActualY < hoverMiddleY) return
             if (dragIndex > hoverIndex && hoverActualY > hoverMiddleY) return
@@ -67,8 +75,8 @@ function BurgerItem({ing, index, moveIng}) {
 
 export default BurgerItem
 
-BurgerItem.propTypes = {
-    ing: PropTypes.object.isRequired,
-    index: PropTypes.number.isRequired,
-    moveIng: PropTypes.func.isRequired,
-}
+// BurgerItem.propTypes = {
+//     ing: PropTypes.object.isRequired,
+//     index: PropTypes.number.isRequired,
+//     moveIng: PropTypes.func.isRequired,
+// }

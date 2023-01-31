@@ -3,8 +3,13 @@ import {updateToken} from "../services/actions/Registration";
 import {setCookie} from "../utils/cookie";
 
 export const checkResponse = (res: Response) => (res.ok ? res.json() : res.json().then((err: any) => Promise.reject(err)));
-// базовая строка запроса
-export const requestAddress = "https://norma.nomoreparties.space/api";
+// базовая строка https запроса
+export const requestAddress: string = "https://norma.nomoreparties.space/api";
+// базовая строка wss запроса на все заказы
+export const urlOrdersAll: string = 'wss://norma.nomoreparties.space/orders/all';
+// базовая строка wss запроса на заказы пользователя
+export const urlOrdersUser:string = 'wss://norma.nomoreparties.space/orders/all';
+
 
 type TOptions = {
     method: string

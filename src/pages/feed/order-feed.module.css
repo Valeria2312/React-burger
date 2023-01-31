@@ -1,0 +1,7 @@
+.containerHeader {
+text-align: left;
+}
+.container {
+    display: flex;
+    gap: 60px;
+}

@@ -1,0 +1,29 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    background: #1C1C21;
+    height: 214px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04), 0 0 2px rgba(0, 0, 0, 0.06), 0 0 1px rgba(0, 0, 0, 0.04);
+    border-radius: 40px;
+}
+.orderDetails {
+    display: flex;
+    justify-content: space-between;
+}
+.nameBurger {
+    text-align: left;
+}
+.burgerInfo {
+    display: flex;
+    gap: 24px;
+    justify-content: space-between;
+
+}
+.burgerIngredients {
+    min-height: 64px;
+}
+.priceBurger {
+    display: flex;
+    gap: 9px;
+    align-items: center;
+}

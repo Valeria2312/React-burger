@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import StyleApp from './App.module.css'
 import {AppHeader} from "../AppHeader/AppHeader";
 import {BrowserRouter as Router, Switch, Route, useHistory, useLocation} from 'react-router-dom';
-import { Location } from "history"
+import {Location} from "history"
 import {Login} from "../../pages/login/login";
 import {Profile} from "../../pages/profile/profile";
 import {Registration} from "../../pages/registration/registration";
@@ -16,11 +16,13 @@ import {IngredientDetails} from "../IngredientDetails/IngredientDetails";
 import {Modal} from "../Modal/Modal";
 import {ProtectedRoute} from "../../pages/protected-route/protected-route";
 import {CLOSE_CURRENT_PRODUCT} from "../../services/actions/BurgerIngridients";
+import {OrderFeed} from "../../pages/feed/order-feed";
+import {OrderInfo} from "../OrderInfo/OrderInfo";
 
 export const App = () => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const location = useLocation<{background: Location }>();
+    const location = useLocation<{ background: Location }>();
     // @ts-ignore
     const {user} = useSelector(store => store.RegisterUser);
     const background = location.state && location.state.background;
@@ -51,6 +53,9 @@ export const App = () => {
                     <Route path="/" exact={true}>
                         <Main/>
                     </Route>
+                    <ProtectedRoute path={`/feed`} exact={true}>
+                        <OrderFeed/>
+                    </ProtectedRoute>
                     <ProtectedRoute path="/login" exact={true}>
                         <Login/>
                     </ProtectedRoute>
@@ -69,16 +74,22 @@ export const App = () => {
                     <ProtectedRoute onlyAuth path={`/profile/orders`} exact={true}>
                         <OrdersUser/>
                     </ProtectedRoute>
+                    <Route path='/feed/:id' exact={true}>
+                        <OrderInfo/>
+                    </Route>
                     <Route path='/ingredients/:id' exact={true}>
-                            <IngredientDetails/>
+                        <IngredientDetails/>
+                    </Route>
+                    <Route path='/profile/orders/:id' exact={true}>
+                        <OrderInfo/>
                     </Route>
                 </main>
             </Switch>
             {background && (
-                <Route path='/ingredients/:id' exact={ true }>
-                    { currentProduct && (
+                <Route path='/ingredients/:id' exact={true}>
+                    {currentProduct && (
                         <Modal close={handleOnClose}>
-                            <IngredientDetails />
+                            <IngredientDetails/>
                         </Modal>
                     )}
                 </Route>

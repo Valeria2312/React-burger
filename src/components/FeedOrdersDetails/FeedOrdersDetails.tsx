@@ -1,8 +1,11 @@
 import styles from "./FeedOrdersDetails.module.css";
 import React from "react";
+import {useSelector} from "react-redux";
 
 export const FeedOrdersDetails = () => {
-
+// @ts-ignore
+//     const data = useSelector(store => store.historyAll)
+// console.log(data)
     return (
         <div className={styles.container}>
             <div className={`${styles.containerOrders} mb-15`}>

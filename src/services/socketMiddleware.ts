@@ -1,71 +1,51 @@
-import {
-    WS_GET_USER_HISTORY_ORDERS,
-    WS_USER_HISTORY_CONNECTION_CLOSED,
-    WS_USER_HISTORY_CONNECTION_ERROR,
-    WS_USER_HISTORY_CONNECTION_SUCCESS
-} from "./actions/wsUserHistoryActions";
-import {
-    WS_GET_HISTORY_ORDERS,
-    WS_HISTORY_CONNECTION_CLOSED,
-    WS_HISTORY_CONNECTION_ERROR,
-    WS_HISTORY_CONNECTION_SUCCESS
-} from "./actions/wsHistoryActions";
 import {Middleware} from "redux";
-import {getCookie} from "../utils/cookie";
+import {ActionCreatorWithoutPayload, ActionCreatorWithPayload} from "@reduxjs/toolkit";
+import {RootState} from "../types/typesDataProduct";
 
-type WSActions = {
-    onOpen:
-        | typeof WS_USER_HISTORY_CONNECTION_SUCCESS
-        | typeof WS_HISTORY_CONNECTION_SUCCESS;
-    onClose:
-        | typeof WS_USER_HISTORY_CONNECTION_CLOSED
-        | typeof WS_HISTORY_CONNECTION_ERROR;
-    onError:
-        | typeof WS_USER_HISTORY_CONNECTION_ERROR
-        | typeof WS_HISTORY_CONNECTION_CLOSED;
-    onMessage:
-        | typeof WS_GET_USER_HISTORY_ORDERS
-        | typeof WS_GET_HISTORY_ORDERS;
-};
-
-export const socketMiddleware = (  url: string,
-                                   actions: WSActions,
-                                   withToken: boolean): Middleware => {
+export type wsActionsTypes = {
+    wsConnect: ActionCreatorWithPayload<string>,
+    wsDisconnect: ActionCreatorWithoutPayload,
+    wsSendMessage?: ActionCreatorWithPayload<any>,
+    onOpen: ActionCreatorWithoutPayload,
+    onClose: ActionCreatorWithoutPayload,
+    onError: ActionCreatorWithPayload<string>,
+    onMessage: ActionCreatorWithPayload<any>,
+}
+export const socketMiddlewareCreator = (wsActions: wsActionsTypes):Middleware<{}, RootState> => {
     return store => {
-        let socket: WebSocket | null = null;
+        let socket: WebSocket | null =  null;
+        console.log(socket)
 
         return next => action => {
-            const { dispatch, getState } = store;
-            const { type, payload } = action;
-            const { onOpen, onClose, onError, onMessage } = actions;
-            const { user } = getState().user;
-            if (type === onOpen && user) {
-                socket = withToken
-                    ? (socket = new WebSocket(
-                        `${url}?token=${getCookie("accessToken")?.split("Bearer ")[1]}`
-                    ))
-                    : new WebSocket(url);
+            const { dispatch } = store;
+            const { wsConnect, wsDisconnect, onOpen, onClose, onError, onMessage } = wsActions;
+
+            if(wsConnect.match(action)) {
+                console.log(action.payload)
+                socket = new WebSocket(action.payload)
             }
             if (socket) {
-                socket.onopen = event => {
-                    dispatch({ type: onOpen, payload: event });
+                socket.onopen = () => {
+                    dispatch(onOpen);
                 };
 
-                socket.onerror = event => {
-                    dispatch({ type: onError, payload: event });
+                socket.onerror = err => {
+                    dispatch(onError('error'));
                 };
 
                 socket.onmessage = event => {
-                    dispatch({ type: onMessage, payload: JSON.parse(event.data) });
+                    const { data } = event;
+                    console.log(data)
+                    const parsedData = JSON.parse(data);
+                    dispatch(onMessage(parsedData));
                 };
 
                 socket.onclose = event => {
                     dispatch({ type: onClose, payload: event });
                 };
-
-            }
-            if (type === onClose) {
-                socket?.close();
+                if(wsDisconnect.match(action)) {
+                    socket?.close();
+                }
             }
 
             next(action);

@@ -8,7 +8,7 @@ export const requestAddress: string = "https://norma.nomoreparties.space/api";
 // базовая строка wss запроса на все заказы
 export const urlOrdersAll: string = 'wss://norma.nomoreparties.space/orders/all';
 // базовая строка wss запроса на заказы пользователя
-export const urlOrdersUser:string = 'wss://norma.nomoreparties.space/orders/all';
+export const urlOrdersUser:string = 'wss://norma.nomoreparties.space/orders';
 
 
 type TOptions = {

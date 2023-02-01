@@ -1,10 +1,21 @@
-import React from "react";
+import React, {useEffect} from "react";
 import styles from './order-feed.module.css'
 import {FeedOrdersDetails} from "../../components/FeedOrdersDetails/FeedOrdersDetails";
 import {FeedOrders} from "../../components/FeedOrders/FeedOrders";
-
+import {useDispatch} from "react-redux";
+import {connect as connectHistory, disconnect as disconnectHistory} from "../../services/actions/wsHistoryActions";
+import {urlOrdersAll} from "../../сonstants/ForQueries";
 
 export const OrderFeed = () => {
+    // console.log(urlOrdersAll)
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(connectHistory(urlOrdersAll));
+        console.log(urlOrdersAll)
+        // return () => {
+        //     dispatch(disconnectHistory());
+        // };
+    }, []);
 
     return(
         <div >

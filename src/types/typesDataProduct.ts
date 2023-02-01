@@ -1,3 +1,5 @@
+import {rootReducer} from "../services/reducers";
+
 export interface IIngredient {
     readonly _id: string
     readonly name: string
@@ -31,3 +33,7 @@ export type TWSData = {
     total: 0;
     totalToday: 0;
 };
+
+// export type AppDispatch = typeof store.dispatch;
+// export type RootState = ReturnType<typeof store.getState>;
+export type RootState = ReturnType<typeof rootReducer>;

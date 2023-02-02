@@ -12,19 +12,18 @@ export const OrderFeed = () => {
     useEffect(() => {
         dispatch(connectHistory(urlOrdersAll));
         console.log(urlOrdersAll)
-        // return () => {
-        //     dispatch(disconnectHistory());
-        // };
+        return () => {
+            dispatch(disconnectHistory());
+        };
     }, []);
 
-    return(
-        <div >
+    return (
+        <div>
             <h2 className={`${styles.containerHeader} text text_type_main-large mt-10 mb-5`}>Лента заказов</h2>
             <div className={styles.container}>
                 <FeedOrders/>
                 <FeedOrdersDetails/>
             </div>
-
         </div>
     )
 }

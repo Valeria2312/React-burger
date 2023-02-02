@@ -1,4 +1,7 @@
-import {rootReducer} from "../services/reducers";
+import {rootReducer, store} from "../services/reducers";
+import {ThunkAction} from "redux-thunk";
+import {Action, ActionCreator} from "redux";
+import {TPassActions} from "../services/actions/ForgotPassword";
 
 export interface IIngredient {
     readonly _id: string
@@ -34,6 +37,17 @@ export type TWSData = {
     totalToday: 0;
 };
 
-// export type AppDispatch = typeof store.dispatch;
-// export type RootState = ReturnType<typeof store.getState>;
+export type TUser = {
+    name: string,
+    email: string,
+    password?: string
+}
+
+type TApplicationActions = TPassActions;
 export type RootState = ReturnType<typeof rootReducer>;
+
+export type AppDispatch = typeof store.dispatch;
+
+export type AppThunk<TReturn = void> = ActionCreator<
+    ThunkAction<TReturn, Action, RootState, TApplicationActions>
+    >;

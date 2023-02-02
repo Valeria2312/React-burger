@@ -1,21 +1,22 @@
 import {checkResponse, requestAddress} from "../../сonstants/ForQueries";
+import {AppDispatch, IIngredient} from "../../types/typesDataProduct";
 
-export const ADD_INGREDIENT = 'ADD_INGREDIENT';
-export const MOVE_INGREDIENT = 'MOVE_INGREDIENT';
-export const DEL_INGREDIENT = 'DEL_INGREDIENT';
-export const ADD_BUN = 'ADD_BUN';
+export const ADD_INGREDIENT: 'ADD_INGREDIENT' = 'ADD_INGREDIENT';
+export const MOVE_INGREDIENT: 'MOVE_INGREDIENT' = 'MOVE_INGREDIENT';
+export const DEL_INGREDIENT: 'DEL_INGREDIENT' = 'DEL_INGREDIENT';
+export const ADD_BUN: 'ADD_BUN' = 'ADD_BUN';
 // export const DEL_BUN = 'DEL_BUN';
-export const DEL_INGREDIENTS = 'DEL_INGREDIENTS';
+export const DEL_INGREDIENTS:'DEL_INGREDIENTS' = 'DEL_INGREDIENTS';
 
-export const GET_ORDER_REQUEST = 'GET_ORDER_REQUEST';
-export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';
-export const GET_ORDER_FAILED = 'GET_ORDER_FAILED';
-export const GET_OPEN_MODAL = "GET_OPEN_MODAL";
-export const GET_CLOSE_MODAL = "GET_CLOSE_MODAL";
+export const GET_ORDER_REQUEST: 'GET_ORDER_REQUEST' = 'GET_ORDER_REQUEST';
+export const GET_ORDER_SUCCESS: 'GET_ORDER_SUCCESS' = 'GET_ORDER_SUCCESS';
+export const GET_ORDER_FAILED: 'GET_ORDER_FAILED' = 'GET_ORDER_FAILED';
+export const GET_OPEN_MODAL: "GET_OPEN_MODAL" = "GET_OPEN_MODAL";
+export const GET_CLOSE_MODAL: "GET_CLOSE_MODAL" = "GET_CLOSE_MODAL";
 
-export function getOrderNumber(orderArr) {
+export function getOrderNumber(orderArr: Array<IIngredient> ) {
     console.log(orderArr);
-    return function (dispatch) {
+    return function (dispatch: AppDispatch) {
         dispatch({
             type: GET_ORDER_REQUEST,
         });

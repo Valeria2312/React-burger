@@ -1,17 +1,18 @@
 import {checkResponse, requestAddress} from "../../сonstants/ForQueries";
+import {AppDispatch} from "../../types/typesDataProduct";
 
-export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
-export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
-export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
+export const GET_INGREDIENTS_REQUEST: 'GET_INGREDIENTS_REQUEST' = 'GET_INGREDIENTS_REQUEST';
+export const GET_INGREDIENTS_SUCCESS: 'GET_INGREDIENTS_SUCCESS' = 'GET_INGREDIENTS_SUCCESS';
+export const GET_INGREDIENTS_FAILED: 'GET_INGREDIENTS_FAILED' = 'GET_INGREDIENTS_FAILED';
 
-export const SHOW_CURRENT_PRODUCT = 'SHOW_CURRENT_PRODUCT';
-export const CLOSE_CURRENT_PRODUCT = 'CLOSE_CURRENT_PRODUCT';
+export const SHOW_CURRENT_PRODUCT: 'SHOW_CURRENT_PRODUCT' = 'SHOW_CURRENT_PRODUCT';
+export const CLOSE_CURRENT_PRODUCT: 'CLOSE_CURRENT_PRODUCT' = 'CLOSE_CURRENT_PRODUCT';
 
 
 
 // Получение ингридиентов
 export function getIngredients() {
-    return function (dispatch) {
+    return function (dispatch: AppDispatch) {
         dispatch({
             type: GET_INGREDIENTS_REQUEST,
         });

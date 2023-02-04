@@ -1,20 +1,17 @@
 import React, {useEffect, useMemo, useRef} from "react";
 import StyleIngredients from "./BurgerIngridients.module.css"
 import {ProductElem} from "../ProductElem/ProductElem";
-import {useDispatch, useSelector} from "react-redux";
 import {getIngredients} from "../../services/actions/BurgerIngridients";
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useInView} from "react-intersection-observer";
-import {IIngredient} from "../../types/typesDataProduct";
+import {IIngredient, useAppDispatch, useAppSelector} from "../../types/typesDataProduct";
 
 export const BurgerIngredients = () => {
-    // @ts-ignore
-    const {ingredients} = useSelector(store => store.BurgerIngredients);
+    const {ingredients} = useAppSelector(store => store.BurgerIngredients);
     const [chapter, setChapter] = React.useState('bun')
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
-        // @ts-ignore
         dispatch(getIngredients())
     }, [dispatch])
 

@@ -11,27 +11,26 @@ import {ResetPassword} from "../../pages/reset-password/reset-password";
 import {Main} from "../../pages/main/main";
 import {OrdersUser} from "../../pages/profile/orders/orders";
 import {getUser} from "../../services/actions/Registration";
-import {useDispatch, useSelector} from "react-redux";
 import {IngredientDetails} from "../IngredientDetails/IngredientDetails";
 import {Modal} from "../Modal/Modal";
 import {ProtectedRoute} from "../../pages/protected-route/protected-route";
 import {CLOSE_CURRENT_PRODUCT} from "../../services/actions/BurgerIngridients";
 import {OrderFeed} from "../../pages/feed/order-feed";
 import {OrderInfo} from "../OrderInfo/OrderInfo";
+import {useAppDispatch, useAppSelector} from "../../types/typesDataProduct";
 
 export const App = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const history = useHistory();
-    const location = useLocation<{ background: Location }>();
-    // @ts-ignore
-    const {user} = useSelector(store => store.RegisterUser);
+    const location = useLocation<{ background: Location, backgroundOrder: Location, backgroundProfileOrder: Location }>();
+    const {user} = useAppSelector(store => store.RegisterUser);
     const background = location.state && location.state.background;
-    // @ts-ignore
-    const {currentProduct} = useSelector((store) => store.BurgerIngredients);
+    const backgroundOrder = location.state && location.state.backgroundOrder;
+    const backgroundProfileOrder = location.state && location.state.backgroundProfileOrder;
+    const {currentProduct} = useAppSelector((store) => store.BurgerIngredients);
 
     useEffect(() => {
         if (!user) {
-            // @ts-ignore
             dispatch(getUser())
         }
     }, [dispatch, user])
@@ -47,15 +46,15 @@ export const App = () => {
     return (
         <div className={`${StyleApp.app}`}>
             <AppHeader/>
-            <Switch location={background || location}>
+            <Switch location={background || backgroundOrder || backgroundProfileOrder || location}>
 
                 <main className={`${StyleApp.mainConstructor}`}>
                     <Route path="/" exact={true}>
                         <Main/>
                     </Route>
-                    <ProtectedRoute path={`/feed`} exact={true}>
+                    <Route path="/feed" exact={true}>
                         <OrderFeed/>
-                    </ProtectedRoute>
+                    </Route>
                     <ProtectedRoute path="/login" exact={true}>
                         <Login/>
                     </ProtectedRoute>
@@ -93,7 +92,19 @@ export const App = () => {
                         </Modal>
                     )}
                 </Route>
+
             )}
+            {/*{backgroundOrder  && (*/}
+            {/*    <Route path='/feed/:id' exact={true}>*/}
+            {/*        <OrderInfo/>*/}
+            {/*    </Route>*/}
+            {/*)}*/}
+            {backgroundProfileOrder && (
+                <Route path='/profile/orders/:id' exact={true}>
+                    <OrderInfo/>
+                </Route>
+            )}
+
         </div>
 
     );

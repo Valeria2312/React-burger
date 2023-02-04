@@ -1,23 +1,25 @@
-import {rootReducer, store} from "../services/reducers";
+import {rootReducer, TApplicationActions} from "../services/reducers";
 import {ThunkAction} from "redux-thunk";
 import {Action, ActionCreator} from "redux";
-import {TPassActions} from "../services/actions/ForgotPassword";
+import {store} from "../index";
+import {TypedUseSelectorHook, useDispatch, useSelector as selectorHook} from "react-redux";
 
 export interface IIngredient {
-    readonly _id: string
-    readonly name: string
-    readonly type: string
-    readonly proteins: number
-    readonly fat: number
-    readonly carbohydrates: number
-    readonly calories: number
-    readonly price: number
-    readonly image: string
-    readonly image_mobile: string
-    readonly image_large: string
+     _id: string
+     name: string
+     type: string
+     proteins: number
+     fat: number
+     carbohydrates: number
+     calories: number
+     price: number
+     image: string
+     image_mobile: string
+     image_large: string
      __v: number
      uuid: string
     index: number
+    key: any
 }
 
 export type TOrder = {
@@ -43,11 +45,13 @@ export type TUser = {
     password?: string
 }
 
-type TApplicationActions = TPassActions;
 export type RootState = ReturnType<typeof rootReducer>;
 
 export type AppDispatch = typeof store.dispatch;
 
-export type AppThunk<TReturn = void> = ActionCreator<
-    ThunkAction<TReturn, Action, RootState, TApplicationActions>
-    >;
+export const useAppSelector: TypedUseSelectorHook<RootState> = selectorHook;
+
+export type AppThunk<ReturnType = void> = ActionCreator<
+    ThunkAction<ReturnType, Action, RootState, TApplicationActions>>;
+
+export const useAppDispatch: () => AppDispatch | AppThunk = useDispatch;

@@ -1,12 +1,10 @@
 import React from "react";
 import StyleOrderDetails from "./orderDetails.module.css"
-// import done from '../../images/done.png'
-import {useSelector} from "react-redux";
+import {useAppSelector} from "../../types/typesDataProduct";
 
 
 export const OrderDetails = () => {
-    // @ts-ignore
-    const { number } = useSelector((store) => store.OrderDetails);
+    const { number } = useAppSelector((store) => store.OrderDetails);
 
     return (
         <div className={`${StyleOrderDetails.description} mt-30 mb-30`}>

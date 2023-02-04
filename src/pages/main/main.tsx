@@ -4,11 +4,11 @@ import {BurgerIngredients} from "../../components/BurgerIngredients/BurgerIngrid
 import {BurgerConstructor} from "../../components/BurgerConstructor/BurgerConstructor";
 import {useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
+import {useAppSelector} from "../../types/typesDataProduct";
 
 export const Main = () => {
     const history = useHistory();
-    // @ts-ignore
-    const { user } = useSelector(store => store.RegisterUser);
+    const { user } = useAppSelector(store => store.RegisterUser);
     if (!user) {
         history.replace({ pathname: '/login' });
     }

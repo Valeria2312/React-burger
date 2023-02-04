@@ -1,10 +1,19 @@
 import {
     CLOSE_CURRENT_PRODUCT,
     GET_INGREDIENTS_FAILED, GET_INGREDIENTS_REQUEST,
-    GET_INGREDIENTS_SUCCESS, SHOW_CURRENT_PRODUCT,
+    GET_INGREDIENTS_SUCCESS, SHOW_CURRENT_PRODUCT, TIngridientsMenuActions,
 } from "../actions/BurgerIngridients";
+import {IIngredient} from "../../types/typesDataProduct";
 
-const initialState = {
+
+type TInitialStateIngredients = {
+    ingredients: Array<IIngredient>,
+    loading: boolean,
+    isError: boolean,
+    currentProduct: IIngredient | null,
+};
+
+const initialState: TInitialStateIngredients = {
     ingredients: [],
     loading: false,
     isError: false,
@@ -12,7 +21,7 @@ const initialState = {
 }
 
 //Редьюсер для ингридиентов
-export const ingredientsReducer = (state = initialState, action) => {
+export const ingredientsReducer = (state = initialState, action: TIngridientsMenuActions): TInitialStateIngredients => {
     switch (action.type) {
         case GET_INGREDIENTS_REQUEST: {
             return {
@@ -36,7 +45,6 @@ export const ingredientsReducer = (state = initialState, action) => {
             };
         }
         case SHOW_CURRENT_PRODUCT: {
-            console.log(state.currentProduct);
             return {
                 ...state,
                 currentProduct: action.currentProduct,

@@ -18,6 +18,3 @@ export const ModalOverlay = (props: TElementProps) => {
         <div className={`${StyleModalOverlay.overlay}`} onClickCapture={closeModal} id="overlay"></div>
     )
 }
-ModalOverlay.propTypes = {
-    props: PropTypes.func,
-}

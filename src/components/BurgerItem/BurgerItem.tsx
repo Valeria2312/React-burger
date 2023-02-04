@@ -4,7 +4,7 @@ import {useDispatch} from 'react-redux';
 import {useRef} from 'react';
 import BurgerElem from "./BurgerItem.module.css";
 import {DEL_INGREDIENT} from "../../services/actions/BurgerConstructor";
-import {IIngredient} from "../../types/typesDataProduct";
+import {IIngredient, useAppDispatch} from "../../types/typesDataProduct";
 
 type TElementProps = {
     ing: IIngredient;
@@ -13,10 +13,8 @@ type TElementProps = {
 };
 
 function BurgerItem({ing, index, moveIng}: TElementProps ) {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const ref = useRef<HTMLDivElement>(null);
-
-    console.log("я отвечаю за бургер айтем" + index);
 
     const [{isDragging}, dragRef] = useDrag({
         type: 'item',

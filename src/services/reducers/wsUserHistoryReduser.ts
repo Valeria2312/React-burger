@@ -1,16 +1,16 @@
 import {TWSData} from "../../types/typesDataProduct";
-import {
-    TUserHistoryActions, WS_GET_USER_HISTORY_ORDERS, WS_USER_HISTORY_CONNECTION_CLOSED,
-    WS_USER_HISTORY_CONNECTION_ERROR,
-    WS_USER_HISTORY_CONNECTION_SUCCESS
-} from "../actions/wsUserHistoryActions";
+import {createReducer} from "@reduxjs/toolkit";
+import {wsClose, wsError, wsMessage, wsOpen} from "../actions/wsUserHistoryActions";
 
-export type TOrdersReducer = {
-    wsConnected?: boolean,
-    data: TWSData
-}
-const initialState: TOrdersReducer = {
-    wsConnected: false,
+type TWSHistoryType = {
+    status: string;
+    error: string;
+    data: TWSData | null;
+};
+
+const initialState: TWSHistoryType = {
+    status: 'offline',
+    error: '',
     data: {
         success: false,
         orders: [],
@@ -19,33 +19,19 @@ const initialState: TOrdersReducer = {
     },
 };
 
-export const userHistoryReducer = (state = initialState, action: TUserHistoryActions) => {
-    switch (action.type) {
-        case WS_USER_HISTORY_CONNECTION_SUCCESS:
-            return {
-                ...state,
-                wsConnected: true
-            };
-
-        case WS_USER_HISTORY_CONNECTION_ERROR:
-            return {
-                ...state,
-                wsConnected: false,
-            };
-
-        case WS_USER_HISTORY_CONNECTION_CLOSED:
-            return {
-                ...state,
-                wsConnected: false
-            };
-
-        case WS_GET_USER_HISTORY_ORDERS:
-            return {
-                ...state,
-                data: action.payload,
-            };
-
-        default:
-            return state;
-    }
-};
+export const historyUserReducer = createReducer(initialState, builder => {
+    builder
+        .addCase(wsOpen,(state) => {
+            state.status = "online"
+        })
+        .addCase(wsClose,(state) => {
+            state.status = "close"
+        })
+        .addCase(wsMessage,(state, action) => {
+            console.log(action.payload)
+            state.data = action.payload
+        })
+        .addCase(wsError,(state, action) => {
+            state.error = action.payload
+        })
+})

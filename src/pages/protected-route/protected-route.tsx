@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, Redirect, Route } from 'react-router-dom'
 import {getUser} from "../../services/actions/Registration";
 import PropTypes from "prop-types";
+import {useAppDispatch, useAppSelector} from "../../types/typesDataProduct";
 
 type TProtectedRoute = {
     children: React.ReactNode,
@@ -12,13 +13,11 @@ type TProtectedRoute = {
 }
 
 export  const ProtectedRoute = ({ onlyAuth = false, children, ...rest }: TProtectedRoute) => {
-    // @ts-ignore
-    const user = useSelector((store) => store.RegisterUser);
+    const user = useAppSelector((store) => store.RegisterUser);
     const location = useLocation();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
-        // @ts-ignore
         dispatch(getUser())
     }, [])
 

@@ -4,13 +4,12 @@ import {NavLink, useHistory} from "react-router-dom";
 import {logoutUser, updateUser} from "../../services/actions/Registration";
 import {useDispatch, useSelector} from "react-redux";
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
+import {useAppDispatch, useAppSelector} from "../../types/typesDataProduct";
 
 export const Profile = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const history = useHistory();
-    // @ts-ignore
-    const { user } = useSelector(store => store.RegisterUser);
-    console.log(user)
+    const { user } = useAppSelector(store => store.RegisterUser);
     if (!user) {
         history.replace({ pathname: '/login' });
     }
@@ -31,7 +30,6 @@ export const Profile = () => {
     }, [user])
 
     const onLogOut = () => {
-        // @ts-ignore
         dispatch(logoutUser())
     }
     const onChange = (e: SyntheticEvent) => {
@@ -39,7 +37,6 @@ export const Profile = () => {
             ...form,
             [(e.target as HTMLInputElement).name]: (e.target as HTMLInputElement).value
         });
-        console.log(form);
     };
 
     const handleSubmit = () => {
@@ -48,17 +45,15 @@ export const Profile = () => {
             email: form.email,
             password: form.password,
         }
-        console.log(updateForm);
-        // @ts-ignore
         dispatch(updateUser(updateForm))
     }
 
 
     const handleSubmitCancel = () => {
         setForm ({
-            name: user.name,
-            email: user.email,
-            password: user.password,
+            name: form.name,
+            email: form.email,
+            password: form.password,
         })
     }
 

@@ -1,3 +1,6 @@
 .container {
     width: 844px;
 }
+.link {
+    text-decoration: none;
+}

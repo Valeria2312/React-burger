@@ -7,6 +7,10 @@
     overflow-x: hidden;
     gap: 16px;
     width: 584px;
+    text-decoration: none;
+}
+.link {
+    text-decoration: none;
 }
 .container::-webkit-scrollbar {
     background: #8585AD;

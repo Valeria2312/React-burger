@@ -13,12 +13,32 @@ import {
     REGISTER_USER_SUCCESS,
     TOKEN_USER_FAILED,
     TOKEN_USER_REQUEST,
-    TOKEN_USER_SUCCESS, UPDATE_USER_FAILED,
+    TOKEN_USER_SUCCESS, TUserActions, UPDATE_USER_FAILED,
     UPDATE_USER_REQUEST,
     UPDATE_USER_SUCCESS
 } from "../actions/Registration";
+import {TUser} from "../../types/typesDataProduct";
 
-const initialState = {
+type TInitialState = {
+    user: TUser | null,
+
+    registrationRequest: boolean,
+    registrationFailed: boolean,
+
+    loginRequest: boolean,
+    loginFailed: boolean,
+    authChecked: boolean,
+
+    logoutRequest: boolean,
+    logoutFailed: boolean,
+
+    updateTokenRequest: boolean,
+    updateTokenFailed: boolean,
+
+    updateUserRequest: boolean,
+    updateUserFailed: boolean,
+}
+const initialState: TInitialState = {
     user: null,
 
     registrationRequest: false,
@@ -37,7 +57,7 @@ const initialState = {
     updateUserRequest: false,
     updateUserFailed: false,
 }
-export const registerUserReducer = (state = initialState, action) => {
+export const registerUserReducer = (state = initialState, action: TUserActions): TInitialState => {
     switch (action.type) {
         case REGISTER_USER_REQUEST: {
             return {
@@ -131,8 +151,6 @@ export const registerUserReducer = (state = initialState, action) => {
         case AUTH_USER_REQUEST: {
             return {
                 ...state,
-                getUserRequest: true,
-                getUserFailed: false,
                 authChecked: false,
             };
         }
@@ -140,8 +158,6 @@ export const registerUserReducer = (state = initialState, action) => {
             return {
                 ...state,
                 user: action.user,
-                getUserRequest: false,
-                getUserFailed: false,
                 authChecked: true,
             };
         }
@@ -149,8 +165,6 @@ export const registerUserReducer = (state = initialState, action) => {
             return {
                 ...state,
                 user: initialState.user,
-                getUserRequest: false,
-                getUserFailed: true,
                 authChecked: false,
             };
         }

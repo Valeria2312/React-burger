@@ -1,5 +1,5 @@
-import {requestAddress} from "../../сonstants/ForQueries";
-import {AppDispatch, TUser} from "../../types/typesDataProduct";
+import {checkResponse, requestAddress} from "../../сonstants/ForQueries";
+import {AppDispatch} from "../../types/typesDataProduct";
 //сброс пароля
 export const FORGOT_PASS_REQUEST: 'FORGOT_PASS_REQUEST' = 'FORGOT_PASS_REQUEST';
 export const FORGOT_PASS_SUCCESS: 'FORGOT_PASS_SUCCESS' = 'FORGOT_PASS_SUCCESS';
@@ -15,7 +15,6 @@ export interface IFORGOT_PASS_REQUEST {
 }
 export interface IFORGOT_PASS_SUCCESS {
     readonly type: typeof FORGOT_PASS_SUCCESS;
-    readonly user: TUser;
 }
 export interface IFORGOT_PASS_FAILED {
     readonly type: typeof FORGOT_PASS_FAILED;
@@ -25,7 +24,6 @@ export interface IRESET_PASS_REQUEST {
 }
 export interface IRESET_PASS_SUCCESS {
     readonly type: typeof RESET_PASS_SUCCESS;
-    readonly user: TUser;
 }
 export interface IRESET_PASS_FAILED {
     readonly type: typeof RESET_PASS_FAILED;
@@ -54,12 +52,13 @@ export function forgotPasswordRequest(userEmail: TUserEmail) {
                 'Content-Type': 'application/json'
             }
         })
+            .then(checkResponse)
             .then(res => {
             if (res) {
                 console.log(res);
                 dispatch({
                     type: FORGOT_PASS_SUCCESS,
-                    // user: res.user
+                    user: res.user
                 });
             } else {
                 dispatch({
@@ -91,12 +90,13 @@ export function resetPasswordRequest(newPassword: TNewPassword) {
                 'Content-Type': 'application/json'
             }
         })
+            .then(checkResponse)
             .then(res => {
             if (res) {
                 console.log(res);
                 dispatch({
                     type: RESET_PASS_SUCCESS,
-                    // user: res.user
+                    user: res.user
                 });
             } else {
                 dispatch({

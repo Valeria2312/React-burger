@@ -12,14 +12,24 @@ display: flex;
     align-items: flex-start;
     gap: 8px;
     width: 272px;
-    height: 152px;
+    /*height: 152px;*/
     color: #F2F2F3;
 }
 .ordersHeader {
     text-align: left;
 }
+.ordersContainer {
+    flex-direction: column;
+    gap: 8px;
+    text-align: left;
+    display: flex;
+}
 .ordersDone {
     color: #00CCCC;
+    flex-direction: column;
+    gap: 8px;
+    text-align: left;
+    display: flex;
 }
 .totalOrders {
     display: flex;

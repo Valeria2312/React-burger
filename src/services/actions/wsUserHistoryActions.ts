@@ -1,33 +1,19 @@
 import {TWSData} from "../../types/typesDataProduct";
+import {createAction} from "@reduxjs/toolkit";
 
-export const WS_USER_HISTORY_CONNECTION_SUCCESS: "WS_USER_HISTORY_CONNECTION_SUCCESS" =
-    "WS_USER_HISTORY_CONNECTION_SUCCESS";
-export const WS_USER_HISTORY_CONNECTION_ERROR: "WS_USER_HISTORY_CONNECTION_ERROR" =
-    "WS_USER_HISTORY_CONNECTION_ERROR";
-export const WS_USER_HISTORY_CONNECTION_CLOSED: "WS_USER_HISTORY_CONNECTION_CLOSED" =
-    "WS_USER_HISTORY_CONNECTION_CLOSED";
-export const WS_GET_USER_HISTORY_ORDERS: "WS_GET_USER_HISTORY_ORDERS" =
-    "WS_GET_USER_HISTORY_ORDERS";
 
-export interface IUserHistoryConnectionSuccess {
-    readonly type: typeof WS_USER_HISTORY_CONNECTION_SUCCESS;
-}
+export const connect = createAction<string, 'HISTORY_USER_CONNECTION_SUCCESS'>('HISTORY_USER_CONNECTION_SUCCESS');
+export const disconnect = createAction('HISTORY_USER_DISCONNECT');
+export const wsConnecting = createAction('WS_HISTORY_USER_CONNECTING');
+export const wsOpen = createAction('WS_HISTORY_USER_OPEN');
+export const wsClose = createAction('WS_HISTORY_USER_CLOSE');
+export const wsMessage = createAction<TWSData, 'WS_GET_HISTORY_USER_ORDERS'>('WS_GET_HISTORY_USER_ORDERS');
+export const wsError = createAction<string, 'WS_HISTORY_USER_CONNECTION_ERROR'>('WS_HISTORY_USER_CONNECTION_ERROR');
 
-export interface IUserHistoryConnectionError {
-    readonly type: typeof WS_USER_HISTORY_CONNECTION_ERROR;
-}
-
-export interface IUserHistoryConnectionClosed {
-    readonly type: typeof WS_USER_HISTORY_CONNECTION_CLOSED;
-}
-
-export interface IGetUserHistoryOrders {
-    readonly type: typeof WS_GET_USER_HISTORY_ORDERS;
-    payload: Array<TWSData>;
-}
-
-export type TUserHistoryActions =
-    | IUserHistoryConnectionSuccess
-    | IUserHistoryConnectionError
-    | IUserHistoryConnectionClosed
-    | IGetUserHistoryOrders;
+export type TWsOrdersUserActions = ReturnType<typeof connect>
+    | ReturnType<typeof disconnect>
+    | ReturnType<typeof wsConnecting>
+    | ReturnType<typeof wsOpen>
+    | ReturnType<typeof wsClose>
+    | ReturnType<typeof wsMessage>
+    | ReturnType<typeof wsError>;

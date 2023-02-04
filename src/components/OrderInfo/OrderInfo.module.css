@@ -14,18 +14,69 @@
 }
 .burgerStatus {
     color: #00CCCC;
+    text-align: left;
 }
 .burgerInfo {
     display: flex;
     gap: 24px;
     justify-content: space-between;
+    flex-direction: column;
 }
+
 .burgerIngredients {
+    overflow: auto;
+    /*overflow-y: auto;*/
+    scrollbar-gutter: stable;
+    width: 640px;
+    height: 236px;
+    gap: 16px;
     display: flex;
     flex-direction: column;
-    min-height: 64px;
-    gap: 16px;
 }
+
+.burgerIngredients::-webkit-scrollbar {
+    width: 8px;
+}
+
+.burgerIngredients::-webkit-scrollbar-track {
+    background-color: #2F2F37;
+    max-height: 236px;
+}
+
+.burgerIngredients::-webkit-scrollbar-thumb {
+    background-color: #8585AD;
+}
+
+.burgerIngredient {
+    height: 64px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.burgerIngredient_image {
+    /*width: 112px;*/
+    height: 56px;
+    top: 3px;
+    left: -24px;
+}
+.burgerIngredient_img {
+    /*position: absolute;*/
+    left: 48px;
+    width: 64px;
+    height: 64px;
+    border-radius: 100px;
+    background: linear-gradient(#131316, #131316) padding-box,
+    linear-gradient(to right, #801ab2, #4c4cff) border-box;
+    border: 2px solid transparent;
+}
+
+.burgerIngredient_price_container {
+    display: flex;
+    flex-direction: row;
+}
+
 .price{
     display: flex;
     justify-content: space-between;

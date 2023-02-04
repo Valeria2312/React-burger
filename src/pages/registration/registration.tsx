@@ -4,15 +4,14 @@ import StyleRegistration from './registration.module.css'
 import {Link, Redirect} from 'react-router-dom';
 import {registerUserRequest} from "../../services/actions/Registration";
 import {useDispatch, useSelector} from "react-redux";
+import {useAppDispatch, useAppSelector} from "../../types/typesDataProduct";
 
 export const Registration = () => {
     const [nameValue, setNameValue] = React.useState('');
     const [emailValue, setEmailValue] = React.useState('');
     const [passValue, setPassValue] = React.useState('');
-    // const history = useHistory();
-    const dispatch = useDispatch();
-    // @ts-ignore
-    const {user} = useSelector(store => store.RegisterUser);
+    const dispatch = useAppDispatch();
+    const {user} = useAppSelector(store => store.RegisterUser);
 
     const registration = (e: SyntheticEvent) => {
         e.preventDefault();
@@ -21,7 +20,6 @@ export const Registration = () => {
             password: passValue,
             name: nameValue,
         }
-        // @ts-ignore
         dispatch(registerUserRequest(userData));
         setEmailValue('');
         setPassValue('');

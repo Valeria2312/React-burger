@@ -14,7 +14,6 @@ export type wsActionsTypes = {
 export const socketMiddlewareCreator = (wsActions: wsActionsTypes):Middleware<{}, RootState> => {
     return store => {
         let socket: WebSocket | null =  null;
-        console.log(socket)
 
         return next => action => {
             const { dispatch } = store;
@@ -22,6 +21,7 @@ export const socketMiddlewareCreator = (wsActions: wsActionsTypes):Middleware<{}
 
             if(wsConnect.match(action)) {
                 console.log(action.payload)
+
                 socket = new WebSocket(action.payload)
             }
             if (socket) {

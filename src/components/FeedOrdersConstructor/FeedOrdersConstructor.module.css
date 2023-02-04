@@ -5,19 +5,28 @@
     height: 214px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04), 0 0 2px rgba(0, 0, 0, 0.06), 0 0 1px rgba(0, 0, 0, 0.04);
     border-radius: 40px;
+    position: relative;
 }
 .orderDetails {
     display: flex;
     justify-content: space-between;
 }
+.orderId {
+    color: #F2F2F3;
+}
 .nameBurger {
     text-align: left;
+    text-overflow: ellipsis;
+    height: 56px;
+    white-space: nowrap;
+    overflow: hidden;
+    color: #F2F2F3;
 }
 .burgerInfo {
     display: flex;
     gap: 24px;
     justify-content: space-between;
-
+    color: #F2F2F3;
 }
 .burgerIngredients {
     min-height: 64px;
@@ -26,4 +35,84 @@
     display: flex;
     gap: 9px;
     align-items: center;
+    color: #F2F2F3;
+}
+.ingredient__frame__1 {
+    position: absolute;
+    left: 0;
+    width: 64px;
+    height: 64px;
+    border-radius: 100px;
+    background: linear-gradient(#131316, #131316) padding-box,
+    linear-gradient(to right, #801ab2, #4c4cff) border-box;
+    border: 2px solid transparent;
+    z-index: 10;
+}
+
+.ingredient__frame__2 {
+    position: absolute;
+    left: 48px;
+    width: 64px;
+    height: 64px;
+    border-radius: 100px;
+    background: linear-gradient(#131316, #131316) padding-box,
+    linear-gradient(to right, #801ab2, #4c4cff) border-box;
+    border: 2px solid transparent;
+    z-index: 9;
+}
+
+.ingredient__frame__3 {
+    position: absolute;
+    left: 96px;
+    width: 64px;
+    height: 64px;
+    border-radius: 100px;
+    background: linear-gradient(#131316, #131316) padding-box,
+    linear-gradient(to right, #801ab2, #4c4cff) border-box;
+    border: 2px solid transparent;
+    z-index: 8;
+}
+
+.ingredient__frame__4 {
+    position: absolute;
+    left: 144px;
+    width: 64px;
+    height: 64px;
+    border-radius: 100px;
+    background: linear-gradient(#131316, #131316) padding-box,
+    linear-gradient(to right, #801ab2, #4c4cff) border-box;
+    border: 2px solid transparent;
+    z-index: 7;
+}
+
+.ingredient__frame__5 {
+    position: absolute;
+    left: 192px;
+    width: 64px;
+    height: 64px;
+    border-radius: 100px;
+    background: linear-gradient(#131316, #131316) padding-box,
+    linear-gradient(to right, #801ab2, #4c4cff) border-box;
+    border: 2px solid transparent;
+    z-index: 6;
+}
+
+.ingredient__frame__6 {
+    position: absolute;
+    left: 240px;
+    width: 64px;
+    height: 64px;
+    border-radius: 100px;
+    background: linear-gradient(#131316, #131316) padding-box,
+    linear-gradient(to right, #801ab2, #4c4cff) border-box;
+    border: 2px solid transparent;
+    z-index: 5;
+    opacity: 0.6;
+}
+.ingredient__img {
+    width: 112px;
+    height: 56px;
+    position: absolute;
+    top: 3px;
+    left: -25px;
 }

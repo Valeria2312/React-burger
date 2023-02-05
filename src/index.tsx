@@ -10,22 +10,27 @@ import {rootReducer, SocketMiddleware, UserSocketMiddleware} from "./services/re
 import {BrowserRouter} from "react-router-dom";
 import {configureStore} from "@reduxjs/toolkit";
 
-export const composeEnhancers =
-    typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-        ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
-        : compose;
+declare global {
+    interface Window {
+        __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+    }
+}
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const enhancer = composeEnhancers(applyMiddleware(thunk));
 
 export const store = configureStore({
     reducer: rootReducer,
+    //@ts-ignore
     middleware: (getDefaultMiddleware)  => {
         return getDefaultMiddleware().concat(SocketMiddleware,UserSocketMiddleware)
     },
-    enhancer
+    // @ts-ignore
+    enhancer,
 })
 const root = ReactDOM.createRoot(
-    document.getElementById('root')
+    document.getElementById('root') as HTMLElement
 )
 
 root.render(

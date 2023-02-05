@@ -2,7 +2,6 @@ import React, {SyntheticEvent, useEffect, useState} from 'react';
 import StyleProfile from "./profile.module.css"
 import {NavLink, useHistory} from "react-router-dom";
 import {logoutUser, updateUser} from "../../services/actions/Registration";
-import {useDispatch, useSelector} from "react-redux";
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useAppDispatch, useAppSelector} from "../../types/typesDataProduct";
 

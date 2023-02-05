@@ -3,7 +3,6 @@ import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components"
 import StyleRegistration from './registration.module.css'
 import {Link, Redirect} from 'react-router-dom';
 import {registerUserRequest} from "../../services/actions/Registration";
-import {useDispatch, useSelector} from "react-redux";
 import {useAppDispatch, useAppSelector} from "../../types/typesDataProduct";
 
 export const Registration = () => {

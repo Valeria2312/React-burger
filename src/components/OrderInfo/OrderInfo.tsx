@@ -56,7 +56,6 @@ export const OrderInfo = () => {
         history.goBack();
     }
     return (
-        // <Modal close={onClose}>
             <div className={`${styles.container} pt-6 pl-6 pr-6 pb-6`}>
                 <div className={`${styles.orderDetails}`}>
                     <p className={`${styles.orderId} text text_type_digits-default mb-10`}>#{orderDetails?.number}</p>
@@ -92,7 +91,5 @@ export const OrderInfo = () => {
                     </div>
                 </div>
             </div>
-        // </Modal>
-
     )
 }

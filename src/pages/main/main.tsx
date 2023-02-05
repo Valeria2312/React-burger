@@ -7,11 +7,11 @@ import {useHistory} from "react-router-dom";
 import {useAppSelector} from "../../types/typesDataProduct";
 
 export const Main = () => {
-    const history = useHistory();
-    const { user } = useAppSelector(store => store.RegisterUser);
-    if (!user) {
-        history.replace({ pathname: '/login' });
-    }
+    // const history = useHistory();
+    // const { user } = useAppSelector(store => store.RegisterUser);
+    // if (!user) {
+    //     history.replace({ pathname: '/login' });
+    // }
     return (
         <>
             <DndProvider backend={HTML5Backend}>

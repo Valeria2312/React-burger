@@ -47,42 +47,43 @@ export const App = () => {
         <div className={`${StyleApp.app}`}>
             <AppHeader/>
             <Switch location={background || backgroundOrder || backgroundProfileOrder || location}>
-
-                <main className={`${StyleApp.mainConstructor}`}>
-                    <Route path="/" exact={true}>
-                        <Main/>
-                    </Route>
-                    <Route path="/feed" exact={true}>
-                        <OrderFeed/>
-                    </Route>
-                    <ProtectedRoute path="/login" exact={true}>
-                        <Login/>
-                    </ProtectedRoute>
-                    <ProtectedRoute path="/register" exact={true}>
-                        <Registration/>
-                    </ProtectedRoute>
-                    <ProtectedRoute path="/forgot-password" exact={true}>
-                        <ForgotPassword/>
-                    </ProtectedRoute>
-                    <ProtectedRoute path="/reset-password" exact={true}>
-                        <ResetPassword/>
-                    </ProtectedRoute>
-                    <ProtectedRoute path="/profile" exact={true}>
-                        <Profile/>
-                    </ProtectedRoute>
-                    <ProtectedRoute onlyAuth path={`/profile/orders`} exact={true}>
-                        <OrdersUser/>
-                    </ProtectedRoute>
-                    <Route path='/feed/:id' exact={true}>
-                        <OrderInfo/>
-                    </Route>
-                    <Route path='/ingredients/:id' exact={true}>
-                        <IngredientDetails/>
-                    </Route>
-                    <Route path='/profile/orders/:id' exact={true}>
-                        <OrderInfo/>
-                    </Route>
-                </main>
+                <>
+                    <main className={`${StyleApp.mainConstructor}`}>
+                        <Route path="/" exact={true}>
+                            <Main/>
+                        </Route>
+                        <Route path="/feed" exact={true}>
+                            <OrderFeed/>
+                        </Route>
+                        <ProtectedRoute path="/login" exact={true}>
+                            <Login/>
+                        </ProtectedRoute>
+                        <ProtectedRoute path="/register" exact={true}>
+                            <Registration/>
+                        </ProtectedRoute>
+                        <ProtectedRoute path="/forgot-password" exact={true}>
+                            <ForgotPassword/>
+                        </ProtectedRoute>
+                        <ProtectedRoute path="/reset-password" exact={true}>
+                            <ResetPassword/>
+                        </ProtectedRoute>
+                        <ProtectedRoute path="/profile" exact={true}>
+                            <Profile/>
+                        </ProtectedRoute>
+                        <ProtectedRoute onlyAuth path={`/profile/orders`} exact={true}>
+                            <OrdersUser/>
+                        </ProtectedRoute>
+                        <Route path='/feed/:id' exact={true}>
+                            <OrderInfo/>
+                        </Route>
+                        <Route path='/ingredients/:id' exact={true}>
+                            <IngredientDetails/>
+                        </Route>
+                        <Route path='/profile/orders/:id' exact={true}>
+                            <OrderInfo/>
+                        </Route>
+                    </main>
+                </>
             </Switch>
             {background && (
                 <Route path='/ingredients/:id' exact={true}>
@@ -94,14 +95,18 @@ export const App = () => {
                 </Route>
 
             )}
-            {/*{backgroundOrder  && (*/}
-            {/*    <Route path='/feed/:id' exact={true}>*/}
-            {/*        <OrderInfo/>*/}
-            {/*    </Route>*/}
-            {/*)}*/}
+            {backgroundOrder && (
+                <Route path='/feed/:id' exact={true}>
+                    <Modal close={handleOnClose}>
+                        <OrderInfo/>
+                    </Modal>
+                </Route>
+            )}
             {backgroundProfileOrder && (
                 <Route path='/profile/orders/:id' exact={true}>
-                    <OrderInfo/>
+                    <Modal close={handleOnClose}>
+                        <OrderInfo/>
+                    </Modal>
                 </Route>
             )}
 

@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, Redirect, Route } from 'react-router-dom'
 import {getUser} from "../../services/actions/Registration";
 import PropTypes from "prop-types";

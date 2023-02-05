@@ -1,4 +1,4 @@
-import {Middleware} from "redux";
+import {Middleware} from "@reduxjs/toolkit";
 import {ActionCreatorWithoutPayload, ActionCreatorWithPayload} from "@reduxjs/toolkit";
 import {RootState} from "../types/typesDataProduct";
 

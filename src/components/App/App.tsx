@@ -14,7 +14,7 @@ import {getUser} from "../../services/actions/Registration";
 import {IngredientDetails} from "../IngredientDetails/IngredientDetails";
 import {Modal} from "../Modal/Modal";
 import {ProtectedRoute} from "../../pages/protected-route/protected-route";
-import {CLOSE_CURRENT_PRODUCT} from "../../services/actions/BurgerIngridients";
+import {CLOSE_CURRENT_PRODUCT, getIngredients} from "../../services/actions/BurgerIngridients";
 import {OrderFeed} from "../../pages/feed/order-feed";
 import {OrderInfo} from "../OrderInfo/OrderInfo";
 import {useAppDispatch, useAppSelector} from "../../types/typesDataProduct";
@@ -28,6 +28,10 @@ export const App = () => {
     // const backgroundOrder = location.state && location.state.backgroundOrder;
     // const backgroundProfileOrder = location.state && location.state.backgroundProfileOrder;
     const {currentProduct} = useAppSelector((store) => store.BurgerIngredients);
+
+    useEffect(() => {
+        dispatch(getIngredients())
+    }, [dispatch])
 
     useEffect(() => {
         if (!user) {
@@ -111,7 +115,6 @@ export const App = () => {
                     </Modal>
                 </Route>
             )}
-
         </div>
 
     );

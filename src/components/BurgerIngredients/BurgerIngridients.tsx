@@ -9,11 +9,6 @@ import {IIngredient, useAppDispatch, useAppSelector} from "../../types/typesData
 export const BurgerIngredients = () => {
     const {ingredients} = useAppSelector(store => store.BurgerIngredients);
     const [chapter, setChapter] = React.useState('bun')
-    const dispatch = useAppDispatch();
-
-    useEffect(() => {
-        dispatch(getIngredients())
-    }, [dispatch])
 
     const firstTab = "Булки";
     const secondTab = "Соусы";

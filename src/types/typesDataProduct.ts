@@ -20,6 +20,7 @@ export interface IIngredient {
      uuid: string
     index: number
     key: any
+    count?:number
 }
 
 export type TOrder = {

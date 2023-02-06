@@ -38,8 +38,7 @@ export const OrderInfo = () => {
 
 
     let ingredientsPrice: number = 0;
-    const ingredientsArray: Array<IIngredient> = [];
-
+    let ingredientsArray: IIngredient[] = [];
 
     ingredients.forEach((item:IIngredient ) => {
         orderDetails?.ingredients.forEach(ingredient => {
@@ -50,7 +49,19 @@ export const OrderInfo = () => {
         })
     });
 
-    console.log(ingredientsArray)
+
+    let orderIngriedientsWithQuantity = new Map(
+        ingredientsArray.map((ingriedient) => [
+            ingriedient._id,
+            { ...ingriedient, count: 0 },
+        ])
+    );
+    for (const { _id } of ingredientsArray)
+        // @ts-ignore
+        orderIngriedientsWithQuantity.get(_id).count++;
+    ingredientsArray = Array.from(orderIngriedientsWithQuantity.values());
+
+
     return (
             <div className={`${styles.container} pt-6 pl-6 pr-6 pb-6`}>
                 <div className={`${styles.orderDetails}`}>
@@ -71,7 +82,7 @@ export const OrderInfo = () => {
                                         {ingredient.name}
                                     </p>
                                     <div className={`${styles.burgerIngredient_price_container}`}>
-                                        <p className="text text_type_digits-default">{ingredient.price}</p>
+                                        <p className="text text_type_digits-default">{`${ingredient.count} × ${ingredient.price}`}</p>
                                         <CurrencyIcon type="primary" />
                                     </div>
                                 </div>

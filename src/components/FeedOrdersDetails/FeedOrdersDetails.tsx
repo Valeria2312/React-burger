@@ -1,6 +1,5 @@
 import styles from "./FeedOrdersDetails.module.css";
-import React, {useEffect} from "react";
-import {useSelector} from "react-redux";
+import React from "react";
 import {useAppSelector} from "../../types/typesDataProduct";
 
 export const FeedOrdersDetails = () => {
@@ -28,7 +27,7 @@ export const FeedOrdersDetails = () => {
                         <div className={styles.ordersContainer}>
                             {ordersDone && ordersDone.map((order, index) => {
                                 if (index < 10) {
-                                    return <div className={`${styles.orders} ${styles.ordersDone}`}>{order}</div>;
+                                    return <div className={`${styles.orders} ${styles.ordersDone}`} key={index}>{order}</div>;
                                 }
                                 else return null;
                             })}
@@ -38,7 +37,7 @@ export const FeedOrdersDetails = () => {
                         <div className={styles.ordersContainer}>
                             {ordersAtWork && ordersAtWork.map((order, index) => {
                                 if (index < 10) {
-                                    return <div className={`${styles.orders} ${styles.ordersAtWork}`}>{order}</div>;
+                                    return <div className={`${styles.orders} ${styles.ordersAtWork}`} key={index}>{order}</div>;
                                 }
                                 else return null;
                             })}

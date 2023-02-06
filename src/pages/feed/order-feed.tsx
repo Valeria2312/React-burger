@@ -5,11 +5,9 @@ import {FeedOrders} from "../../components/FeedOrders/FeedOrders";
 import {connect as connectHistory, disconnect as disconnectHistory} from "../../services/actions/wsHistoryActions";
 import {urlOrdersAll} from "../../сonstants/ForQueries";
 import {useAppDispatch} from "../../types/typesDataProduct";
-import {useLocation} from "react-router-dom";
 
 export const OrderFeed = () => {
     const dispatch  = useAppDispatch();
-    // const location = useLocation();
     useEffect(() => {
         dispatch(connectHistory(urlOrdersAll));
         return () => {

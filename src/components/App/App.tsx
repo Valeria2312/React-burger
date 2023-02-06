@@ -25,8 +25,6 @@ export const App = () => {
     const location = useLocation<{ background: Location }>();
     const {user} = useAppSelector(store => store.RegisterUser);
     const background = location.state && location.state.background;
-    // const backgroundOrder = location.state && location.state.backgroundOrder;
-    // const backgroundProfileOrder = location.state && location.state.backgroundProfileOrder;
     const {currentProduct} = useAppSelector((store) => store.BurgerIngredients);
 
     useEffect(() => {
@@ -53,9 +51,8 @@ export const App = () => {
     return (
         <div className={`${StyleApp.app}`}>
             <AppHeader/>
+            <main className={`${StyleApp.mainConstructor}`}>
             <Switch location={background || location}>
-                <>
-                    <main className={`${StyleApp.mainConstructor}`}>
                         <Route path="/" exact={true}>
                             <Main/>
                         </Route>
@@ -89,8 +86,6 @@ export const App = () => {
                         <Route path='/ingredients/:number' exact={true}>
                             <IngredientDetails/>
                         </Route>
-                    </main>
-                </>
             </Switch>
             {background && (
                     <Route path='/ingredients/:id' exact={true}>
@@ -115,6 +110,7 @@ export const App = () => {
                     </Modal>
                 </Route>
             )}
+        </main>
         </div>
 
     );

@@ -1,7 +1,6 @@
 //Проверка ответа на ошибку
 import {updateToken} from "../services/actions/Registration";
 import {setCookie} from "../utils/cookie";
-import {GET_INGREDIENTS_FAILED, GET_INGREDIENTS_SUCCESS} from "../services/actions/BurgerIngridients";
 
 export const checkResponse = (res: Response) => (res.ok ? res.json() : res.json().then((err: any) => Promise.reject(err)));
 // базовая строка https запроса

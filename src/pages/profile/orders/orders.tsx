@@ -35,16 +35,16 @@ export const OrdersUser = () => {
     return (
         <div className={`${styles.container} mt-10`}>
             {orders && orders.map((order: TOrder) => (
-                <Link
-                    key={order.number}
-                    to={{
-                        pathname: `/profile/orders/${order.number}`,
-                        state: { backgroundOrder: location }
-                    }}
-                    className={styles.link}
-                >
-                <FeedOrdersConstructor order={order}/>
-                </Link>
+                // <Link
+                //     key={order.number}
+                //     to={{
+                //         pathname: `/profile/orders/${order.number}`,
+                //         state: { backgroundProfileOrder: location }
+                //     }}
+                //     className={styles.link}
+                // >
+                <FeedOrdersConstructor order={order} key={order.number}/>
+                // </Link>
             ))}
         </div>
     )

@@ -1,28 +1,32 @@
 import React, {SyntheticEvent} from 'react';
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import StyleQueryPassword from './reset-password.module.css'
-import {NavLink, useHistory} from "react-router-dom";
+import {NavLink, useHistory, Redirect} from "react-router-dom";
 import {resetPasswordRequest} from "../../services/actions/ForgotPassword";
-import {useAppDispatch} from "../../types/typesDataProduct";
+import {useAppDispatch, useAppSelector} from "../../types/typesDataProduct";
 
 
 export const ResetPassword = () => {
     const [passwordValue, setPasswordValue] = React.useState('');
     const [codeValue, setCodeValue] = React.useState('');
+    const {forgotPasswordSuccess} = useAppSelector(store => store.ForgotPassword);
     const dispatch = useAppDispatch();
     const history = useHistory();
 
-       const reset = (e: SyntheticEvent) => {
-            e.preventDefault();
-            const newPassword = {
-                password: passwordValue,
-                token: codeValue
-            }
-           dispatch(resetPasswordRequest(newPassword));
-           history.replace({ pathname: '/login' });
-           setPasswordValue('');
-           setCodeValue('');
-        };
+    const reset = (e: SyntheticEvent) => {
+        e.preventDefault();
+        const newPassword = {
+            password: passwordValue,
+            token: codeValue
+        }
+        dispatch(resetPasswordRequest(newPassword));
+        history.replace({pathname: '/login'});
+        setPasswordValue('');
+        setCodeValue('');
+    };
+    if (!forgotPasswordSuccess) {
+        return <Redirect to={{pathname: "/forgot-password"}}/>;
+    }
 
     return (
         <div className={`${StyleQueryPassword.form}`}>
@@ -58,7 +62,7 @@ export const ResetPassword = () => {
             </form>
             <div className={`${StyleQueryPassword.entrance} mt-20`}>
                 <p>Вспимнили пароль?</p>
-                <NavLink to={{ pathname: '/login' }}>Войти</NavLink>
+                <NavLink to={{pathname: '/login'}}>Войти</NavLink>
             </div>
         </div>
     )

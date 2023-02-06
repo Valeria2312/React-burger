@@ -22,11 +22,11 @@ import {useAppDispatch, useAppSelector} from "../../types/typesDataProduct";
 export const App = () => {
     const dispatch = useAppDispatch();
     const history = useHistory();
-    const location = useLocation<{ background: Location, backgroundOrder: Location, backgroundProfileOrder: Location }>();
+    const location = useLocation<{ background: Location }>();
     const {user} = useAppSelector(store => store.RegisterUser);
     const background = location.state && location.state.background;
-    const backgroundOrder = location.state && location.state.backgroundOrder;
-    const backgroundProfileOrder = location.state && location.state.backgroundProfileOrder;
+    // const backgroundOrder = location.state && location.state.backgroundOrder;
+    // const backgroundProfileOrder = location.state && location.state.backgroundProfileOrder;
     const {currentProduct} = useAppSelector((store) => store.BurgerIngredients);
 
     useEffect(() => {
@@ -42,18 +42,18 @@ export const App = () => {
         })
         history.goBack();
     }
+    const handleOnCloseModal = () => {
+        history.goBack();
+    }
 
     return (
         <div className={`${StyleApp.app}`}>
             <AppHeader/>
-            <Switch location={background || backgroundOrder || backgroundProfileOrder || location}>
+            <Switch location={background || location}>
                 <>
                     <main className={`${StyleApp.mainConstructor}`}>
                         <Route path="/" exact={true}>
                             <Main/>
-                        </Route>
-                        <Route path="/feed" exact={true}>
-                            <OrderFeed/>
                         </Route>
                         <ProtectedRoute path="/login" exact={true}>
                             <Login/>
@@ -73,38 +73,40 @@ export const App = () => {
                         <ProtectedRoute onlyAuth path={`/profile/orders`} exact={true}>
                             <OrdersUser/>
                         </ProtectedRoute>
+                        <ProtectedRoute path='/profile/orders/:number' exact={true}>
+                            <OrderInfo/>
+                        </ProtectedRoute>
+                        <Route path="/feed" exact={true}>
+                            <OrderFeed/>
+                        </Route>
                         <Route path='/feed/:id' exact={true}>
                             <OrderInfo/>
                         </Route>
-                        <Route path='/ingredients/:id' exact={true}>
+                        <Route path='/ingredients/:number' exact={true}>
                             <IngredientDetails/>
-                        </Route>
-                        <Route path='/profile/orders/:id' exact={true}>
-                            <OrderInfo/>
                         </Route>
                     </main>
                 </>
             </Switch>
             {background && (
-                <Route path='/ingredients/:id' exact={true}>
-                    {currentProduct && (
-                        <Modal close={handleOnClose}>
-                            <IngredientDetails/>
-                        </Modal>
-                    )}
-                </Route>
-
+                    <Route path='/ingredients/:id' exact={true}>
+                        {currentProduct && (
+                            <Modal close={handleOnClose}>
+                                <IngredientDetails/>
+                            </Modal>
+                        )}
+                    </Route>
             )}
-            {backgroundOrder && (
-                <Route path='/feed/:id' exact={true}>
-                    <Modal close={handleOnClose}>
+            {background && (
+                <Route path='/profile/orders/:id' exact={true}>
+                    <Modal close={handleOnCloseModal}>
                         <OrderInfo/>
                     </Modal>
                 </Route>
             )}
-            {backgroundProfileOrder && (
-                <Route path='/profile/orders/:id' exact={true}>
-                    <Modal close={handleOnClose}>
+            {background && (
+                <Route path='/feed/:id' exact={true}>
+                    <Modal close={handleOnCloseModal}>
                         <OrderInfo/>
                     </Modal>
                 </Route>

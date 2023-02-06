@@ -2,13 +2,18 @@ import React from "react";
 import {CurrencyIcon, FormattedDate} from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './FeedOrdersConstructor.module.css'
 import {TOrder, useAppSelector} from "../../types/typesDataProduct";
+import {useHistory, useLocation} from "react-router-dom";
 
 type TElementProps = {
     order: TOrder,
+    key: number,
+
 }
 
 export const FeedOrdersConstructor = ({order}: TElementProps) => {
     const {ingredients} = useAppSelector(store => store.BurgerIngredients);
+    // const location = useLocation();
+    // const history = useHistory();
     const picturesArray: Array<string> = [];
     let ingredientsPrice: number = 0;
 
@@ -21,6 +26,13 @@ export const FeedOrdersConstructor = ({order}: TElementProps) => {
         })
     });
 
+    // const openModal = () => {
+    //     const _location = {
+    //         pathname: `/feed/${order.number}`,
+    //         state: { background: location }
+    //     }
+    //     history.push(_location)
+    // };
 
     return (
         <div className={`${styles.container} pt-6 pl-6 pr-6 pb-6`}>

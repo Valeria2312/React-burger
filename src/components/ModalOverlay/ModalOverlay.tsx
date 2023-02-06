@@ -1,6 +1,5 @@
 import React, {SyntheticEvent} from "react";
 import StyleModalOverlay from "./ModalOverlay.module.css";
-import PropTypes from "prop-types";
 
 type TElementProps = {
     close: () => void;

@@ -51,10 +51,6 @@ export const OrderInfo = () => {
     });
 
     console.log(ingredientsArray)
-
-    const onClose = () => {
-        history.goBack();
-    }
     return (
             <div className={`${styles.container} pt-6 pl-6 pr-6 pb-6`}>
                 <div className={`${styles.orderDetails}`}>

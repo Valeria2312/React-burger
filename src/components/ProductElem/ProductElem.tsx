@@ -33,7 +33,6 @@ export const ProductElem = ({product}: TElementProps) => {
     });
 
     const openModal = () => {
-        console.log(product);
         dispatch({
             type: SHOW_CURRENT_PRODUCT,
             currentProduct: product,

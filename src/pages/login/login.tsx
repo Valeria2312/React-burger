@@ -2,7 +2,6 @@ import React, {SyntheticEvent, useState} from "react";
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {NavLink, Redirect} from 'react-router-dom';
 import StyleLogin from "./login.module.css"
-import {useDispatch, useSelector} from "react-redux";
 import {loginUser} from "../../services/actions/Registration";
 import {useAppDispatch, useAppSelector} from "../../types/typesDataProduct";
 

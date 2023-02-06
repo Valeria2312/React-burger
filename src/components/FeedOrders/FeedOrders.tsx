@@ -27,7 +27,7 @@ export const FeedOrders = () => {
                     key={order.number}
                     to={{
                         pathname: `/feed/${order.number}`,
-                        state: { backgroundOrder: location }
+                        state: { background: location }
                     }}
                     className={styles.link}
                 >

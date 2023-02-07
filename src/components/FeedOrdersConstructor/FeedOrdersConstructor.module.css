@@ -108,6 +108,7 @@
     border: 2px solid transparent;
     z-index: 5;
     opacity: 0.6;
+    text-align: center;
 }
 .ingredient__img {
     width: 112px;
@@ -115,4 +116,10 @@
     position: absolute;
     top: 3px;
     left: -25px;
+}
+.ingredient__frame_text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
 }

@@ -64,9 +64,9 @@ export const FeedOrdersConstructor = ({order}: TElementProps) => {
                             <div className={styles.ingredient__frame__6}>
                                 <img className={styles.ingredient__img} src={picturesArray[5]} alt={`Ингредиент бургера`}/>
                                 { counterClosedIngredients > 0 && (
-                                <>
+                                <span className={`${styles.ingredient__frame_text} text text_type_digits-default`}>
                                     +{counterClosedIngredients}
-                                </>
+                                </span>
                                 )}
                             </div>
                         </>

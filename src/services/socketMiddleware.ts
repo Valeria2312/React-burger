@@ -1,6 +1,7 @@
 import {Middleware} from "@reduxjs/toolkit";
 import {ActionCreatorWithoutPayload, ActionCreatorWithPayload} from "@reduxjs/toolkit";
 import {RootState} from "../types/typesDataProduct";
+import {updateToken} from "./actions/Registration";
 
 export type wsActionsTypes = {
     wsConnect: ActionCreatorWithPayload<string>,
@@ -29,7 +30,8 @@ export const socketMiddlewareCreator = (wsActions: wsActionsTypes):Middleware<{}
                 };
 
                 socket.onerror = err => {
-                    dispatch(onError('error'));
+                    // dispatch(onError('error'));
+                    updateToken()
                 };
 
                 socket.onmessage = event => {

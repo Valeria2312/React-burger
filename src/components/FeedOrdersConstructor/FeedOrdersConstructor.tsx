@@ -7,6 +7,7 @@ type TElementProps = {
     order: TOrder,
     key: number,
 }
+const maximumIngredientsToDisplay = 6;
 
 export const FeedOrdersConstructor = ({order}: TElementProps) => {
     const {ingredients} = useAppSelector(store => store.BurgerIngredients);
@@ -21,6 +22,7 @@ export const FeedOrdersConstructor = ({order}: TElementProps) => {
             }
         })
     });
+    let counterClosedIngredients = picturesArray.length - maximumIngredientsToDisplay;
     return (
         <div className={`${styles.container} pt-6 pl-6 pr-6 pb-6`}>
             <div className={`${styles.orderDetails}`}>
@@ -61,6 +63,11 @@ export const FeedOrdersConstructor = ({order}: TElementProps) => {
                         <>
                             <div className={styles.ingredient__frame__6}>
                                 <img className={styles.ingredient__img} src={picturesArray[5]} alt={`Ингредиент бургера`}/>
+                                { counterClosedIngredients > 0 && (
+                                <>
+                                    +{counterClosedIngredients}
+                                </>
+                                )}
                             </div>
                         </>
                     }

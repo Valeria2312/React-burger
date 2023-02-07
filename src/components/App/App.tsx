@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import StyleApp from './App.module.css'
 import {AppHeader} from "../AppHeader/AppHeader";
-import {BrowserRouter as Router, Switch, Route, useHistory, useLocation} from 'react-router-dom';
+import {Switch, Route, useHistory, useLocation} from 'react-router-dom';
 import {Location} from "history"
 import {Login} from "../../pages/login/login";
 import {Profile} from "../../pages/profile/profile";
@@ -18,6 +18,7 @@ import {CLOSE_CURRENT_PRODUCT, getIngredients} from "../../services/actions/Burg
 import {OrderFeed} from "../../pages/feed/order-feed";
 import {OrderInfo} from "../OrderInfo/OrderInfo";
 import {useAppDispatch, useAppSelector} from "../../types/typesDataProduct";
+import {UserProfile} from "../../pages/profile/user-profile/user-profile";
 
 export const App = () => {
     const dispatch = useAppDispatch();
@@ -44,50 +45,50 @@ export const App = () => {
         })
         history.goBack();
     }
-    const handleOnCloseModal = () => {
-        history.goBack();
-    }
 
     return (
         <div className={`${StyleApp.app}`}>
             <AppHeader/>
             <main className={`${StyleApp.mainConstructor}`}>
-            <Switch location={background || location}>
-                        <Route path="/" exact={true}>
-                            <Main/>
-                        </Route>
-                        <ProtectedRoute path="/login" exact={true}>
-                            <Login/>
-                        </ProtectedRoute>
-                        <ProtectedRoute path="/register" exact={true}>
-                            <Registration/>
-                        </ProtectedRoute>
-                        <ProtectedRoute path="/forgot-password" exact={true}>
-                            <ForgotPassword/>
-                        </ProtectedRoute>
-                        <ProtectedRoute path="/reset-password" exact={true}>
-                            <ResetPassword/>
-                        </ProtectedRoute>
-                        <ProtectedRoute path="/profile" exact={true}>
-                            <Profile/>
-                        </ProtectedRoute>
-                        <ProtectedRoute onlyAuth path={`/profile/orders`} exact={true}>
-                            <OrdersUser/>
-                        </ProtectedRoute>
-                        <ProtectedRoute path='/profile/orders/:number' exact={true}>
-                            <OrderInfo/>
-                        </ProtectedRoute>
-                        <Route path="/feed" exact={true}>
-                            <OrderFeed/>
-                        </Route>
-                        <Route path='/feed/:id' exact={true}>
-                            <OrderInfo/>
-                        </Route>
-                        <Route path='/ingredients/:number' exact={true}>
-                            <IngredientDetails/>
-                        </Route>
-            </Switch>
-            {background && (
+                <Switch location={background || location}>
+                    <Route path="/" exact={true}>
+                        <Main/>
+                    </Route>
+                    <ProtectedRoute path="/login" exact={true}>
+                        <Login/>
+                    </ProtectedRoute>
+                    <ProtectedRoute path="/register" exact={true}>
+                        <Registration/>
+                    </ProtectedRoute>
+                    <ProtectedRoute path="/forgot-password" exact={true}>
+                        <ForgotPassword/>
+                    </ProtectedRoute>
+                    <ProtectedRoute path="/reset-password" exact={true}>
+                        <ResetPassword/>
+                    </ProtectedRoute>
+                    <ProtectedRoute path="/profile" exact={true}>
+                        <Profile/>
+                    </ProtectedRoute>
+                    <ProtectedRoute onlyAuth exact path="/profile">
+                        <UserProfile/>
+                    </ProtectedRoute>
+                    <ProtectedRoute onlyAuth exact path="/profile/orders">
+                        <OrdersUser/>
+                    </ProtectedRoute>
+                    <ProtectedRoute path='/profile/orders/:id' exact={true}>
+                        <OrderInfo/>
+                    </ProtectedRoute>
+                    <Route path="/feed" exact={true}>
+                        <OrderFeed/>
+                    </Route>
+                    <Route path='/feed/:id' exact={true}>
+                        <OrderInfo/>
+                    </Route>
+                    <Route path='/ingredients/:id' exact={true}>
+                        <IngredientDetails/>
+                    </Route>
+                </Switch>
+                {background && (
                     <Route path='/ingredients/:id' exact={true}>
                         {currentProduct && (
                             <Modal close={handleOnClose}>
@@ -95,22 +96,25 @@ export const App = () => {
                             </Modal>
                         )}
                     </Route>
-            )}
-            {background && (
-                <Route path='/profile/orders/:id' exact={true}>
-                    <Modal close={handleOnCloseModal}>
-                        <OrderInfo/>
-                    </Modal>
-                </Route>
-            )}
-            {background && (
-                <Route path='/feed/:id' exact={true}>
-                    <Modal close={handleOnCloseModal}>
-                        <OrderInfo/>
-                    </Modal>
-                </Route>
-            )}
-        </main>
+                )}
+                {background && (
+                    <Route path='/profile/orders/:id' exact={true}>
+                        <Modal close={() => {
+                            history.replace({ pathname: "/profile/orders/"});
+                        }}>
+                            <OrderInfo/>
+                        </Modal>
+                    </Route>
+                )}
+                {background && (
+                    <Route path='/feed/:id' exact={true}>
+                        <Modal close={() => {
+                            history.replace({ pathname: "/feed/"})}}>
+                            <OrderInfo/>
+                        </Modal>
+                    </Route>
+                )}
+            </main>
         </div>
 
     );

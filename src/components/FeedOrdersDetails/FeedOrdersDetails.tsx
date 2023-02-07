@@ -4,6 +4,7 @@ import {useAppSelector} from "../../types/typesDataProduct";
 
 export const FeedOrdersDetails = () => {
     const {data} = useAppSelector(store => store.historyAll);
+    // console.log(data)
 
     let ordersDone: Array<number> = [];
     let ordersAtWork: Array<number> = [];

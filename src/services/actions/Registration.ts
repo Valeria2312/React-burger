@@ -1,8 +1,6 @@
 import fetchWithRefresh, {checkResponse, requestAddress} from "../../сonstants/ForQueries";
 import {deleteCookie, getCookie, setCookie} from "../../utils/cookie";
 import {AppDispatch, TUser} from "../../types/typesDataProduct";
-import {FORGOT_PASS_REQUEST} from "./ForgotPassword";
-
 
 //регистрация пользовалеля
 export const REGISTER_USER_REQUEST: 'REGISTER_USER_REQUEST'  = 'REGISTER_USER_REQUEST';

@@ -7,24 +7,27 @@ import {getFeedOrder} from "../../сonstants/ForQueries";
 
 export const OrderInfo = () => {
     const { id } = useParams<{id: string}>();
+
     const history = useHistory();
     const {ingredients} = useAppSelector(store => store.BurgerIngredients);
     const [ orderDetails, setOrderDetails ] = useState<TOrder | null>(null);
+    let ingredientsPrice: number = 0;
+    let ingredientsArray: IIngredient[] = [];
+    console.log(orderDetails)
+    //
+    // useEffect(() => {
+    //     const keydownHandler = (e : KeyboardEvent) => {
+    //         switch (e.key) {
+    //             case 'Escape':
+    //                 history.goBack();
+    //                 break;
+    //             default:
+    //         }
+    //     };
+    //     document.addEventListener('keydown', keydownHandler);
+    //     return () => document.removeEventListener('keydown', keydownHandler);
+    // })
 
-    useEffect(() => {
-        const keydownHandler = (e : KeyboardEvent) => {
-            switch (e.key) {
-                case 'Escape':
-                    history.goBack();
-                    break;
-                default:
-            }
-        };
-
-        document.addEventListener('keydown', keydownHandler);
-
-        return () => document.removeEventListener('keydown', keydownHandler);
-    })
     useEffect(() => {
         getFeedOrder(id).then(res => {
             if (res) {
@@ -34,11 +37,7 @@ export const OrderInfo = () => {
         }).catch( err => {
         });
 
-    }, []);
-
-
-    let ingredientsPrice: number = 0;
-    let ingredientsArray: IIngredient[] = [];
+    }, [id]);
 
     ingredients.forEach((item:IIngredient ) => {
         orderDetails?.ingredients.forEach(ingredient => {
@@ -48,7 +47,6 @@ export const OrderInfo = () => {
             }
         })
     });
-
 
     let orderIngriedientsWithQuantity = new Map(
         ingredientsArray.map((ingriedient) => [

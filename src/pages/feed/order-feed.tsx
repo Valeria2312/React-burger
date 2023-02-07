@@ -13,7 +13,7 @@ export const OrderFeed = () => {
         return () => {
             dispatch(disconnectHistory());
         };
-    }, [dispatch,connectHistory]);
+    }, [dispatch]);
 
     return (
         <div>

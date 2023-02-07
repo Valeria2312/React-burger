@@ -1,10 +1,9 @@
 import React, {useEffect, useMemo, useRef} from "react";
 import StyleIngredients from "./BurgerIngridients.module.css"
 import {ProductElem} from "../ProductElem/ProductElem";
-import {getIngredients} from "../../services/actions/BurgerIngridients";
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useInView} from "react-intersection-observer";
-import {IIngredient, useAppDispatch, useAppSelector} from "../../types/typesDataProduct";
+import {IIngredient, useAppSelector} from "../../types/typesDataProduct";
 
 export const BurgerIngredients = () => {
     const {ingredients} = useAppSelector(store => store.BurgerIngredients);

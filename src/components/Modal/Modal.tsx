@@ -8,19 +8,22 @@ import PropTypes from "prop-types";
 const modalRoot = document.getElementById("react-modals")as HTMLElement;
 
 type TElementProps = {
-    close: () => void;
+    close?: () => void;
     children: ReactNode;
 };
 
 export const Modal = ({close, children}: TElementProps) => {
-
     const closeModal = () => {
-        close();
+        if (close) {
+            close();
+        }
     };
 
     function closeByEsc(evt: KeyboardEvent) {
         if (evt.key === "Escape") {
-            closeModal();
+            if (close) {
+                close();
+            }
         }
     }
 
@@ -29,7 +32,7 @@ export const Modal = ({close, children}: TElementProps) => {
         return () => {
             document.removeEventListener("keydown", closeByEsc);
         };
-    }, []);
+    }, [closeByEsc]);
 
     return ReactDOM.createPortal(
         <>

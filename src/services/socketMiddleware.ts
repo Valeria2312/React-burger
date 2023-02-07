@@ -20,7 +20,6 @@ export const socketMiddlewareCreator = (wsActions: wsActionsTypes):Middleware<{}
             const { wsConnect, wsDisconnect, onOpen, onClose, onError, onMessage } = wsActions;
 
             if(wsConnect.match(action)) {
-                console.log(action.payload)
 
                 socket = new WebSocket(action.payload)
             }
@@ -35,13 +34,12 @@ export const socketMiddlewareCreator = (wsActions: wsActionsTypes):Middleware<{}
 
                 socket.onmessage = event => {
                     const { data } = event;
-                    console.log(data)
                     const parsedData = JSON.parse(data);
                     dispatch(onMessage(parsedData));
                 };
 
                 socket.onclose = event => {
-                    dispatch({ type: onClose, payload: event });
+                    dispatch(onClose());
                 };
                 if(wsDisconnect.match(action)) {
                     socket?.close();

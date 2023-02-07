@@ -4,7 +4,7 @@ import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-com
 import StyleIBurgerProducts from "./ProductElem.module.css"
 import {useDrag} from "react-dnd";
 import {SHOW_CURRENT_PRODUCT} from "../../services/actions/BurgerIngridients";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {useHistory, useLocation} from "react-router-dom";
 import {IIngredient, useAppSelector} from "../../types/typesDataProduct";
 

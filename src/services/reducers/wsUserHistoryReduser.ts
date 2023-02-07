@@ -28,7 +28,6 @@ export const historyUserReducer = createReducer(initialState, builder => {
             state.status = "close"
         })
         .addCase(wsMessage,(state, action) => {
-            console.log(action.payload)
             state.data = action.payload
         })
         .addCase(wsError,(state, action) => {

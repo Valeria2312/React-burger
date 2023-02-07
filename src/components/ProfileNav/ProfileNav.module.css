@@ -1,0 +1,23 @@
+.calculations {
+    display: flex;
+    flex-direction: column;
+    width: 320px;
+    text-align: left;
+}
+.link {
+    cursor: pointer;
+    width: 320px;
+    height: 64px;
+    color: #8585AD;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+.link:hover {
+    color: #F2F2F3;
+}
+
+.link_active {
+    color: #F2F2F3;
+    cursor: default;
+}

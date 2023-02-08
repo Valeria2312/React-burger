@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { useLocation, Redirect, Route } from 'react-router-dom'
 import {getUser} from "../../services/actions/Registration";
-import PropTypes from "prop-types";
 import {useAppDispatch, useAppSelector} from "../../types/typesDataProduct";
 
 type TProtectedRoute = {
@@ -11,33 +10,31 @@ type TProtectedRoute = {
     exact?: boolean
 }
 
-export  const ProtectedRoute = ({ onlyAuth = false, children, ...rest }: TProtectedRoute) => {
+export  const ProtectedRoute = ({ onlyAuth, children, ...rest }: TProtectedRoute) => {
     const user = useAppSelector((store) => store.RegisterUser);
     const location = useLocation();
     const dispatch = useAppDispatch();
 
 
+    // @ts-ignore
+    const from = location.state?.from || '/';
+
     useEffect(() => {
         dispatch(getUser())
     }, [])
 
-    if (!user && !onlyAuth) {
+    if (onlyAuth && !user) {
         return (
-            <Redirect
-                to={{
-                    pathname: '/login',
-                    state: { from: location },
-                }}
-            />
+            <Redirect to={from} />
+        );
+    } else if (!user && !onlyAuth) {
+        return (
+            <Redirect to={{ pathname: '/login', state: { from: location }}}/>
+        )
+    } else {
+        return (
+         <Route {...rest}>{children}</Route>
         )
     }
-    // if (onlyAuth && user) {
-    //
-    //     return (
-    //         // @ts-ignore
-    //         <Redirect to={location?.state?.from || '/'} />
-    //     );
-    // }
-
-    return <Route {...rest}>{children}</Route>
 }
+

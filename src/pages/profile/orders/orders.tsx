@@ -20,6 +20,7 @@ export const OrdersUser = () => {
     const orders = data?.orders;
     const location = useLocation();
     const urlOrder = `${urlOrdersUser}?token=${accessToken}`;
+    const {user} = useAppSelector(store => store.RegisterUser);
 
     useEffect(() => {
         dispatch(connectHistory(urlOrder));

@@ -13,16 +13,6 @@ import {Link, useLocation} from "react-router-dom";
 import {ProfileNav} from "../../../components/ProfileNav/ProfileNav";
 import StyleProfile from "../profile.module.css";
 
-type TOrder = {
-    createdAt: string,
-    ingredients: Array<string>,
-    name: string,
-    number: number,
-    status: string,
-    updatedAt: string,
-    _id: string,
-}
-
 export const OrdersUser = () => {
     const dispatch = useAppDispatch();
     const accessToken = getCookie('token')?.split('Bearer ')[1];
@@ -42,7 +32,7 @@ export const OrdersUser = () => {
         <div className={`${StyleProfile.main}`}>
             <ProfileNav/>
             <div className={`${styles.container} mt-10`}>
-                {orders?.map((order: TOrder) => (
+                {orders?.map((order) => (
                     <Link
                         key={order.number}
                         to={{

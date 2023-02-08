@@ -31,13 +31,13 @@ export  const ProtectedRoute = ({ onlyAuth = false, children, ...rest }: TProtec
             />
         )
     }
-    if (onlyAuth && user) {
-
-        return (
-            // @ts-ignore
-            <Redirect to={location?.state?.from || '/'} />
-        );
-    }
+    // if (onlyAuth && user) {
+    //
+    //     return (
+    //         // @ts-ignore
+    //         <Redirect to={location?.state?.from || '/'} />
+    //     );
+    // }
 
     return <Route {...rest}>{children}</Route>
 }

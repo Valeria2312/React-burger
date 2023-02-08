@@ -4,13 +4,12 @@ import {useAppSelector} from "../../types/typesDataProduct";
 
 export const FeedOrdersDetails = () => {
     const {data} = useAppSelector(store => store.historyAll);
-    // console.log(data)
 
     let ordersDone: Array<number> = [];
     let ordersAtWork: Array<number> = [];
 
         data?.orders
-            .forEach((order: { status: string; number: number; }) => {
+            .forEach((order) => {
                 if (order.status === 'done') {
                     ordersDone.push(order.number);
                 } else if (order.status === 'pending') {

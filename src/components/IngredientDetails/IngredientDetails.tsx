@@ -1,12 +1,12 @@
 import React from "react";
 import StyleProductDetails from "./IngredientDetails.module.css";
 import {useParams} from "react-router-dom";
-import {IIngredient, useAppSelector} from "../../types/typesDataProduct";
+import {useAppSelector} from "../../types/typesDataProduct";
 
 export const IngredientDetails = () => {
     const { id } = useParams<{ id?: string }>();
     const {ingredients} = useAppSelector(store => store.BurgerIngredients);
-    let data= ingredients.length && ingredients.find((item: IIngredient) => item._id === id);
+    let data= ingredients.length && ingredients.find((item) => item._id === id);
 
     return (
         <>

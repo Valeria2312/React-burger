@@ -1,32 +1,17 @@
 import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
 import React, {useEffect, useState} from "react";
 import styles from "./OrderInfo.module.css"
-import {useHistory, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {IIngredient, TOrder, useAppSelector} from "../../types/typesDataProduct";
 import {getFeedOrder} from "../../сonstants/ForQueries";
 
 export const OrderInfo = () => {
     const { id } = useParams<{id: string}>();
-
-    const history = useHistory();
     const {ingredients} = useAppSelector(store => store.BurgerIngredients);
     const [ orderDetails, setOrderDetails ] = useState<TOrder | null>(null);
     let ingredientsPrice: number = 0;
     let ingredientsArray: IIngredient[] = [];
-    console.log(orderDetails)
-    //
-    // useEffect(() => {
-    //     const keydownHandler = (e : KeyboardEvent) => {
-    //         switch (e.key) {
-    //             case 'Escape':
-    //                 history.goBack();
-    //                 break;
-    //             default:
-    //         }
-    //     };
-    //     document.addEventListener('keydown', keydownHandler);
-    //     return () => document.removeEventListener('keydown', keydownHandler);
-    // })
+
 
     useEffect(() => {
         getFeedOrder(id).then(res => {

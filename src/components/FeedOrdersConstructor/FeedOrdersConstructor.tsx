@@ -14,7 +14,7 @@ export const FeedOrdersConstructor = ({order}: TElementProps) => {
     const picturesArray: Array<string> = [];
     let ingredientsPrice: number = 0;
 
-    ingredients.forEach((item: { _id: string; image_mobile: string; price: number; }) => {
+    ingredients.forEach((item) => {
         order.ingredients.forEach(ingredient => {
             if (ingredient === item._id) {
                 picturesArray.push(item.image_mobile);

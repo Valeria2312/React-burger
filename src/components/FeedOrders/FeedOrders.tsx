@@ -4,17 +4,6 @@ import styles from './FeedOrders.module.css'
 import {useAppSelector} from "../../types/typesDataProduct";
 import { Link, useLocation } from "react-router-dom";
 
-
-type TOrder = {
-    createdAt: string,
-    ingredients: Array<string>,
-    name: string,
-    number: number,
-    status: string,
-    updatedAt: string,
-    _id: string,
-}
-
 export const FeedOrders = () => {
     const {data} = useAppSelector(store => store.historyAll);
     const orders = data?.orders;
@@ -22,7 +11,7 @@ export const FeedOrders = () => {
     return (
 
         <div className={styles.container}>
-            {orders?.map((order: TOrder) => (
+            {orders?.map((order) => (
                 <Link
                     key={order.number}
                     to={{

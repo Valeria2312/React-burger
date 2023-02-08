@@ -71,9 +71,3 @@ function BurgerItem({ing, index, moveIng}: TElementProps ) {
 }
 
 export default BurgerItem
-
-// BurgerItem.propTypes = {
-//     ing: PropTypes.object.isRequired,
-//     index: PropTypes.number.isRequired,
-//     moveIng: PropTypes.func.isRequired,
-// }

@@ -4,9 +4,8 @@ import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-com
 import StyleIBurgerProducts from "./ProductElem.module.css"
 import {useDrag} from "react-dnd";
 import {SHOW_CURRENT_PRODUCT} from "../../services/actions/BurgerIngridients";
-import {useDispatch} from "react-redux";
 import {useHistory, useLocation} from "react-router-dom";
-import {IIngredient, useAppSelector} from "../../types/typesDataProduct";
+import {IIngredient, useAppDispatch, useAppSelector} from "../../types/typesDataProduct";
 
 type TElementProps = {
     product: IIngredient;
@@ -25,7 +24,7 @@ export const ProductElem = ({product}: TElementProps) => {
     });
     const count = foundInBasket.length;
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const [, dragRef] = useDrag({
         type: 'ingredient',
@@ -58,7 +57,3 @@ export const ProductElem = ({product}: TElementProps) => {
         </>
     );
 };
-
-ProductElem.propTypes = {
-    product: PropTypes.object.isRequired,
-}

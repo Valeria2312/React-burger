@@ -84,7 +84,7 @@ export const BurgerConstructor = () => {
     //подстчет цены
     const price: number | false | undefined = useMemo(() => {
         if (ingredients && bun) {
-            return ingredients?.length > 0 && bun.price * 2 + ingredients?.reduce((acc:number, item: IIngredient) => acc + item.price, 0)
+            return ingredients?.length > 0 && bun.price * 2 + ingredients?.reduce((acc, item: IIngredient) => acc + item.price, 0)
         }
     }, [ingredients, bun]);
 

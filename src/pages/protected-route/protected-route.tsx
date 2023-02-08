@@ -16,6 +16,7 @@ export  const ProtectedRoute = ({ onlyAuth = false, children, ...rest }: TProtec
     const location = useLocation();
     const dispatch = useAppDispatch();
 
+
     useEffect(() => {
         dispatch(getUser())
     }, [])
@@ -30,12 +31,13 @@ export  const ProtectedRoute = ({ onlyAuth = false, children, ...rest }: TProtec
             />
         )
     }
+    if (onlyAuth && user) {
+
+        return (
+            // @ts-ignore
+            <Redirect to={location?.state?.from || '/'} />
+        );
+    }
 
     return <Route {...rest}>{children}</Route>
-}
-
-ProtectedRoute.propTypes = {
-    props: PropTypes.node,
-    onlyAuth: PropTypes.bool,
-    children: PropTypes.node.isRequired,
 }

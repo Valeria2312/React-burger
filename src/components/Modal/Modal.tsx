@@ -47,8 +47,3 @@ export const Modal = ({close, children}: TElementProps) => {
         modalRoot
     );
 }
-
-Modal.propTypes = {
-    close: PropTypes.func.isRequired,
-    children: PropTypes.element.isRequired,
-}

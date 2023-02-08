@@ -19,7 +19,6 @@ export  const ProtectedRoute = ({ onlyAuth, children, ...rest }: TProtectedRoute
 
 
     useEffect(() => {
-        // @ts-ignore
         dispatch(getUser())
     }, [])
 
@@ -33,7 +32,7 @@ export  const ProtectedRoute = ({ onlyAuth, children, ...rest }: TProtectedRoute
         );
     }
 
-    if (onlyAuth && !user) {
+    if (onlyAuth) {
         return (
             <Route {...rest}>
                 <Redirect to={{ pathname: "/login", state: { from: location } }} />

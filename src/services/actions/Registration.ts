@@ -192,6 +192,7 @@ export function loginUser(login: TLogin) {
 
 //выход
 export function logoutUser() {
+    console.log(requestAddress + `/auth/logout`)
     return function (dispatch: AppDispatch) {
         dispatch({
             type: LOGOUT_USER_REQUEST

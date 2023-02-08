@@ -9,10 +9,10 @@ export const Profile = () => {
     const history = useHistory();
     const {user} = useAppSelector(store => store.RegisterUser);
 
-    // useEffect(() => {
-    // if (!user) {
-    //     history.replace({pathname: '/login'});
-    // }},[])
+    useEffect(() => {
+    if (!user) {
+        history.replace({pathname: '/login'});
+    }},[])
 
     return (
         <div className={`${StyleProfile.main}`}>

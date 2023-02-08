@@ -69,10 +69,10 @@ export const App = () => {
                     <ProtectedRoute path="/profile" exact={true}>
                         <Profile/>
                     </ProtectedRoute>
-                    <ProtectedRoute onlyAuth exact path="/profile">
+                    <ProtectedRoute exact={true} path="/profile" onlyAuth>
                         <UserProfile/>
                     </ProtectedRoute>
-                    <ProtectedRoute onlyAuth exact path="/profile/orders">
+                    <ProtectedRoute exact={true} path="/profile/orders" onlyAuth>
                         <OrdersUser/>
                     </ProtectedRoute>
                     <ProtectedRoute path='/profile/orders/:id' exact={true}>

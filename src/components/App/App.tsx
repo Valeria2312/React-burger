@@ -18,7 +18,6 @@ import {CLOSE_CURRENT_PRODUCT, getIngredients} from "../../services/actions/Burg
 import {OrderFeed} from "../../pages/feed/order-feed";
 import {OrderInfo} from "../OrderInfo/OrderInfo";
 import {useAppDispatch, useAppSelector} from "../../types/typesDataProduct";
-import {UserProfile} from "../../pages/profile/user-profile/user-profile";
 
 export const App = () => {
     const dispatch = useAppDispatch();
@@ -26,7 +25,6 @@ export const App = () => {
     const location = useLocation<{ background: Location }>();
     const {user} = useAppSelector(store => store.RegisterUser);
     const background = location.state && location.state.background;
-    const {currentProduct} = useAppSelector((store) => store.BurgerIngredients);
 
     useEffect(() => {
         dispatch(getIngredients())
@@ -69,9 +67,6 @@ export const App = () => {
                     <ProtectedRoute path="/profile" exact={true} onlyAuth>
                         <Profile/>
                     </ProtectedRoute>
-                    {/*<ProtectedRoute exact={true} path="/profile" onlyAuth>*/}
-                    {/*    <UserProfile/>*/}
-                    {/*</ProtectedRoute>*/}
                     <ProtectedRoute exact={true} path="/profile/orders" onlyAuth>
                         <OrdersUser/>
                     </ProtectedRoute>
@@ -90,11 +85,9 @@ export const App = () => {
                 </Switch>
                 {background && (
                     <Route path='/ingredients/:id' exact={true}>
-                        {currentProduct && (
                             <Modal close={handleOnClose}>
                                 <IngredientDetails/>
                             </Modal>
-                        )}
                     </Route>
                 )}
                 {background && (

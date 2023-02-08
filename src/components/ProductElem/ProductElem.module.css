@@ -1,5 +1,9 @@
+.link {
+    text-decoration: none;
+}
 .product {
     position: relative;
+    color: #F2F2F3;
 }
 .productName {
     word-break: break-all;

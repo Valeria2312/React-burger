@@ -1,12 +1,17 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import StyleProductDetails from "./IngredientDetails.module.css";
 import {useParams} from "react-router-dom";
-import {useAppSelector} from "../../types/typesDataProduct";
+import {IIngredient, useAppSelector} from "../../types/typesDataProduct";
 
 export const IngredientDetails = () => {
     const { id } = useParams<{ id?: string }>();
     const {ingredients} = useAppSelector(store => store.BurgerIngredients);
-    let data= ingredients.length && ingredients.find((item) => item._id === id);
+    const [data, setData] = useState<IIngredient>();
+
+      useEffect(() => {
+        let itemToShow = ingredients.find(({ _id }) => _id === id);
+          setData(itemToShow);
+      }, [id, ingredients]);
 
     return (
         <>

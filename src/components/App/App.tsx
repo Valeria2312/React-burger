@@ -54,28 +54,28 @@ export const App = () => {
                     <Route path="/" exact={true}>
                         <Main/>
                     </Route>
-                    <ProtectedRoute path="/login" exact={true}  onlyAuth={false}>
+                    <ProtectedRoute path="/login" exact={true}>
                         <Login/>
                     </ProtectedRoute>
-                    <ProtectedRoute path="/register" exact={true}  onlyAuth={false}>
+                    <ProtectedRoute path="/register" exact={true}>
                         <Registration/>
                     </ProtectedRoute>
-                    <ProtectedRoute path="/forgot-password" exact={true}  onlyAuth={false}>
+                    <ProtectedRoute path="/forgot-password" exact={true}>
                         <ForgotPassword/>
                     </ProtectedRoute>
-                    <ProtectedRoute path="/reset-password" exact={true}  onlyAuth={false}>
+                    <ProtectedRoute path="/reset-password" exact={true}>
                         <ResetPassword/>
                     </ProtectedRoute>
-                    <ProtectedRoute path="/profile" exact={true}  onlyAuth={false}>
+                    <ProtectedRoute path="/profile" exact={true}>
                         <Profile/>
                     </ProtectedRoute>
-                    <ProtectedRoute exact path="/profile"  onlyAuth={true}>
+                    <ProtectedRoute onlyAuth exact path="/profile">
                         <UserProfile/>
                     </ProtectedRoute>
-                    <ProtectedRoute exact path="/profile/orders" onlyAuth={true}>
+                    <ProtectedRoute onlyAuth exact path="/profile/orders">
                         <OrdersUser/>
                     </ProtectedRoute>
-                    <ProtectedRoute path='/profile/orders/:id' exact={true}  onlyAuth={false}>
+                    <ProtectedRoute path='/profile/orders/:id' exact={true}>
                         <OrderInfo/>
                     </ProtectedRoute>
                     <Route path="/feed" exact={true}>

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useLocation, Redirect, Route } from 'react-router-dom'
 import {getUser} from "../../services/actions/Registration";
 import {useAppDispatch, useAppSelector} from "../../types/typesDataProduct";
+import {getCookie} from "../../utils/cookie";
 
 type TProtectedRoute = {
     children: React.ReactNode,
@@ -11,30 +12,34 @@ type TProtectedRoute = {
 }
 
 export  const ProtectedRoute = ({ onlyAuth, children, ...rest }: TProtectedRoute) => {
-    const user = useAppSelector((store) => store.RegisterUser);
+    const { user } = useAppSelector(store => store.RegisterUser);
     const location = useLocation();
     const dispatch = useAppDispatch();
+    const isAuthorized = getCookie("accessToken");
 
-
-    // @ts-ignore
-    const from = location.state?.from || '/';
 
     useEffect(() => {
+        // @ts-ignore
         dispatch(getUser())
     }, [])
 
+    if (!onlyAuth && isAuthorized) {
+        // @ts-ignore
+        const { from } = location.state?.from || { from: { pathname: "/" } };
+        return (
+            <Route {...rest}>
+                <Redirect to={from} />
+            </Route>
+        );
+    }
+
     if (onlyAuth && !user) {
         return (
-            <Redirect to={from} />
+            <Route {...rest}>
+                <Redirect to={{ pathname: "/login", state: { from: location } }} />
+            </Route>
         );
-    } else if (!user && !onlyAuth) {
-        return (
-            <Redirect to={{ pathname: '/login', state: { from: location }}}/>
-        )
-    } else {
-        return (
-         <Route {...rest}>{children}</Route>
-        )
     }
-}
 
+    return <Route {...rest}>{children}</Route>;
+};

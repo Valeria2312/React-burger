@@ -5,6 +5,7 @@ import {useAppDispatch} from "../../types/typesDataProduct";
 import StyleProfile from "../ProfileNav/ProfileNav.module.css"
 
 export const ProfileNav= () => {
+
     const dispatch = useAppDispatch();
     const onLogOut = () => {
         dispatch(logoutUser())

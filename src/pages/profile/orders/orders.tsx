@@ -12,6 +12,7 @@ import {getCookie} from "../../../utils/cookie";
 import {Link, useLocation} from "react-router-dom";
 import {ProfileNav} from "../../../components/ProfileNav/ProfileNav";
 import StyleProfile from "../profile.module.css";
+import {updateToken} from "../../../services/actions/Registration";
 
 export const OrdersUser = () => {
     const dispatch = useAppDispatch();
@@ -20,7 +21,10 @@ export const OrdersUser = () => {
     const orders = data?.orders;
     const location = useLocation();
     const urlOrder = `${urlOrdersUser}?token=${accessToken}`;
-    const {user} = useAppSelector(store => store.RegisterUser);
+
+    if(accessToken === undefined) {
+        dispatch(updateToken())
+    }
 
     useEffect(() => {
         dispatch(connectHistory(urlOrder));

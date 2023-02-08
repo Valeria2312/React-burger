@@ -22,6 +22,7 @@ export const UserProfile = () => {
             })
         }
     }, [user])
+
     const onChange = (e: SyntheticEvent) => {
         setForm({
             ...form,

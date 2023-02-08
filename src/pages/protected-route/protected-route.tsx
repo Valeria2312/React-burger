@@ -32,7 +32,8 @@ export  const ProtectedRoute = ({ onlyAuth, children, ...rest }: TProtectedRoute
         );
     }
 
-    if (onlyAuth) {
+    if (onlyAuth && !user) {
+        console.log(user)
         return (
             <Route {...rest}>
                 <Redirect to={{ pathname: "/login", state: { from: location } }} />

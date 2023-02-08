@@ -1,6 +1,6 @@
 import React, {SyntheticEvent, useState} from "react";
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import {NavLink, Redirect} from 'react-router-dom';
+import {NavLink, Redirect, useLocation} from 'react-router-dom';
 import StyleLogin from "./login.module.css"
 import {loginUser} from "../../services/actions/Registration";
 import {useAppDispatch, useAppSelector} from "../../types/typesDataProduct";
@@ -12,6 +12,7 @@ export const Login = () => {
         password: ''
     });
     const dispatch = useAppDispatch();
+    const location = useLocation();
 
     const onChange = (e: SyntheticEvent) => {
         setForm({
@@ -31,7 +32,8 @@ export const Login = () => {
 
     if (user) {
         return (
-            <Redirect to='/profile'/>
+            // @ts-ignore
+            <Redirect to={location?.state?.from || '/'}/>
         );
     }
 

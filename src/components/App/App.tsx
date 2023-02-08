@@ -66,12 +66,12 @@ export const App = () => {
                     <ProtectedRoute path="/reset-password" exact={true}>
                         <ResetPassword/>
                     </ProtectedRoute>
-                    <ProtectedRoute path="/profile" exact={true}>
+                    <ProtectedRoute path="/profile" exact={true} onlyAuth>
                         <Profile/>
                     </ProtectedRoute>
-                    <ProtectedRoute exact={true} path="/profile" onlyAuth>
-                        <UserProfile/>
-                    </ProtectedRoute>
+                    {/*<ProtectedRoute exact={true} path="/profile" onlyAuth>*/}
+                    {/*    <UserProfile/>*/}
+                    {/*</ProtectedRoute>*/}
                     <ProtectedRoute exact={true} path="/profile/orders" onlyAuth>
                         <OrdersUser/>
                     </ProtectedRoute>

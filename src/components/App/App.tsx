@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
 import StyleApp from './App.module.css'
 import {AppHeader} from "../AppHeader/AppHeader";
-import {BrowserRouter as Router, Switch, Route, useHistory, useLocation} from 'react-router-dom';
-import { Location } from "history"
+import {Switch, Route, useHistory, useLocation} from 'react-router-dom';
+import {Location} from "history"
 import {Login} from "../../pages/login/login";
 import {Profile} from "../../pages/profile/profile";
 import {Registration} from "../../pages/registration/registration";
@@ -11,25 +11,27 @@ import {ResetPassword} from "../../pages/reset-password/reset-password";
 import {Main} from "../../pages/main/main";
 import {OrdersUser} from "../../pages/profile/orders/orders";
 import {getUser} from "../../services/actions/Registration";
-import {useDispatch, useSelector} from "react-redux";
 import {IngredientDetails} from "../IngredientDetails/IngredientDetails";
 import {Modal} from "../Modal/Modal";
 import {ProtectedRoute} from "../../pages/protected-route/protected-route";
-import {CLOSE_CURRENT_PRODUCT} from "../../services/actions/BurgerIngridients";
+import {CLOSE_CURRENT_PRODUCT, getIngredients} from "../../services/actions/BurgerIngridients";
+import {OrderFeed} from "../../pages/feed/order-feed";
+import {OrderInfo} from "../OrderInfo/OrderInfo";
+import {useAppDispatch, useAppSelector} from "../../types/typesDataProduct";
 
 export const App = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const history = useHistory();
-    const location = useLocation<{background: Location }>();
-    // @ts-ignore
-    const {user} = useSelector(store => store.RegisterUser);
+    const location = useLocation<{ background: Location }>();
+    const {user} = useAppSelector(store => store.RegisterUser);
     const background = location.state && location.state.background;
-    // @ts-ignore
-    const {currentProduct} = useSelector((store) => store.BurgerIngredients);
+
+    useEffect(() => {
+        dispatch(getIngredients())
+    }, [dispatch])
 
     useEffect(() => {
         if (!user) {
-            // @ts-ignore
             dispatch(getUser())
         }
     }, [dispatch, user])
@@ -45,9 +47,8 @@ export const App = () => {
     return (
         <div className={`${StyleApp.app}`}>
             <AppHeader/>
-            <Switch location={background || location}>
-
-                <main className={`${StyleApp.mainConstructor}`}>
+            <main className={`${StyleApp.mainConstructor}`}>
+                <Switch location={background || location}>
                     <Route path="/" exact={true}>
                         <Main/>
                     </Route>
@@ -63,26 +64,50 @@ export const App = () => {
                     <ProtectedRoute path="/reset-password" exact={true}>
                         <ResetPassword/>
                     </ProtectedRoute>
-                    <ProtectedRoute path="/profile" exact={true}>
+                    <ProtectedRoute path="/profile" exact={true} onlyAuth>
                         <Profile/>
                     </ProtectedRoute>
-                    <ProtectedRoute onlyAuth path={`/profile/orders`} exact={true}>
+                    <ProtectedRoute exact={true} path="/profile/orders" onlyAuth>
                         <OrdersUser/>
                     </ProtectedRoute>
-                    <Route path='/ingredients/:id' exact={true}>
-                            <IngredientDetails/>
+                    <ProtectedRoute path='/profile/orders/:id' exact={true}>
+                        <OrderInfo/>
+                    </ProtectedRoute>
+                    <Route path="/feed" exact={true}>
+                        <OrderFeed/>
                     </Route>
-                </main>
-            </Switch>
-            {background && (
-                <Route path='/ingredients/:id' exact={ true }>
-                    { currentProduct && (
-                        <Modal close={handleOnClose}>
-                            <IngredientDetails />
+                    <Route path='/feed/:id' exact={true}>
+                        <OrderInfo/>
+                    </Route>
+                    <Route path='/ingredients/:id' exact={true}>
+                        <IngredientDetails/>
+                    </Route>
+                </Switch>
+                {background && (
+                    <Route path='/ingredients/:id' exact={true}>
+                            <Modal close={handleOnClose}>
+                                <IngredientDetails/>
+                            </Modal>
+                    </Route>
+                )}
+                {background && (
+                    <Route path='/profile/orders/:id' exact={true}>
+                        <Modal close={() => {
+                            history.replace({ pathname: "/profile/orders/"});
+                        }}>
+                            <OrderInfo/>
                         </Modal>
-                    )}
-                </Route>
-            )}
+                    </Route>
+                )}
+                {background && (
+                    <Route path='/feed/:id' exact={true}>
+                        <Modal close={() => {
+                            history.replace({ pathname: "/feed/"})}}>
+                            <OrderInfo/>
+                        </Modal>
+                    </Route>
+                )}
+            </main>
         </div>
 
     );

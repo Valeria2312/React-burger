@@ -1,21 +1,17 @@
 import React from "react";
-import PropTypes from "prop-types";
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import StyleIBurgerProducts from "./ProductElem.module.css"
 import {useDrag} from "react-dnd";
 import {SHOW_CURRENT_PRODUCT} from "../../services/actions/BurgerIngridients";
-import {useDispatch, useSelector} from "react-redux";
-import {useHistory, useLocation} from "react-router-dom";
-import {IIngredient} from "../../types/typesDataProduct";
+import {useLocation, Link} from "react-router-dom";
+import {IIngredient, useAppDispatch, useAppSelector} from "../../types/typesDataProduct";
 
 type TElementProps = {
     product: IIngredient;
 };
 
 export const ProductElem = ({product}: TElementProps) => {
-    // @ts-ignore
-    const {bun, ingredients} = useSelector((store) => store.BurgerConstructor);
-    const history = useHistory();
+    const {bun, ingredients} = useAppSelector((store) => store.BurgerConstructor);
     const location = useLocation();
 
     const foundInBasket = [...ingredients, bun].filter((prod) => {
@@ -26,7 +22,7 @@ export const ProductElem = ({product}: TElementProps) => {
     });
     const count = foundInBasket.length;
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const [, dragRef] = useDrag({
         type: 'ingredient',
@@ -34,21 +30,23 @@ export const ProductElem = ({product}: TElementProps) => {
     });
 
     const openModal = () => {
-        console.log(product);
         dispatch({
             type: SHOW_CURRENT_PRODUCT,
             currentProduct: product,
         })
-        const _location = {
-            pathname: `/ingredients/${ product._id }`,
-            state: { background: location }
-        }
-        history.push(_location)
     };
 
     return (
         <>
-            <div ref={dragRef} className={`${StyleIBurgerProducts.product}`} onClick={openModal}>
+            <Link
+                key={product._id}
+                to={{
+                    pathname: `/ingredients/${product._id }`,
+                    state: {background: location}
+                }}
+                className={StyleIBurgerProducts.link}
+            >
+            <div ref={dragRef} className={`${StyleIBurgerProducts.product}`} onClick={openModal} key={product._id}>
                 <img className={`mr-4 ml-4`} src={product.image} alt={product.name}/>
                 <Counter count={count} size="default" extraClass="m-1"/>
                 <h3 className={`${StyleIBurgerProducts.productName} text text_type_main-default`}>{product.name}</h3>
@@ -57,10 +55,7 @@ export const ProductElem = ({product}: TElementProps) => {
                     <CurrencyIcon type="primary"/>
                 </div>
             </div>
+            </Link>
         </>
     );
 };
-
-ProductElem.propTypes = {
-    product: PropTypes.object.isRequired,
-}

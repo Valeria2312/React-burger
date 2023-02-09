@@ -1,16 +1,21 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import StyleProductDetails from "./IngredientDetails.module.css";
-import {useSelector} from "react-redux";
 import {useParams} from "react-router-dom";
-import {IIngredient} from "../../types/typesDataProduct";
+import {IIngredient, useAppSelector} from "../../types/typesDataProduct";
 
 export const IngredientDetails = () => {
     const { id } = useParams<{ id?: string }>();
-    // @ts-ignore
-    const {ingredients} = useSelector(store => store.BurgerIngredients);
+    const {ingredients} = useAppSelector(store => store.BurgerIngredients);
+    const [data, setData] = useState<IIngredient>();
 
-    const data = ingredients.length && ingredients.find((item: IIngredient) => item._id === id);
+      useEffect(() => {
+        let itemToShow = ingredients.find(({ _id }) => _id === id);
+          setData(itemToShow);
+      }, [id, ingredients]);
+
     return (
+        <>
+        {data ? (
         <div className={`${StyleProductDetails.container}`}>
             <p className={`text text_type_main-large ml-10 mt-10`}>Детали ингридиента</p>
             <div className={`${StyleProductDetails.description}`}>
@@ -34,6 +39,7 @@ export const IngredientDetails = () => {
                     </tbody>
                 </table>
             </div>
-        </div>
+        </div>) : null }
+        </>
     )
 }

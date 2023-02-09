@@ -1,5 +1,4 @@
 import {ConstructorElement} from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
 import React from "react";
 import StyleElement from "./ElementConstructor.module.css"
 

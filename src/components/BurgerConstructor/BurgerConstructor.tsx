@@ -3,7 +3,6 @@ import StylesConstructor from "./BurgerConstructor.module.css";
 import {Button, ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Modal} from "../Modal/Modal";
 import {OrderDetails} from "../orderDetails/orderDetails";
-import {useDispatch, useSelector} from "react-redux";
 import {
     ADD_BUN,
     ADD_INGREDIENT,
@@ -16,18 +15,14 @@ import {useDrop} from "react-dnd";
 import {v4 as uuid4} from 'uuid';
 import BurgerItem from "../BurgerItem/BurgerItem";
 import {useHistory} from "react-router-dom";
-import {IIngredient} from "../../types/typesDataProduct";
+import {IIngredient, useAppDispatch, useAppSelector} from "../../types/typesDataProduct";
 
 export const BurgerConstructor = () => {
-    // @ts-ignore
-    const {showModal} = useSelector(store => store.OrderDetails);
-    // @ts-ignore
-    const {ingredients} = useSelector(store => store.BurgerConstructor);
-    // @ts-ignore
-    const {bun} = useSelector(store => store.BurgerConstructor);
-    // @ts-ignore
-    const {user} = useSelector(store => store.RegisterUser);
-    const dispatch = useDispatch();
+    const {showModal} = useAppSelector(store => store.OrderDetails);
+    const {ingredients} = useAppSelector((store) => store.BurgerConstructor);
+    const {bun} = useAppSelector(store => store.BurgerConstructor);
+    const {user} = useAppSelector(store => store.RegisterUser);
+    const dispatch = useAppDispatch();
     const history = useHistory();
 
     type TCallback = (
@@ -38,9 +33,9 @@ export const BurgerConstructor = () => {
     const [, dropRef] = useDrop({
         accept: 'ingredient',
         drop(item: IIngredient) {
+            item = {...item};
             item.uuid = uuid4();
             if (item.type === 'bun') {
-                console.log(item);
                 dispatch({
                     type: ADD_BUN,
                     data: item,
@@ -62,7 +57,6 @@ export const BurgerConstructor = () => {
         if(!user) {
             return (history.push({ pathname: "/login"}))
         } else {
-            // @ts-ignore
             dispatch(getOrderNumber(orderArr));
             dispatch({
                 type: GET_OPEN_MODAL,
@@ -81,16 +75,16 @@ export const BurgerConstructor = () => {
     };
 
 
-    const orderArr = useMemo(() => {
+    const orderArr: string[] | undefined = useMemo(() => {
         if (ingredients && bun) {
             return [...ingredients, bun].map(elem => elem._id)
         }
     }, [ingredients, bun])
 
     //подстчет цены
-    const price: number = useMemo(() => {
+    const price: number | false | undefined = useMemo(() => {
         if (ingredients && bun) {
-            return ingredients.length > 0 && bun.price * 2 + ingredients.reduce((acc:number, item: IIngredient) => acc + item.price, 0)
+            return ingredients?.length > 0 && bun.price * 2 + ingredients?.reduce((acc, item ) => acc + item.price, 0)
         }
     }, [ingredients, bun]);
 
@@ -102,6 +96,7 @@ export const BurgerConstructor = () => {
           const newIngredients = [...ingredients];
           newIngredients[dragIndex] = hoverItem;
           newIngredients[hoverIndex] = dragItem;
+            console.log(newIngredients)
 
           dispatch({ type: MOVE_INGREDIENT, sorted: newIngredients });
         },
@@ -133,7 +128,7 @@ export const BurgerConstructor = () => {
                     </div>
                 }
                 {ingredients.length >= 1 ?
-                    ingredients.map((ingredient: IIngredient, index: number) => (renderIngredients(ingredient, index)))
+                    ingredients.map((ingredient, index) => (renderIngredients(ingredient, index)))
                     :
                     <div>
                         <h2>Добавьте начинку</h2>

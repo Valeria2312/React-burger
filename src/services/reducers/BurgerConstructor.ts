@@ -8,10 +8,22 @@ import {
     MOVE_INGREDIENT,
     DEL_INGREDIENT,
     ADD_BUN,
-    DEL_INGREDIENTS,
+    DEL_INGREDIENTS, TIngridientActions, TOrderActions,
 } from '../actions/BurgerConstructor'
+import {IIngredient} from "../../types/typesDataProduct";
 
-const initialState = {
+
+type TInitialStateConstructor = {
+    ingredients: Array<IIngredient>,
+    bun: IIngredient | null,
+    number: number | null,
+    isLoading: boolean,
+    isError: boolean,
+    showModal: boolean,
+    hasData: boolean,
+}
+
+const initialState: TInitialStateConstructor = {
     ingredients: [],
     bun: null,
     number: null,
@@ -21,17 +33,15 @@ const initialState = {
     hasData: false,
 };
 
-export const constructorReducer = (state = initialState, action) => {
+export const constructorReducer = (state = initialState, action:TIngridientActions): TInitialStateConstructor => {
     switch (action.type) {
         case ADD_BUN: {
-            console.log(state.bun)
             return {
                 ...state,
                 bun: action.data
             };
         }
         case ADD_INGREDIENT: {
-            console.log(state.ingredients)
             return {
                 ...state,
                 ingredients: [...state.ingredients, {...action.data, key: action.key}]
@@ -58,8 +68,9 @@ export const constructorReducer = (state = initialState, action) => {
             }
         case DEL_INGREDIENTS: {
             return {
+                hasData: false, isError: false, isLoading: false, number: null, showModal: false,
                 ingredients: [],
-                bun: null,
+                bun: null
             }
         }
 
@@ -69,11 +80,7 @@ export const constructorReducer = (state = initialState, action) => {
     }
 }
 
-// type: MOVE_INGREDIENT,
-//     sorted: ingredients
-
-
-export const orderReducer = (state = initialState, action) => {
+export const orderReducer = (state = initialState, action: TOrderActions) => {
     switch (action.type) {
         case GET_ORDER_REQUEST: {
             return {
@@ -82,7 +89,6 @@ export const orderReducer = (state = initialState, action) => {
             }
         }
         case GET_ORDER_SUCCESS: {
-            console.log(action);
             return {
                 ...state,
                 number: action.number,

@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, Redirect, Route } from 'react-router-dom'
 import {getUser} from "../../services/actions/Registration";
-import PropTypes from "prop-types";
+import {useAppDispatch, useAppSelector} from "../../types/typesDataProduct";
+import {getCookie} from "../../utils/cookie";
 
 type TProtectedRoute = {
     children: React.ReactNode,
@@ -11,33 +11,35 @@ type TProtectedRoute = {
     exact?: boolean
 }
 
-export  const ProtectedRoute = ({ onlyAuth = false, children, ...rest }: TProtectedRoute) => {
-    // @ts-ignore
-    const user = useSelector((store) => store.RegisterUser);
+export  const ProtectedRoute = ({ onlyAuth, children, ...rest }: TProtectedRoute) => {
+    const { user } = useAppSelector(store => store.RegisterUser);
     const location = useLocation();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
+    const isAuthorized = getCookie("accessToken");
+
 
     useEffect(() => {
-        // @ts-ignore
         dispatch(getUser())
     }, [])
 
-    if (!user && !onlyAuth) {
+    if (!onlyAuth && isAuthorized) {
+        // @ts-ignore
+        const { from } = location.state?.from || { from: { pathname: "/" } };
         return (
-            <Redirect
-                to={{
-                    pathname: '/login',
-                    state: { from: location },
-                }}
-            />
-        )
+            <Route {...rest}>
+                <Redirect to={from} />
+            </Route>
+        );
     }
 
-    return <Route {...rest}>{children}</Route>
-}
+    if (onlyAuth && !user) {
+        console.log(user)
+        return (
+            <Route {...rest}>
+                <Redirect to={{ pathname: "/login", state: { from: location } }} />
+            </Route>
+        );
+    }
 
-ProtectedRoute.propTypes = {
-    props: PropTypes.node,
-    onlyAuth: PropTypes.bool,
-    children: PropTypes.node.isRequired,
-}
+    return <Route {...rest}>{children}</Route>;
+};

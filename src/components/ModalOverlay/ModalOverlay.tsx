@@ -1,6 +1,5 @@
 import React, {SyntheticEvent} from "react";
 import StyleModalOverlay from "./ModalOverlay.module.css";
-import PropTypes from "prop-types";
 
 type TElementProps = {
     close: () => void;
@@ -17,7 +16,4 @@ export const ModalOverlay = (props: TElementProps) => {
     return (
         <div className={`${StyleModalOverlay.overlay}`} onClickCapture={closeModal} id="overlay"></div>
     )
-}
-ModalOverlay.propTypes = {
-    props: PropTypes.func,
 }

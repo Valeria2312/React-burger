@@ -8,7 +8,7 @@ type TWSHistoryType = {
     data: TWSData | null;
 };
 
-const initialState: TWSHistoryType = {
+export const initialState: TWSHistoryType = {
     status: 'offline',
     error: '',
     data: {

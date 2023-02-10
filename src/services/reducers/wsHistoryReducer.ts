@@ -2,13 +2,14 @@ import {TWSData} from "../../types/typesDataProduct";
 import {createReducer} from "@reduxjs/toolkit";
 import {wsClose, wsError, wsMessage, wsOpen} from "../actions/wsHistoryActions";
 
+
 type TWSOrdersType = {
     status: string;
     error: string;
     data: TWSData | null;
 };
 
-const initialState: TWSOrdersType = {
+export const initialState: TWSOrdersType = {
     status: 'offline',
     error: '',
     data: {

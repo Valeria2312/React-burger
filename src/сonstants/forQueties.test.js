@@ -18,19 +18,3 @@ expect(response).toBe("res-ok")
      const response = checkResponse(mockedResponse)
      await  expect(response).rejects.toBe("Ошибка: res-not-ok")
  })
-
-// describe("Get feed order request api", () => {
-//     beforeEach(() => {
-//         jest.spyOn(global, "fetch").mockRejectedValue({
-//             json: jest.fn().mockRejectedValue({result: "OK"}),
-//             ok: true,
-//         });
-//     });
-//     afterEach(() => {
-//         jest.restoreAllMocks();
-//     });
-//     test("Should be successful", async () => {
-//         const getFeedOrderResult = await getFeedOrder('orderNumber')
-//         expect(getFeedOrderResult).toEqual({result: "OK"})
-//     })
-//  });

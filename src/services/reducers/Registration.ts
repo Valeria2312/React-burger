@@ -38,7 +38,7 @@ type TInitialState = {
     updateUserRequest: boolean,
     updateUserFailed: boolean,
 }
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
     user: null,
 
     registrationRequest: false,
@@ -78,7 +78,7 @@ export const registerUserReducer = (state = initialState, action: TUserActions):
             return {
                 ...initialState,
                 user: initialState.user,
-                registrationRequest: true,
+                registrationRequest: false,
                 registrationFailed: true,
             };
         }
@@ -186,6 +186,7 @@ export const registerUserReducer = (state = initialState, action: TUserActions):
         case UPDATE_USER_FAILED: {
             return {
                 ...state,
+                user: initialState.user,
                 updateUserRequest: false,
                 updateUserFailed: true,
             };

@@ -1,5 +1,5 @@
 import {checkResponse, requestAddress} from "../../сonstants/ForQueries";
-import {AppDispatch, IIngredient, TUser} from "../../types/typesDataProduct";
+import {AppDispatch, IIngredient} from "../../types/typesDataProduct";
 import {getCookie} from "../../utils/cookie";
 
 export const ADD_INGREDIENT: 'ADD_INGREDIENT' = 'ADD_INGREDIENT';

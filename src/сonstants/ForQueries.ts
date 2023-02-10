@@ -10,10 +10,13 @@ export const requestAddress: string = "https://norma.nomoreparties.space/api";
 export const urlOrdersAll: string = 'wss://norma.nomoreparties.space/orders/all';
 // базовая строка wss запроса на заказы пользователя
 export const urlOrdersUser:string = 'wss://norma.nomoreparties.space/orders';
+
+
 export const getFeedOrder = (orderNumber:string) => {
     return fetch(requestAddress + `/orders/${orderNumber}`)
         .then(checkResponse)
 }
+
 
 // проверка запроса
 const fetchWithRefresh = async (url: string, options: RequestInit) => {

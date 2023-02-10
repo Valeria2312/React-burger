@@ -13,7 +13,7 @@ type TInitialStateIngredients = {
     currentProduct: IIngredient | null,
 };
 
-const initialState: TInitialStateIngredients = {
+export const initialState: TInitialStateIngredients = {
     ingredients: [],
     loading: false,
     isError: false,

@@ -2,6 +2,7 @@ import {TWSData} from "../../types/typesDataProduct";
 import {createReducer} from "@reduxjs/toolkit";
 import {wsClose, wsError, wsMessage, wsOpen} from "../actions/wsUserHistoryActions";
 
+
 type TWSHistoryType = {
     status: string;
     error: string;

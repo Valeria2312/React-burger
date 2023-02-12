@@ -96,8 +96,6 @@ export const BurgerConstructor = () => {
           const newIngredients = [...ingredients];
           newIngredients[dragIndex] = hoverItem;
           newIngredients[hoverIndex] = dragItem;
-            console.log(newIngredients)
-
           dispatch({ type: MOVE_INGREDIENT, sorted: newIngredients });
         },
         [dispatch, ingredients]
@@ -111,7 +109,7 @@ export const BurgerConstructor = () => {
 
     return (
         <section className={`StylesConstructor mt-25`}>
-            <div ref={dropRef} className={StylesConstructor.basket}>
+            <div ref={dropRef} className={StylesConstructor.basket} data-test-id="burger-container">
                 {bun ?
                     <div>
                         <ConstructorElement
@@ -155,7 +153,7 @@ export const BurgerConstructor = () => {
                     <p className="text text_type_digits-medium">{price}</p>
                     <CurrencyIcon type="primary"/>
                 </div>
-                <Button htmlType="button" type="primary" size="medium" onClick={openModal}>
+                <Button htmlType="button" type="primary" size="medium" onClick={openModal} data-test-id="button-order">
 
                     Оформить заказ
                 </Button>

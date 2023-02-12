@@ -12,7 +12,7 @@ describe("Redux store and actions", () => {
     afterEach(() => {
         jest.restoreAllMocks();
     });
-    test("should return constructor initial state", () => {
+    test("should return history reducer initial state", () => {
         expect(historyReducer(undefined, {})).toEqual(initialState)
     })
     test("should return status online WebSocket", () => {

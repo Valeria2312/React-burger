@@ -1,5 +1,6 @@
 import {forgotResetPassReducer, initialState} from "./ForgotPassword";
 import * as actions from '../actions/ForgotPassword'
+import {FORGOT_PASS_FAILED, FORGOT_PASS_REQUEST} from "../actions/ForgotPassword";
 
 describe("Redux store and actions", () => {
     beforeEach(() => {
@@ -14,6 +15,14 @@ describe("Redux store and actions", () => {
     test("should return order initial state", () => {
         expect(forgotResetPassReducer(undefined, {})).toEqual(initialState)
     })
+    test('should return the flags forgot password request', () => {
+        expect(forgotResetPassReducer(initialState, {
+            type: actions.FORGOT_PASS_REQUEST,
+        })).toEqual({
+            ...initialState,
+            forgotPasswordRequest: true
+        })
+    })
     test('should return the flags of the successful forgot password request', () => {
         expect(forgotResetPassReducer(initialState, {
             type: actions.FORGOT_PASS_SUCCESS,
@@ -22,6 +31,15 @@ describe("Redux store and actions", () => {
             forgotPasswordRequest: false,
             forgotPasswordSuccess: true,
             forgotPasswordError: false
+        })
+    })
+    test('should return the flags forgot password failed', () => {
+        expect(forgotResetPassReducer(initialState, {
+            type: actions.FORGOT_PASS_FAILED,
+        })).toEqual({
+            ...initialState,
+            forgotPasswordSuccess: false,
+            forgotPasswordError: true
         })
     })
     test('should return the flags of the failed  forgot password request', () => {

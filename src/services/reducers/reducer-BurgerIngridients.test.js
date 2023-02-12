@@ -1,9 +1,8 @@
 import {ingredientsReducer} from "./BurgerIngridients";
 import {initialState} from './BurgerIngridients'
-// import {testIngredient} from "../../utils/testData";
 import * as actions from '../actions/BurgerIngridients'
-import {testBodyRequest, testIngredient, testIngredientsMove} from "../../utils/testData";
-import {CLOSE_CURRENT_PRODUCT, SHOW_CURRENT_PRODUCT} from "../actions/BurgerIngridients";
+import {testBodyRequest, testIngredient} from "../../utils/testData";
+import {GET_INGREDIENTS_FAILED, GET_INGREDIENTS_REQUEST} from "../actions/BurgerIngridients";
 
 describe("Redux store and actions", () => {
     beforeEach(() => {
@@ -18,13 +17,30 @@ describe("Redux store and actions", () => {
     test("should return constructor initial state", () => {
         expect(ingredientsReducer(undefined, {})).toEqual(initialState)
     })
-    test("should return the ingredients from the request", () => {
+    test("request for ingredients", () => {
+        expect(ingredientsReducer(initialState, {
+            type: actions.GET_INGREDIENTS_REQUEST,
+        })).toEqual({
+            ...initialState,
+            loading: true
+        })
+    })
+    test("ingredients from the request", () => {
         expect(ingredientsReducer(initialState, {
             type: actions.GET_INGREDIENTS_SUCCESS,
             ingredients: testBodyRequest,
         })).toEqual({
             ...initialState,
             ingredients: testBodyRequest,
+        })
+    })
+    test("faild for ingredients", () => {
+        expect(ingredientsReducer(initialState, {
+            type: actions.GET_INGREDIENTS_FAILED,
+        })).toEqual({
+            ...initialState,
+            isError: true,
+            loading: false,
         })
     })
     test("should return current product", () => {

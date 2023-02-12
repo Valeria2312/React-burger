@@ -1,6 +1,13 @@
 import {initialState, registerUserReducer} from "./Registration";
 import * as action from '../actions/Registration'
 import {testAithUser, testLoginUser, testRegUser, testUpdateUser,} from "../../utils/testData";
+import {
+    AUTH_USER_REQUEST,
+    LOGIN_USER_REQUEST,
+    LOGOUT_USER_FAILED,
+    LOGOUT_USER_REQUEST,
+    REGISTER_USER_REQUEST, TOKEN_USER_REQUEST, UPDATE_USER_REQUEST
+} from "../actions/Registration";
 
 describe("Redux store and actions", () => {
     beforeEach(() => {
@@ -14,6 +21,15 @@ describe("Redux store and actions", () => {
     });
     test("should return order initial state", () => {
         expect(registerUserReducer(undefined, {})).toEqual(initialState)
+    })
+    test("should return registration request flags", () => {
+        expect(registerUserReducer(initialState, {
+            type: action.REGISTER_USER_REQUEST,
+        })).toEqual({
+            ...initialState,
+            registrationRequest: true,
+            registrationFailed: false,
+        })
     })
     test("should return the registered user", () => {
         expect(registerUserReducer(initialState, {
@@ -35,6 +51,15 @@ describe("Redux store and actions", () => {
             user: null,
             registrationRequest: false,
             registrationFailed: true,
+        })
+    })
+    test("should return login request flags", () => {
+        expect(registerUserReducer(initialState, {
+            type: action.LOGIN_USER_REQUEST,
+        })).toEqual({
+            ...initialState,
+            loginRequest: true,
+            loginFailed: false,
         })
     })
     test("should return the login user", () => {
@@ -59,6 +84,15 @@ describe("Redux store and actions", () => {
             loginFailed: true,
         })
     })
+    test("should return logout request flags", () => {
+        expect(registerUserReducer(initialState, {
+            type: action.LOGOUT_USER_REQUEST,
+        })).toEqual({
+            ...initialState,
+            logoutRequest: true,
+            logoutFailed: false
+        })
+    })
     test("should return a null value when logout user", () => {
         expect(registerUserReducer(initialState, {
             type: action.LOGOUT_USER_SUCCESS,
@@ -69,7 +103,25 @@ describe("Redux store and actions", () => {
             logoutFailed: false,
         })
     })
-    test("should return the flags of the successful  token request", () => {
+    test("should return logout failed flags", () => {
+        expect(registerUserReducer(initialState, {
+            type: action.LOGOUT_USER_FAILED,
+        })).toEqual({
+            ...initialState,
+            logoutRequest: false,
+            logoutFailed: true
+        })
+    })
+    test("should return token request flags", () => {
+        expect(registerUserReducer(initialState, {
+            type: action.TOKEN_USER_REQUEST,
+        })).toEqual({
+            ...initialState,
+            updateTokenRequest: true,
+            updateTokenFailed: false
+        })
+    })
+    test("should return the flags of the successful token request", () => {
         expect(registerUserReducer(initialState, {
             type: action.TOKEN_USER_SUCCESS,
         })).toEqual({
@@ -85,6 +137,14 @@ describe("Redux store and actions", () => {
             ...initialState,
             updateTokenRequest: false,
             updateTokenFailed: true,
+        })
+    })
+    test("should return auth request flags", () => {
+        expect(registerUserReducer(initialState, {
+            type: action.AUTH_USER_REQUEST,
+        })).toEqual({
+            ...initialState,
+            authChecked: false,
         })
     })
     test("should return the authenticated user", () => {
@@ -105,6 +165,15 @@ describe("Redux store and actions", () => {
             ...initialState,
             user: null,
             authChecked: false,
+        })
+    })
+    test("should return update user request flags", () => {
+        expect(registerUserReducer(initialState, {
+            type: action.UPDATE_USER_REQUEST,
+        })).toEqual({
+            ...initialState,
+            updateUserRequest: true,
+            updateUserFailed: false,
         })
     })
     test("should return the update user", () => {

@@ -1,6 +1,7 @@
 import {constructorReducer, initialState, orderReducer} from './BurgerConstructor'
 import * as actions from '../actions/BurgerConstructor'
 import {testIngredient, testIngredientsMove, testOrderNumber} from "../../utils/testData";
+import {GET_ORDER_FAILED, GET_ORDER_REQUEST} from "../actions/BurgerConstructor";
 
 describe("Redux store and actions", () => {
     beforeEach(() => {
@@ -67,7 +68,14 @@ describe("Redux store and actions", () => {
             showModal: false,
         })
     })
-
+    test("request getting the order number", () => {
+        expect(orderReducer(initialState, {
+            type: actions.GET_ORDER_REQUEST,
+        })).toEqual({
+            ...initialState,
+            isLoading: true,
+        })
+    })
     test("getting the order number", () => {
         expect(orderReducer(initialState, {
             type: actions.GET_ORDER_SUCCESS,
@@ -76,6 +84,14 @@ describe("Redux store and actions", () => {
             ...initialState,
             number: testOrderNumber,
             hasData: true,
+        })
+    })
+    test("failed getting the order number", () => {
+        expect(orderReducer(initialState, {
+            type: actions.GET_ORDER_FAILED,
+        })).toEqual({
+            ...initialState,
+            isError: true,
         })
     })
     test("the modal window is open", () => {

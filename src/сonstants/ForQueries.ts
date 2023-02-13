@@ -2,7 +2,8 @@
 import {updateToken} from "../services/actions/Registration";
 import {setCookie} from "../utils/cookie";
 
-export const checkResponse = (res: Response) => (res.ok ? res.json() : res.json().then((err: any) => Promise.reject(err)));
+export const checkResponse = (res: Response) => (res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`));
+
 // базовая строка https запроса
 export const requestAddress: string = "https://norma.nomoreparties.space/api";
 // базовая строка wss запроса на все заказы
@@ -11,24 +12,11 @@ export const urlOrdersAll: string = 'wss://norma.nomoreparties.space/orders/all'
 export const urlOrdersUser:string = 'wss://norma.nomoreparties.space/orders';
 
 
-type TOptions = {
-    method?: string,
-    mode?: string,
-    cache?: string,
-    credentials?: string,
-    headers: {
-        "Content-Type"?: "application/json"
-        Authorization?: string | undefined,
-    }
-    body?: string
-    redirect?: string,
-    referrerPolicy?: string,
-}
-
 export const getFeedOrder = (orderNumber:string) => {
     return fetch(requestAddress + `/orders/${orderNumber}`)
         .then(checkResponse)
 }
+
 
 // проверка запроса
 const fetchWithRefresh = async (url: string, options: RequestInit) => {

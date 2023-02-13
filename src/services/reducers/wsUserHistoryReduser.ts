@@ -2,13 +2,14 @@ import {TWSData} from "../../types/typesDataProduct";
 import {createReducer} from "@reduxjs/toolkit";
 import {wsClose, wsError, wsMessage, wsOpen} from "../actions/wsUserHistoryActions";
 
+
 type TWSHistoryType = {
     status: string;
     error: string;
     data: TWSData | null;
 };
 
-const initialState: TWSHistoryType = {
+export const initialState: TWSHistoryType = {
     status: 'offline',
     error: '',
     data: {

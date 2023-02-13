@@ -36,7 +36,7 @@ export const Modal = ({close, children}: TElementProps) => {
     return ReactDOM.createPortal(
         <>
             <div className={`${StyleModal.container}`}>
-                <button className={`${StyleModal.btn}`} onClickCapture={closeModal}>
+                <button className={`${StyleModal.btn}`} onClickCapture={closeModal} data-id="modal-close-icon">
                     <CloseIcon type="primary"/>
                 </button>
                 {children}

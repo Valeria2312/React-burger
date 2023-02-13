@@ -23,7 +23,7 @@ type TInitialStateConstructor = {
     hasData: boolean,
 }
 
-const initialState: TInitialStateConstructor = {
+export const initialState: TInitialStateConstructor = {
     ingredients: [],
     bun: null,
     number: null,
@@ -73,7 +73,6 @@ export const constructorReducer = (state = initialState, action:TIngridientActio
                 bun: null
             }
         }
-
         default: {
             return state
         }

@@ -13,7 +13,7 @@ type TInitialState = {
     resetPasswordSuccess: boolean,
     resetPasswordError: boolean
 }
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
     forgotPasswordRequest: false,
     forgotPasswordSuccess: false,
     forgotPasswordError: false,

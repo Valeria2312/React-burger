@@ -53,6 +53,7 @@ export const Login = () => {
                     errorText={'Ошибка'}
                     size={'default'}
                     extraClass="mb-6"
+                    data-test-id="email-input"
                 />
                 <Input
                     type="password"
@@ -65,6 +66,7 @@ export const Login = () => {
                     errorText={'Ошибка'}
                     size={'default'}
                     extraClass="mb-6"
+                    data-test-id="password-input"
                 />
                 <Button htmlType="submit" type="primary" size="medium">
                     Войти

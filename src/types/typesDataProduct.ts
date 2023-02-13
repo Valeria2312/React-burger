@@ -17,9 +17,9 @@ export interface IIngredient {
      image_mobile: string
      image_large: string
      __v: number
-     uuid: string
+     uuid?: string
     index: number
-    key: any
+    key?: any
     count?:number
 }
 

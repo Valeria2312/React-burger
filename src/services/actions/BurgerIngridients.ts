@@ -35,7 +35,7 @@ export type TIngridientsMenuActions =
     ICLOSE_CURRENT_PRODUCT;
 
 // Получение ингридиентов
-export function getIngredients() {
+export const getIngredients = () => {
     return function (dispatch: AppDispatch) {
         dispatch({
             type: GET_INGREDIENTS_REQUEST,

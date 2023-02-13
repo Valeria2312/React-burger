@@ -46,7 +46,7 @@ export const ProductElem = ({product}: TElementProps) => {
                 }}
                 className={StyleIBurgerProducts.link}
             >
-            <div ref={dragRef} className={`${StyleIBurgerProducts.product}`} onClick={openModal} key={product._id}>
+            <div ref={dragRef} className={`${StyleIBurgerProducts.product}`} onClick={openModal} key={product._id} data-test-id="ingredient-link">
                 <img className={`mr-4 ml-4`} src={product.image} alt={product.name}/>
                 <Counter count={count} size="default" extraClass="m-1"/>
                 <h3 className={`${StyleIBurgerProducts.productName} text text_type_main-default`}>{product.name}</h3>

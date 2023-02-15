@@ -26,3 +26,7 @@
 
 ## Ссылка
 [Stellar Burger](https://koroleva.valeria.nomoredomains.work/)
+
+## Статус
+Планируются дороботки:
+1. Адаптивная верстка проекта
